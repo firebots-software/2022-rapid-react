@@ -12,4 +12,31 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+    public static class OI {
+        public static final int PS4_CONTROLLER_PORT = 3;
+
+        // Buttons on PS4 Controller
+        public static final int SQUARE_BUTTON_PORT = 1;
+        public static final int X_BUTTON_PORT = 2;
+        public static final int CIRCLE_BUTTON_PORT = 3;
+        public static final int TRIANGLE_BUTTON_PORT = 4;
+        public static final int L1_BUTTON_PORT = 5;
+        public static final int R1_BUTTON_PORT = 6;
+        public static final int L2_BUTTON_PORT = 7;
+        public static final int R2_BUTTON_PORT = 8;
+        public static final int PS_SHARE_BUTTON = 9;
+        public static final int OPTIONS_BUTTON = 10;
+        public static final int L3_BUTTON = 11;
+        public static final int R3_BUTTON = 12;
+        public static final int PS_BUTTON_PORT = 13;
+        public static final int BIG_BUTTON = 14;
+    }
+
+    public static final class Drivetrain {
+        public final static int leftFollowerPort = 1; //TODO: change port numbers for new drivetrain
+        public final static int leftMasterPort = 2;
+        public final static int rightMasterPort = 4;
+        public final static int rightFollowerPort = 3;
+    }
+}
