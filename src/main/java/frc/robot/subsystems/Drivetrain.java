@@ -38,6 +38,14 @@ public class Drivetrain extends SubsystemBase {
 
   private driveOrientation orientation;
 
+  // robot status
+  private boolean brakeMode;
+
+  // motion Profiling
+
+  private double previousThrust = 0;
+  private double previousRotation = 0;
+
   /**
    * The Singleton instance of this Drivetrain. External classes should
    * use the {@link #getInstance()} method to get the instance.
@@ -106,6 +114,15 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
+  public void PIDarcadeDrive(double frontBackSpeed, double rotation) {
+    frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
+    rotation = restrictToRange(rotation, -1, 1);
+
+    robotDrive.arcadeDrive(frontBackSpeed, rotation, false);
+    previousRotation = rotation;
+    previousThrust = frontBackSpeed;
+}
+
   public void resetEncoders() {
     leftFrontMaster.setSelectedSensorPosition(0);
     rightRearMaster.setSelectedSensorPosition(0);
@@ -134,6 +151,37 @@ public class Drivetrain extends SubsystemBase {
     robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
 }
 
+public boolean getBrakeModeStatus() {
+  return brakeMode;
+}
+
+//todo: why is setBrakeMode commented out
+public void setBrakeMode(boolean newBrakeMode) {
+  //       if (newBrakeMode) {
+  //        rightRearMaster.set(NeutralMode.Brake, 0);
+  // }
+}
+
+public driveOrientation getDriveOrientation() {
+  return orientation;
+}
+
+public void setDriveOrientation(driveOrientation orientation) {
+  this.orientation = orientation;
+}
+
+public boolean getSlowModeStatus() {
+  return isSlowMode;
+}
+
+/**
+* Sets the drivetrain's slow mode status. If slow mode is on, all velocity values will be reduced.
+*
+* @param isSlowMode
+*/
+public void setSlowMode(boolean isSlowMode) {
+  this.isSlowMode = isSlowMode;
+}
 
   public void stop() {
     leftFollower.set(0);
