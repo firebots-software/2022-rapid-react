@@ -142,6 +142,18 @@ public class Drivetrain extends SubsystemBase {
     rightFollower.set(0);
 }
 
+  public void resetGyro() {
+    this.gyro.reset();
+  }
+
+  public double getHeading() {
+    if (gyro != null) {
+        return -gyro.getAngle(); //todo: why gyro angle = -heading?
+    } else {
+        return 0;
+    }
+}
+
   private double restrictToRange(double n, int min, int max) {
     if (n > max) return max;
     if (n < min) return min;
