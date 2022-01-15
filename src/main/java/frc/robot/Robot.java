@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     CameraServer cameraServer = CameraServer.getInstance(); 
-    UsbCamera camera = cameraServer.startAutomaticCapture();
+    UsbCamera camera = cameraServer.startAutomaticCapture(1);
       camera.setResolution(640, 480);
   }
 
@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
 
   private void updateShuffleboard() {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
+
   }
 
 
