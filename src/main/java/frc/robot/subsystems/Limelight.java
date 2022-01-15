@@ -41,7 +41,7 @@ public class Limelight extends SubsystemBase {
   // The value of tv to be returned if no target is found
   private final double DEFAULT_VALUE_TV = 0;
 
-  // The value of tv to be returned if no target is found
+  // The value of ta to be returned if no target is found
   private final double DEFAULT_VALUE_TA = 0;
 
   /** Creates a new Limelight. */
@@ -78,7 +78,6 @@ public class Limelight extends SubsystemBase {
     ty = table.getEntry("ty");
     tv = table.getEntry("tv");
     ta = table.getEntry("ta");
-
   }
 
    /**
