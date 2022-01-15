@@ -131,7 +131,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
-    robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
+    
 }
 
 
