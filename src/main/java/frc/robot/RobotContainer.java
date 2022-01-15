@@ -60,7 +60,7 @@ public class RobotContainer {
     buttonName.whenPressed(new commandName());
     */
 
-    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON);
+    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
     flipOrientation.whenPressed(new FlipOrientation());
 
     final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);

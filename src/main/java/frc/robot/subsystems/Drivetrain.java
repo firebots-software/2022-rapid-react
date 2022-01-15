@@ -9,13 +9,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
   // constants
-  private static final double DEADZONE_RANGE = 0.3;
+  private static final double DEADZONE_RANGE = 0.1;
   private final double SLOW_MODE_CONSTANT = 0.4;
   private final double RAMPING_CONSTANT = 0.25;
 
@@ -92,9 +93,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
-    if (rotation > 1) rotation = 1.0;
-    if (rotation < -1) rotation = -1.0;
-    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
+    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
+        rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
       robotDrive.stopMotor();
     } else {
       if (orientation == driveOrientation.BACK) {
@@ -104,13 +104,14 @@ public class Drivetrain extends SubsystemBase {
         frontBackSpeed *= SLOW_MODE_CONSTANT;
         rotation *= SLOW_MODE_CONSTANT;
       } else {
-        frontBackSpeed *= 0.7;
+        frontBackSpeed *= 0.5;
         rotation *= 0.5;
       }
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
 
       robotDrive.arcadeDrive(frontBackSpeed, rotation);
+
     }
   }
 
@@ -148,7 +149,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
-    robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
+  //robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
 }
 
 public boolean getBrakeModeStatus() {
@@ -168,6 +169,10 @@ public driveOrientation getDriveOrientation() {
 
 public void setDriveOrientation(driveOrientation orientation) {
   this.orientation = orientation;
+}
+
+public void toggleDriveOrientation() {
+  this.orientation = orientation.toggle();
 }
 
 public boolean getSlowModeStatus() {

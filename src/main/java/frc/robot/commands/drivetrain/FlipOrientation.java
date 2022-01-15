@@ -7,17 +7,21 @@ import frc.robot.subsystems.Drivetrain;
 import java.util.Set;
 
 public class FlipOrientation implements Command {
-
-    private final Drivetrain drivetrain;
+    private Drivetrain drivetrain;
 
     public FlipOrientation() {
         this.drivetrain = Drivetrain.getInstance();
     }
 
+    public void initialize() {
+      drivetrain.toggleDriveOrientation();
+    }
+
     @Override
     public void execute() {
-        drivetrain.setDriveOrientation(drivetrain.getDriveOrientation().toggle());
+       
     }
+
 
     @Override
     public boolean isFinished() {
