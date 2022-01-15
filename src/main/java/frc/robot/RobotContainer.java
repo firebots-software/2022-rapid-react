@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
+import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -32,6 +34,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     this.ps4_controller = new Joystick(Constants.OI.PS4_CONTROLLER_PORT);
+    this.drivetrain = Drivetrain.getInstance();
     configureButtonBindings();
 
         // Configure default commands
@@ -57,6 +60,11 @@ public class RobotContainer {
     buttonName.whenPressed(new commandName());
     */
 
+    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON);
+    flipOrientation.whenPressed(new FlipOrientation());
+
+    final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    slowMode.whenHeld(new ToggleSlowMode());
 
   }
 
