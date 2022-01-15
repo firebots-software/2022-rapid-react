@@ -25,7 +25,10 @@ public class Limelight extends SubsystemBase {
   private NetworkTableEntry ty;
 
   /** Creates a new Limelight. */
-  public Limelight() {}
+  public Limelight() {
+    tx.setDouble(0.0);
+    ty.setDouble(0.0);
+  }
 
   @Override
   public void periodic() {
