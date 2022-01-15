@@ -20,14 +20,16 @@ public class Limelight extends SubsystemBase {
   your data. In this case, it's a table called datatable. */
   private NetworkTable table = instance.getTable("limelight");
 
-
   private NetworkTableEntry tx;
   private NetworkTableEntry ty;
 
+  private final double DEFAULT_VALUE_TX = 0.0;
+  private final double DEFAULT_VALUE_TY = 0.0;
+
   /** Creates a new Limelight. */
   public Limelight() {
-    tx.setDouble(0.0);
-    ty.setDouble(0.0);
+    tx.setDouble(DEFAULT_VALUE_TX);
+    ty.setDouble(DEFAULT_VALUE_TY);
   }
 
     /**
@@ -56,7 +58,13 @@ public class Limelight extends SubsystemBase {
     ty = table.getEntry("ty");
   }
 
-  
+  public double getTx() {
+    return tx.getDouble(DEFAULT_VALUE_TX);
+  }
+
+  public double getTy() {
+    return ty.getDouble(DEFAULT_VALUE_TY);
+  }
 
   @Override
   public void periodic() {
