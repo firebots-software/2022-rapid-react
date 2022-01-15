@@ -48,6 +48,16 @@ public class Limelight extends SubsystemBase {
     return INSTANCE;
   }
 
+  /**
+   * Refreshes (updates) the tx and ty values
+   */
+  public void refreshValues(){
+    tx = table.getEntry("tx");
+    ty = table.getEntry("ty");
+  }
+
+  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
