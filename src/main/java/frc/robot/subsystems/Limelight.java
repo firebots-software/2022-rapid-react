@@ -30,6 +30,24 @@ public class Limelight extends SubsystemBase {
     ty.setDouble(0.0);
   }
 
+    /**
+   * The Singleton instance of this Limelight. External classes should use the
+   * {@link #getInstance()} method to get the instance.
+   */
+  private static Limelight INSTANCE;
+
+  /**
+   * Returns the Singleton instance of this Limelight. This static method should be
+   * used -- {@code Limelight.getInstance();} -- by external classes, rather than the
+   * constructor to get the instance of this class.
+   */
+  public static Limelight getInstance() {
+    if (INSTANCE == null) {
+      INSTANCE = new Limelight();
+    }
+    return INSTANCE;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
