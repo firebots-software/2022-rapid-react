@@ -97,6 +97,24 @@ public class Limelight extends SubsystemBase {
     return ty.getDouble(DEFAULT_VALUE_TY);
   }
 
+
+   /**
+     * Returns the target area. (From 0% of the image to 100% of the image) 
+     * @return Target area as a percentage.
+     */
+    public double getTa() {
+      return ta.getDouble(DEFAULT_VALUE_TA);
+    }
+
+
+   /**
+     * Returns whether the Limelight has any valid targets (0 or 1). This means that the Limelight has a valid target, or is not. 
+     * @return Boolean value for if limelight has a target.
+     */
+    public boolean getTv() {
+      return tv.getDouble(DEFAULT_VALUE_TV) == 1;
+    }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
