@@ -26,16 +26,30 @@ public class Limelight extends SubsystemBase {
   // A network table entry that stores the ty value
   private NetworkTableEntry ty;
 
+  // A network table entry that stores the tv value
+  private NetworkTableEntry tv;
+
+  // A network table entry that stores the ta value
+  private NetworkTableEntry ta;
+
   // The value of tx to be returned if no value is found
   private final double DEFAULT_VALUE_TX = 0.0;
 
   // The value of ty to be returned if no value is found
   private final double DEFAULT_VALUE_TY = 0.0;
 
+  // The value of tv to be returned if no target is found
+  private final double DEFAULT_VALUE_TV = 0;
+
+  // The value of tv to be returned if no target is found
+  private final double DEFAULT_VALUE_TA = 0;
+
   /** Creates a new Limelight. */
   public Limelight() {
     tx.setDouble(DEFAULT_VALUE_TX);
     ty.setDouble(DEFAULT_VALUE_TY);
+    tv.setDouble(DEFAULT_VALUE_TV);
+    ta.setDouble(DEFAULT_VALUE_TA);
   }
 
     /**
@@ -62,6 +76,9 @@ public class Limelight extends SubsystemBase {
   public void refreshValues(){
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
+    tv = table.getEntry("tv");
+    ta = table.getEntry("ta");
+
   }
 
    /**
@@ -83,6 +100,5 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
   }
 }
