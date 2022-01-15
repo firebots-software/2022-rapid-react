@@ -20,10 +20,16 @@ public class Limelight extends SubsystemBase {
   your data. In this case, it's a table called datatable. */
   private NetworkTable table = instance.getTable("limelight");
 
+  // A network table entry that stores the tx value
   private NetworkTableEntry tx;
+
+  // A network table entry that stores the ty value
   private NetworkTableEntry ty;
 
+  // The value of tx to be returned if no value is found
   private final double DEFAULT_VALUE_TX = 0.0;
+
+  // The value of ty to be returned if no value is found
   private final double DEFAULT_VALUE_TY = 0.0;
 
   /** Creates a new Limelight. */
@@ -58,10 +64,18 @@ public class Limelight extends SubsystemBase {
     ty = table.getEntry("ty");
   }
 
+   /**
+     * Returns the horizontal offset from the crosshair to the target (-27 degrees to 27 degrees).
+     * @return Horizontal offset in degrees.
+     */
   public double getTx() {
     return tx.getDouble(DEFAULT_VALUE_TX);
   }
 
+   /**
+     * Returns the vertical offset from the crosshair to the target (-20.5 degrees to 20.5 degrees). 
+     * @return Vertical offset in degrees.
+     */
   public double getTy() {
     return ty.getDouble(DEFAULT_VALUE_TY);
   }
