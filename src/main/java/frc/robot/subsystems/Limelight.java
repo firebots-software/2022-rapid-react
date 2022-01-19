@@ -32,6 +32,8 @@ public class Limelight extends SubsystemBase {
   // A network table entry that stores the ta value
   private NetworkTableEntry ta;
 
+  private NetworkTableEntry contourReport;
+
   // The value of tx to be returned if no value is found
   private final double DEFAULT_VALUE_TX = 0.0;
 
@@ -44,12 +46,14 @@ public class Limelight extends SubsystemBase {
   // The value of ta to be returned if no target is found
   private final double DEFAULT_VALUE_TA = 0;
 
+  
+
   /** Creates a new Limelight. */
   public Limelight() {
-    tx.setDouble(DEFAULT_VALUE_TX);
-    ty.setDouble(DEFAULT_VALUE_TY);
-    tv.setDouble(DEFAULT_VALUE_TV);
-    ta.setDouble(DEFAULT_VALUE_TA);
+    // tx.setDouble(DEFAULT_VALUE_TX);
+    // ty.setDouble(DEFAULT_VALUE_TY);
+    // tv.setDouble(DEFAULT_VALUE_TV);
+    // ta.setDouble(DEFAULT_VALUE_TA);
   }
 
     /**
@@ -74,10 +78,11 @@ public class Limelight extends SubsystemBase {
    * Refreshes (updates) the tx and ty values
    */
   public void refreshValues(){
-    tx = table.getEntry("tx");
-    ty = table.getEntry("ty");
-    tv = table.getEntry("tv");
-    ta = table.getEntry("ta");
+    // tx = table.getEntry("tx");
+    // ty = table.getEntry("ty");
+    // tv = table.getEntry("tv");
+    // ta = table.getEntry("ta");
+    contourReport = table.getEntry("contourReport");
   }
 
    /**
@@ -86,6 +91,10 @@ public class Limelight extends SubsystemBase {
      */
   public double getTx() {
     return tx.getDouble(DEFAULT_VALUE_TX);
+  }
+
+  public double[] getContourReport(){
+    return contourReport.getDoubleArray(new double[]{});
   }
 
    /**
