@@ -52,8 +52,24 @@ public class Robot extends TimedRobot {
   }
 
   private void updateShuffleboard() {
-    for(double d : limelight.getContourReport()){
-      SmartDashboard.putNumber("Report", d);
+
+    final String[] names = new String[]{
+      "Area",
+      "CenterX",
+      "CenterY",
+      "Width",
+      "Height",
+      "Solidity"
+    };
+
+    double[][] contours = limelight.getContours();
+
+    SmartDashboard.putNumber("Total number of contours" , contours[0].length);
+
+    for(int i = 0; i < contours.length; i++ ){
+      for (int j = 0; j < contours[i].length; j++) {
+        SmartDashboard.putNumber(names[i] + ": " + j , contours[i][j]);
+      }
     }
 
   }

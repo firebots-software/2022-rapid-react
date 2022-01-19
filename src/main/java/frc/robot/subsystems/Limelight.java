@@ -82,7 +82,7 @@ public class Limelight extends SubsystemBase {
     // ty = table.getEntry("ty");
     // tv = table.getEntry("tv");
     // ta = table.getEntry("ta");
-    contourReport = table.getEntry("contourReport");
+    table = instance.getTable("GRIP/myContoursReport");
   }
 
    /**
@@ -93,8 +93,15 @@ public class Limelight extends SubsystemBase {
     return tx.getDouble(DEFAULT_VALUE_TX);
   }
 
-  public double[] getContourReport(){
-    return contourReport.getDoubleArray(new double[]{});
+  public double[][] getContours(){
+    double[] areaArr = table.getEntry("area").getDoubleArray(new double[]{}); 
+    double[] centerXArr = table.getEntry("centerX").getDoubleArray(new double[]{}); 
+    double[] centerYArr = table.getEntry("centerY").getDoubleArray(new double[]{}); 
+    double[] widthArr = table.getEntry("width").getDoubleArray(new double[]{}); 
+    double[] heightArr = table.getEntry("height").getDoubleArray(new double[]{}); 
+    double[] solidityArr = table.getEntry("solidity").getDoubleArray(new double[]{}); 
+
+    return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr};
   }
 
    /**
@@ -127,17 +134,6 @@ public class Limelight extends SubsystemBase {
     // public double getXOffset() {
     //   //TODO: get the centerX from Network Table and return
     // }
-
-    public double[][] getValuesFromGRIP() {
-      double[] areaArr = table.getEntry("area").getDoubleArray(new double[]{}); 
-      double[] centerXArr = table.getEntry("centerX").getDoubleArray(new double[]{}); 
-      double[] centerYArr = table.getEntry("centerY").getDoubleArray(new double[]{}); 
-      double[] widthArr = table.getEntry("width").getDoubleArray(new double[]{}); 
-      double[] heightArr = table.getEntry("height").getDoubleArray(new double[]{}); 
-      double[] solidityArr = table.getEntry("solidity").getDoubleArray(new double[]{}); 
-
-      return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr};
-    }
 
 
   @Override
