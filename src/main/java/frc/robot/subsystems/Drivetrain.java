@@ -17,7 +17,7 @@ import frc.robot.Constants;
 public class Drivetrain extends SubsystemBase {
   // constants
   private static final double DEADZONE_RANGE = 0.1;
-  private final double SLOW_MODE_CONSTANT = 0.4;
+  private final double SLOW_MODE_CONSTANT = 0.35;
   private final double RAMPING_CONSTANT = 0.25;
 
 
@@ -59,12 +59,13 @@ public class Drivetrain extends SubsystemBase {
     this.leftFrontMaster = new WPI_TalonFX(Constants.Drivetrain.leftMasterPort);
     this.rightRearMaster = new WPI_TalonFX(Constants.Drivetrain.rightMasterPort);
     this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
-    configTalons();
+
     resetEncoders();
 
     SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFrontMaster, leftFollower);
     SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFollower, rightRearMaster);
     robotDrive = new DifferentialDrive(leftSide, rightSide);
+    configTalons();
 
     this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     this.gyro.calibrate();
@@ -95,20 +96,33 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double frontBackSpeed, double rotation) {
     if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
         rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
+          System.out.println("InArcadeDrive2");         
       robotDrive.stopMotor();
     } else {
+      System.out.println("InArcadeDrive3");
       if (orientation == driveOrientation.BACK) {
         frontBackSpeed *= -1;
       }
       if (isSlowMode) {
-        frontBackSpeed *= SLOW_MODE_CONSTANT;
+        System.out.println("SlowModeSpeedBefore" + frontBackSpeed);
+       frontBackSpeed *= SLOW_MODE_CONSTANT;
         rotation *= SLOW_MODE_CONSTANT;
+
+        System.out.println("SlowModeSpeedAfter" + frontBackSpeed);
       } else {
+        System.out.println("NormalModeSpeedBefore" + frontBackSpeed);
         frontBackSpeed *= 0.5;
         rotation *= 0.5;
+        System.out.println("NormalModeSpeedAfter" + frontBackSpeed);
       }
+
+      System.out.println("InArcadeDrive4");
+
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
+
+      SmartDashboard.putNumber("frontbackspeed",frontBackSpeed);
+      SmartDashboard.putNumber("rotationspeed",rotation);
 
       robotDrive.arcadeDrive(frontBackSpeed, rotation);
 
@@ -149,7 +163,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
-  //robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
+    robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
 }
 
 public boolean getBrakeModeStatus() {
