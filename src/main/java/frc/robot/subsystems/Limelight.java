@@ -18,7 +18,7 @@ public class Limelight extends SubsystemBase {
   /*Get the table within that instance that contains the data. There can
   be as many tables as you like and exist to make it easier to organize
   your data. In this case, it's a table called datatable. */
-  private NetworkTable table = instance.getTable("limelight");
+  private NetworkTable table = instance.getTable("GRIP/myContoursReport");
 
   // A network table entry that stores the tx value
   private NetworkTableEntry tx;
@@ -122,6 +122,23 @@ public class Limelight extends SubsystemBase {
     public boolean getTv() {
       return tv.getDouble(DEFAULT_VALUE_TV) == 1;
     }
+
+    // Subsystem Calculations
+    // public double getXOffset() {
+    //   //TODO: get the centerX from Network Table and return
+    // }
+
+    public double[][] getValuesFromGRIP() {
+      double[] areaArr = table.getEntry("area").getDoubleArray(new double[]{}); 
+      double[] centerXArr = table.getEntry("centerX").getDoubleArray(new double[]{}); 
+      double[] centerYArr = table.getEntry("centerY").getDoubleArray(new double[]{}); 
+      double[] widthArr = table.getEntry("width").getDoubleArray(new double[]{}); 
+      double[] heightArr = table.getEntry("height").getDoubleArray(new double[]{}); 
+      double[] solidityArr = table.getEntry("solidity").getDoubleArray(new double[]{}); 
+
+      return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr};
+    }
+
 
   @Override
   public void periodic() {
