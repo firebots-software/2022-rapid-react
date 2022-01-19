@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.Drivetrain;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class FlipOrientation implements Command {
@@ -36,6 +37,7 @@ public class FlipOrientation implements Command {
 
     @Override
     public Set<Subsystem> getRequirements() {
-        return Set.of(drivetrain);
+        return Collections.emptySet();
+        // do not require drivetrain here
     }
 }
