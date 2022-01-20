@@ -4,7 +4,12 @@
 
 package frc.robot;
 
+import org.opencv.core.Mat;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,10 +35,21 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    //init cameraServer + stream 
     m_robotContainer = new RobotContainer();
-    CameraServer cameraServer = CameraServer.getInstance(); 
-    UsbCamera camera = cameraServer.startAutomaticCapture(1);
-      camera.setResolution(640, 480);
+    CameraServer camServer = CameraServer.getInstance();
+    UsbCamera camera = camServer.startAutomaticCapture("frontCamera", 1);
+    camera.setVideoMode(PixelFormat.kMJPEG, 320, 240, 120);
+
+    new Thread( () -> {
+      CvSink cvSink = camServer.getVideo();
+      CvSource outputStream = camServer.putVideo("camera stream", 320, 240);
+      Mat source = new Mat();
+      while (!Thread.interrupted()) {
+        cvSink.grabFrame(source);
+        outputStream.putFrame(source);
+      }
+    }).start();
   }
 
   /**
