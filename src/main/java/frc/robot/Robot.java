@@ -5,13 +5,15 @@
 package frc.robot;
 
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -37,19 +39,13 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     //init cameraServer + stream 
     m_robotContainer = new RobotContainer();
-    CameraServer camServer = CameraServer.getInstance();
-    UsbCamera camera = camServer.startAutomaticCapture("frontCamera", 1);
-    camera.setVideoMode(PixelFormat.kMJPEG, 320, 240, 120);
 
-    new Thread( () -> {
-      CvSink cvSink = camServer.getVideo();
-      CvSource outputStream = camServer.putVideo("camera stream", 320, 240);
-      Mat source = new Mat();
-      while (!Thread.interrupted()) {
-        cvSink.grabFrame(source);
-        outputStream.putFrame(source);
-      }
-    }).start();
+    // new Thread(() -> {
+      
+      UsbCamera camera = CameraServer.startAutomaticCapture(0);
+      camera.setResolution(1280, 720);
+      Shuffleboard.update();
+    // }).start();
   }
 
   /**
