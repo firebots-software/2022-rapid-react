@@ -131,7 +131,10 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
 }
 
 
