@@ -156,4 +156,9 @@ public class Drivetrain extends SubsystemBase {
   public driveOrientation getOrientation(){
     return orientation;
   }
+
+  // Setters
+  public void setDriveOrientation(driveOrientation orientation) {
+    this.orientation = orientation;
+  }
 }

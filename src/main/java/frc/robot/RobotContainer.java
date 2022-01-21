@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.subsystems.Drivetrain;
 
@@ -52,12 +53,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /*
-    final Button buttonName = new JoystickButton(ps4_controller, Constants.OI.PortNumber);
-    buttonName.whenPressed(new commandName());
-    */
-
-
+    final Button toggleOrientation = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    toggleOrientation.whenPressed(new FlipOrientation());
+  
   }
 
   /**
