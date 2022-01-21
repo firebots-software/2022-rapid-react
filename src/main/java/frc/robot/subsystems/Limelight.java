@@ -64,6 +64,39 @@ public class Limelight extends SubsystemBase {
     return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr};
   }
 
+  // Get endpoints of two furthest contours
+  public double[] getEndpoints(){
+
+      double[][] contours = getContours();
+      double[] centerXArr = contours[1];
+      double[] widthArr = contours[3];
+
+      if(centerXArr.length == 1){
+        return new double[]{
+          centerXArr[0] - (0.5 * widthArr[0]), centerXArr[0] + (0.5 * widthArr[0])
+        };
+      }
+
+      double xMax = centerXArr[0], xMin = centerXArr[0];
+      double minWidth = 0, maxWidth = 0;
+
+      for (int i = 1; i < centerXArr.length; i++) {
+        if(xMax < centerXArr[i]) {
+          xMax = centerXArr[i];
+          maxWidth = widthArr[i];
+        }
+        if(xMin > centerXArr[i]) {
+          xMin = centerXArr[i];
+          minWidth = widthArr[i];
+        }
+      }
+      
+      return new double[]{
+        xMin - (0.5 * minWidth), xMax + (0.5 * maxWidth)
+      };
+
+  }
+
 
     // Subsystem Calculations
     // public double getXOffset() {
