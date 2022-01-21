@@ -40,12 +40,50 @@ public class Robot extends TimedRobot {
     //init cameraServer + stream 
     m_robotContainer = new RobotContainer();
 
-    // new Thread(() -> {
+    // CameraServer is responsible for publishing about cameras/camera servers to Network Tables
+
+    // startAutomaticCapture: creates server for viewing camera feed from dashboard 
+
+    try {
+      // UsbCamera shooterCamera = CameraServer.startAutomaticCapture("Shooter Camera", 0);
+      // UsbCamera intakeCamera = CameraServer.startAutomaticCapture("Intake Camera", 1);
       
-      UsbCamera camera = CameraServer.startAutomaticCapture(0);
-      camera.setResolution(1280, 720);
+      // shooterCamera.setResolution(640, 480);
+      // intakeCamera.setResolution(640, 480);
+
+      new Thread(() -> {
+        UsbCamera camera = CameraServer.startAutomaticCapture("Shooter Camera", 0);
+        camera.setResolution(640, 480);
+  
+        CvSink cvSink = CameraServer.getVideo();
+        // Put video Blur -> stream on Shuffleboard
+        CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
+  
+        Mat source = new Mat();
+        Mat output = new Mat();
+  
+        while(!Thread.interrupted()) {
+          if (cvSink.grabFrame(source) == 0) {
+            continue;
+          }
+
+          // Image processing goes here
+          Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+
+
+          outputStream.putFrame(output);
+        }
+      }).start();
+
       Shuffleboard.update();
-    // }).start();
+
+
+
+
+
+    } catch(Exception e){
+      System.err.println("Error initializing camera");
+    }
   }
 
   /**
