@@ -103,19 +103,14 @@ public class Drivetrain extends SubsystemBase {
         frontBackSpeed *= -1;
       }
       if (isSlowMode) {
-        System.out.println("SlowModeSpeedBefore" + frontBackSpeed);
        frontBackSpeed *= SLOW_MODE_CONSTANT;
         rotation *= SLOW_MODE_CONSTANT;
 
-        System.out.println("SlowModeSpeedAfter" + frontBackSpeed);
       } else {
-        System.out.println("NormalModeSpeedBefore" + frontBackSpeed);
         frontBackSpeed *= 0.5;
         rotation *= 0.5;
-        System.out.println("NormalModeSpeedAfter" + frontBackSpeed);
       }
 
-      System.out.println("InArcadeDrive4");
 
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
