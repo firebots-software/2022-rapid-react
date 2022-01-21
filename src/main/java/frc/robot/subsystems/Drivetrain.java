@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -59,13 +59,13 @@ public class Drivetrain extends SubsystemBase {
     this.leftFrontMaster = new WPI_TalonFX(Constants.Drivetrain.leftMasterPort);
     this.rightRearMaster = new WPI_TalonFX(Constants.Drivetrain.rightMasterPort);
     this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
-
     resetEncoders();
 
-    SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFrontMaster, leftFollower);
-    SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFollower, rightRearMaster);
+    MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
+    MotorControllerGroup rightSide = new MotorControllerGroup(rightFollower, rightRearMaster);
     robotDrive = new DifferentialDrive(leftSide, rightSide);
     configTalons();
+
 
     this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     this.gyro.calibrate();
@@ -94,12 +94,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
-    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
-        rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
-          System.out.println("InArcadeDrive2");         
+    if (rotation > 1) rotation = 1.0;
+    if (rotation < -1) rotation = -1.0;
+    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
       robotDrive.stopMotor();
     } else {
-      System.out.println("InArcadeDrive3");
       if (orientation == driveOrientation.BACK) {
         frontBackSpeed *= -1;
       }
@@ -163,7 +162,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
-    robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
+    //robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
 }
 
 public boolean getBrakeModeStatus() {
