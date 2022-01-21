@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drivetrain.driveOrientation;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+  private static Drivetrain driveTrain;
   private RobotContainer m_robotContainer;
 
   /**
@@ -39,6 +42,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     //init cameraServer + stream 
     m_robotContainer = new RobotContainer();
+    driveTrain = Drivetrain.getInstance();
 
     // CameraServer is responsible for publishing about cameras/camera servers to Network Tables
 
@@ -52,7 +56,15 @@ public class Robot extends TimedRobot {
       // intakeCamera.setResolution(640, 480);
 
       new Thread(() -> {
-        UsbCamera camera = CameraServer.startAutomaticCapture("Shooter Camera", 0);
+        UsbCamera camera;
+
+        if(driveTrain.getOrientation() == Drivetrain.driveOrientation.FRONT){
+          camera = CameraServer.startAutomaticCapture("Camera", 0);
+        } else {
+          // BACK Orientation
+          camera = CameraServer.startAutomaticCapture("Camera", 1);
+        }
+
         camera.setResolution(640, 480);
   
         CvSink cvSink = CameraServer.getVideo();
@@ -70,17 +82,11 @@ public class Robot extends TimedRobot {
           // Image processing goes here
           Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
 
-
           outputStream.putFrame(output);
         }
       }).start();
 
       Shuffleboard.update();
-
-
-
-
-
     } catch(Exception e){
       System.err.println("Error initializing camera");
     }

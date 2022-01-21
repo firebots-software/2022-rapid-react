@@ -63,7 +63,7 @@ public class Drivetrain extends SubsystemBase {
     this.gyro.calibrate();
     this.gyro.reset();
 
-    this.orientation = driveOrientation.FRONT; // default value
+    this.orientation = driveOrientation.BACK; // default value
     this.isSlowMode = false; // default value
 
   }
@@ -151,4 +151,9 @@ public class Drivetrain extends SubsystemBase {
     return n;
   }
 
+
+  // Getters
+  public driveOrientation getOrientation(){
+    return orientation;
+  }
 }
