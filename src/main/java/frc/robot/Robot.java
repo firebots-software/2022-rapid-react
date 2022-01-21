@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,8 +20,6 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private Limelight limelight;
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -32,7 +29,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    limelight = Limelight.getInstance();
   }
 
   /**
@@ -52,26 +48,7 @@ public class Robot extends TimedRobot {
   }
 
   private void updateShuffleboard() {
-
-    final String[] names = new String[]{
-      "Area",
-      "CenterX",
-      "CenterY",
-      "Width",
-      "Height",
-      "Solidity"
-    };
-
-    double[][] contours = limelight.getContours();
-
-    SmartDashboard.putNumber("Total number of contours" , contours[0].length);
-
-    for(int i = 0; i < contours.length; i++ ){
-      for (int j = 0; j < contours[i].length; j++) {
-        SmartDashboard.putNumber(names[i] + ": " + j , contours[i][j]);
-      }
-    }
-
+    // SmartDashboard.putNumber("name", subsystem.getNumberValue());
   }
 
 
