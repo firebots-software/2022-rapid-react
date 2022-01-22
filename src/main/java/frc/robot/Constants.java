@@ -25,12 +25,12 @@ public final class Constants {
         public static final int R1_BUTTON_PORT = 6;
         public static final int L2_BUTTON_PORT = 7;
         public static final int R2_BUTTON_PORT = 8;
-        public static final int PS_SHARE_BUTTON = 9;
-        public static final int OPTIONS_BUTTON = 10;
-        public static final int L3_BUTTON = 11;
-        public static final int R3_BUTTON = 12;
+        public static final int PS_SHARE_BUTTON_PORT = 9;
+        public static final int OPTIONS_BUTTON_PORT = 10;
+        public static final int L3_BUTTON_PORT = 11;
+        public static final int R3_BUTTON_PORT = 12;
         public static final int PS_BUTTON_PORT = 13;
-        public static final int BIG_BUTTON = 14;
+        public static final int BIG_BUTTON_PORT = 14;
     }
 
     public static final class Drivetrain {

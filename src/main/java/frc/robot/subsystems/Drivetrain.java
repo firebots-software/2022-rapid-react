@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
@@ -50,12 +51,13 @@ public class Drivetrain extends SubsystemBase {
     this.leftFrontMaster = new WPI_TalonFX(Constants.Drivetrain.leftMasterPort);
     this.rightRearMaster = new WPI_TalonFX(Constants.Drivetrain.rightMasterPort);
     this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
-    configTalons();
     resetEncoders();
 
-    SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFrontMaster, leftFollower);
-    SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFollower, rightRearMaster);
+    MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
+    MotorControllerGroup rightSide = new MotorControllerGroup(rightFollower, rightRearMaster);
     robotDrive = new DifferentialDrive(leftSide, rightSide);
+    configTalons();
+
 
     this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     this.gyro.calibrate();
@@ -131,7 +133,8 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
-    robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
+    // robotDrive.setRightSideInverted(true); 
+    // THIS IS BROCKEN IN 2022!!!!!! either invert rightSide motorcontrollergroup or invert individual motors
 }
 
 
