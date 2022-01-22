@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.auton.DriveBackForTime;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.subsystems.Drivetrain;
 
@@ -42,6 +43,8 @@ public class RobotContainer {
                   () -> ps4_controller.getRawAxis(2)));
 
     SmartDashboard.putData("Auton chooser", autonChooser);
+    autonChooser.setDefaultOption("Drive Back for Time", new DriveBackForTime(-0.5, 2));
+    autonChooser.addOption("Drive Forward for Time", new DriveBackForTime(0.5, 2));
 
   }
 
@@ -56,7 +59,8 @@ public class RobotContainer {
     final Button buttonName = new JoystickButton(ps4_controller, Constants.OI.PortNumber);
     buttonName.whenPressed(new commandName());
     */
-
+    //final Button driveBackTime = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    //driveBackTime.whenPressed(new DriveBackForTime(0.5, 3));
 
   }
 

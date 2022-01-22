@@ -24,15 +24,18 @@ public class DriveBackForTime extends CommandBase {
    * @param targetTime  = time set in RobotContainer.java
    */
   public DriveBackForTime(double speed,int targetTime) {
+    System.out.println("init cmd");
     this.drivetrain = Drivetrain.getInstance();
-    timer.start();
+    timer = new Timer();
     this.speed = speed;
     this.targetTime = targetTime;
   }
 
   
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.start();
+  }
 
   
   /**
