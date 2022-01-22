@@ -56,36 +56,47 @@ public class Robot extends TimedRobot {
       // intakeCamera.setResolution(640, 480);
 
       new Thread(() -> {
-        UsbCamera camera;
+        UsbCamera frontCamera, backCamera;
 
-        if(driveTrain.getOrientation() == Drivetrain.driveOrientation.FRONT){
-          camera = CameraServer.startAutomaticCapture("Camera", 0);
-        } else {
+        
+        frontCamera = CameraServer.startAutomaticCapture("Camera", 0);
+      
           // BACK Orientation
-          camera = CameraServer.startAutomaticCapture("Camera", 1);
-        }
+        backCamera = CameraServer.startAutomaticCapture("Camera", 1);
 
-        camera.setResolution(640, 480);
+        frontCamera.setResolution(640, 480);
+        backCamera.setResolution(640,480);
   
-        CvSink cvSink = CameraServer.getVideo();
+        CvSink cvSink1 = CameraServer.getVideo(frontCamera);
+        CvSink cvSink2 = CameraServer.getVideo(backCamera);
         // Put video Blur -> stream on Shuffleboard
         CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
   
-        Mat source = new Mat();
-        Mat output = new Mat();
-  
+        Mat frontSource = new Mat();
+        Mat frontOutput = new Mat();
+        Mat backSource = new Mat();
+        Mat backOutput = new Mat();
+        
+        
         while(!Thread.interrupted()) {
-          if (cvSink.grabFrame(source) == 0) {
-            continue;
+          if(driveTrain.getOrientation() == Drivetrain.driveOrientation.FRONT){
+            if (cvSink1.grabFrame(frontSource) == 0) {
+              continue;
+            }
+            // Image processing goes here
+            Imgproc.cvtColor(frontSource, frontOutput, Imgproc.COLOR_BGR2GRAY);
+            outputStream.putFrame(frontOutput);
           }
-
-          // Image processing goes here
-          Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-
-          outputStream.putFrame(output);
+          if(driveTrain.getOrientation() == Drivetrain.driveOrientation.BACK){
+            if (cvSink2.grabFrame(backSource) == 0) {
+              continue;
+            }
+            // Image processing goes here
+            Imgproc.cvtColor(backSource, backOutput, Imgproc.COLOR_BGR2GRAY);
+            outputStream.putFrame(backOutput);
+          }
         }
       }).start();
-
       Shuffleboard.update();
     } catch(Exception e){
       System.err.println("Error initializing camera");

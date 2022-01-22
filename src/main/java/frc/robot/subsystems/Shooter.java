@@ -25,7 +25,10 @@ public class Shooter extends SubsystemBase {
     return instance;
   }
 
-
+  // spinup flywheel 
+  // lock target 
+  // TurntoAngle: turnright and turnleft 
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
