@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
 
   private static Drivetrain driveTrain;
   private RobotContainer m_robotContainer;
+  private Drivetrain drivetrain;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -121,6 +122,8 @@ public class Robot extends TimedRobot {
 
   private void updateShuffleboard() {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
+    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
   }
 
 
