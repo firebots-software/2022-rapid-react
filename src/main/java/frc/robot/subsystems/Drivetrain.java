@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -42,10 +43,6 @@ public class Drivetrain extends SubsystemBase {
   // robot status
   private boolean brakeMode;
 
-  // motion Profiling
-
-  private double previousThrust = 0;
-  private double previousRotation = 0;
 
   /**
    * The Singleton instance of this Drivetrain. External classes should
@@ -94,9 +91,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
-    if (rotation > 1) rotation = 1.0;
-    if (rotation < -1) rotation = -1.0;
-    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
+    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
+    rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
       robotDrive.stopMotor();
     } else {
       if (orientation == driveOrientation.BACK) {
@@ -128,8 +124,6 @@ public class Drivetrain extends SubsystemBase {
     rotation = restrictToRange(rotation, -1, 1);
 
     robotDrive.arcadeDrive(frontBackSpeed, rotation, false);
-    previousRotation = rotation;
-    previousThrust = frontBackSpeed;
 }
 
   public void resetEncoders() {
