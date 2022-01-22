@@ -31,8 +31,6 @@ public class JoystickDrive implements Command {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("axis 1",frontBackSpeed.getAsDouble());
-        SmartDashboard.putNumber("axis 2",rotationSpeed.getAsDouble());
         drivetrain.arcadeDrive(-frontBackSpeed.getAsDouble(), rotationSpeed.getAsDouble());
 
     }
