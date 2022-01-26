@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -108,6 +107,15 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
+  public void PIDarcadeDrive(double frontBackSpeed, double rotation) {
+    frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
+    rotation = restrictToRange(rotation, -1, 1);
+
+    robotDrive.arcadeDrive(frontBackSpeed, rotation, false);
+    // previousRotation = rotation;
+    // previousThrust = frontBackSpeed;
+  }
+
   public void resetEncoders() {
     leftFrontMaster.setSelectedSensorPosition(0);
     rightRearMaster.setSelectedSensorPosition(0);
@@ -150,5 +158,27 @@ public class Drivetrain extends SubsystemBase {
     if (n < min) return min;
     return n;
   }
+  public double getLeftEncoderCountMeters() {
+    return leftFrontMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+  }
 
+  public double getRightEncoderCountMeters() {
+    return rightRearMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+  }
+
+  public double getRightEncoderTicks() {
+    return rightRearMaster.getSelectedSensorPosition();
+  }
+
+  public double getLeftEncoderVelocityMetersPerSec() {
+    return leftFrontMaster.getSelectedSensorVelocity() * 10 / Constants.TICKS_PER_METER;
+  }
+
+  public double getRightEncoderVelocityMetersPerSec() {
+    return rightRearMaster.getSelectedSensorVelocity() * 10 / Constants.TICKS_PER_METER;
+  } 
+
+  public double getAvgEncoderVal(){
+    return (getRightEncoderCountMeters() + getLeftEncoderCountMeters())/2;
+  }
 }

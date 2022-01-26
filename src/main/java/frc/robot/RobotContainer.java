@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.auton.DriveBackForTime;
+import frc.robot.commands.auton.DriveForDistance;
+import frc.robot.commands.auton.DriveForDistance2;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.subsystems.Drivetrain;
 
@@ -45,6 +47,8 @@ public class RobotContainer {
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("Drive Back for Time", new DriveBackForTime(-0.5, 2));
     autonChooser.addOption("Drive Forward for Time", new DriveBackForTime(0.5, 2));
+    autonChooser.addOption("Drive for Distance Test", new DriveForDistance(drivetrain, 2.13));
+    autonChooser.addOption("Drive for Distance Test 2", new DriveForDistance2(2.13));
 
   }
 
@@ -59,8 +63,11 @@ public class RobotContainer {
     final Button buttonName = new JoystickButton(ps4_controller, Constants.OI.PortNumber);
     buttonName.whenPressed(new commandName());
     */
-    //final Button driveBackTime = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
-    //driveBackTime.whenPressed(new DriveBackForTime(0.5, 3));
+    final Button driveForDist = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    driveForDist.whenPressed(new DriveForDistance2(2.13));
+    
+    final Button driveForDist1 = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    driveForDist1.whenPressed(new DriveForDistance(drivetrain, 2.13));
 
   }
 

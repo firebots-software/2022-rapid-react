@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.auton.DriveBackForTime;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,7 +19,7 @@ import frc.robot.commands.auton.DriveBackForTime;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private Drivetrain drivetrain;
   private RobotContainer m_robotContainer;
 
   /**
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    drivetrain = Drivetrain.getInstance();
   }
 
   /**
@@ -50,6 +52,11 @@ public class Robot extends TimedRobot {
 
   private void updateShuffleboard() {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
+    SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
+    SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
+
+    SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
+    SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
   }
 
 
