@@ -73,28 +73,26 @@ public class Robot extends TimedRobot {
         // Put video Blur -> stream on Shuffleboard
         CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
   
-        Mat frontSource = new Mat();
-        Mat frontOutput = new Mat();
-        Mat backSource = new Mat();
-        Mat backOutput = new Mat();
+        Mat source = new Mat();
+        Mat output = new Mat();
         
         
         while(!Thread.interrupted()) {
           if(driveTrain.getOrientation() == Drivetrain.driveOrientation.FRONT){
-            if (cvSink1.grabFrame(frontSource) == 0) {
+            if (cvSink1.grabFrame(source) == 0) {
               continue;
             }
             // Image processing goes here
-            Imgproc.cvtColor(frontSource, frontOutput, Imgproc.COLOR_BGR2GRAY);
-            outputStream.putFrame(frontOutput);
+            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+            outputStream.putFrame(output);
           }
           if(driveTrain.getOrientation() == Drivetrain.driveOrientation.BACK){
-            if (cvSink2.grabFrame(backSource) == 0) {
+            if (cvSink2.grabFrame(source) == 0) {
               continue;
             }
             // Image processing goes here
-            Imgproc.cvtColor(backSource, backOutput, Imgproc.COLOR_BGR2GRAY);
-            outputStream.putFrame(backOutput);
+            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+            outputStream.putFrame(output);
           }
         }
       }).start();
@@ -122,8 +120,8 @@ public class Robot extends TimedRobot {
 
   private void updateShuffleboard() {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
-    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
-    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+    //SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    //SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
   }
 
 
