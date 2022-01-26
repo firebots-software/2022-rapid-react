@@ -18,9 +18,10 @@ public class Limelight extends SubsystemBase {
   /*Get the table within that instance that contains the data. There can
   be as many tables as you like and exist to make it easier to organize
   your data. In this case, it's a table called datatable. */
-  private NetworkTable table = instance.getTable("GRIP/myContoursReport");
+  private NetworkTable table = instance.getTable("limelight");
+  double tx; 
+  double ty; 
 
-  private NetworkTableEntry contourReport;
   
   /** Creates a new Limelight. */
   public Limelight() {
@@ -48,11 +49,21 @@ public class Limelight extends SubsystemBase {
   /**
    * Refreshes (updates) the myContoursReport Network Table
    */
+
   public void refreshValues(){
-    table = instance.getTable("GRIP/myContoursReport");
+    tx = table.getEntry("tx").getDouble(0); 
+    ty = table.getEntry("ty").getDouble(0); 
   }
 
+  public double getTX(){
+    return tx;  
+  }
 
+  public double getTY(){
+    return ty;  
+  }
+
+  /**
   public double[][] getContours(){
     double[] areaArr = table.getEntry("area").getDoubleArray(new double[]{}); 
     double[] centerXArr = table.getEntry("centerX").getDoubleArray(new double[]{}); 
@@ -73,7 +84,9 @@ public class Limelight extends SubsystemBase {
 
     return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr, degreeOffsetArr};
   }
+  */
 
+  /*
   // Get endpoints of two furthest contours
   public double[] getEndpoints(){
 
@@ -104,9 +117,10 @@ public class Limelight extends SubsystemBase {
       return new double[]{
         xMin - (0.5 * minWidth), xMax + (0.5 * maxWidth)
       };
+      
 
   }
-
+  */
 
     // Subsystem Calculations
     // public double getXOffset() {

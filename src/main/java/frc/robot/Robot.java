@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.sound.sampled.SourceDataLine;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
   }
 
   private void updateShuffleboard() {
+    /*
     final String[] names = new String[]{
       "Area",
       "CenterX",
@@ -63,7 +66,7 @@ public class Robot extends TimedRobot {
     };
 
     double[][] contours = limelight.getContours();
-
+ 
     SmartDashboard.putNumber("Total number of contours" , contours[0].length);
 
     for(int i = 0; i < contours.length; i++ ){
@@ -71,6 +74,10 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber(names[i] + ": " + j , contours[i][j]);
       }
     }
+    */
+    limelight.refreshValues();
+    SmartDashboard.putNumber("tx", limelight.getTX()); 
+    SmartDashboard.putNumber("ty", limelight.getTY()); 
 
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
   }
