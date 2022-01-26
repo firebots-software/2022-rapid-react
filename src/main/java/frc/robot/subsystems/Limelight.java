@@ -60,8 +60,18 @@ public class Limelight extends SubsystemBase {
     double[] widthArr = table.getEntry("width").getDoubleArray(new double[]{}); 
     double[] heightArr = table.getEntry("height").getDoubleArray(new double[]{}); 
     double[] solidityArr = table.getEntry("solidity").getDoubleArray(new double[]{}); 
+    double[] degreeOffsetArr = new double[centerXArr.length];
 
-    return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr};
+    // Horizontal FOV is 59.6 degrees
+    // Hardware Zoom is 3x
+    // Pixels is 320 x 240 fps, center is 159.5th column
+    // Detect centerX at certain point
+    
+    for (int i = 0; i < degreeOffsetArr.length; i++) {
+      degreeOffsetArr[i] = (centerXArr[i] - 159.5) * 0.18625; 
+    } 
+
+    return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr, degreeOffsetArr};
   }
 
   // Get endpoints of two furthest contours

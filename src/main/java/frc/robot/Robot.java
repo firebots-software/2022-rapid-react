@@ -58,7 +58,8 @@ public class Robot extends TimedRobot {
       "CenterY",
       "Width",
       "Height",
-      "Solidity"
+      "Solidity",
+      "DegreeOffset"
     };
 
     double[][] contours = limelight.getContours();
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber(names[i] + ": " + j , contours[i][j]);
       }
     }
+
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
   }
 
