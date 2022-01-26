@@ -30,4 +30,17 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+public double getRPM() {
+	return 0;  //motor speed convert
+ }
+
+public void setVal(double newVal) {
+  // value to move to aimed point
+
+}
+
+
+
+
 }
