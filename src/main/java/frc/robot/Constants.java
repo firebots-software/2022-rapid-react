@@ -42,4 +42,9 @@ public final class Constants {
         public static final double turnRateToleranceDegPerS = 45;
         public static double smallTurnP = 0.01, smallTurnI = 0.0, smallTurnD = 0.0036569; //todo: verify if correct values
     }
+
+    public static final class Climber {
+        public final static int leftClimberPort = 9999;
+        public final static int rightClimberPort = 9998;  //Both of these are random numbers replace when we actually now the correct port
+    }
 }
