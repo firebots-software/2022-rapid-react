@@ -22,10 +22,10 @@ public class SpinUpShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double current = shooter.getRPM();
-    double error = desired - current; // desired = desired aimed position we want
-    double newVal = P * (error); //magic number P (proportionality constant)
-    shooter.setVal(newVal); //
+    //double current = shooter.getRPM();
+    //double error = desired - current; // desired = desired aimed position we want
+    //double newVal = P * (error); //magic number P (proportionality constant)
+   // shooter.setVal(newVal); //
   }
 
   // Called once the command ends or is interrupted.
