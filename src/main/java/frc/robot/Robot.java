@@ -29,7 +29,6 @@ import frc.robot.subsystems.Drivetrain.driveOrientation;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private static Drivetrain driveTrain;
   private RobotContainer m_robotContainer;
   private Drivetrain drivetrain;
 
@@ -43,7 +42,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     //init cameraServer + stream 
     m_robotContainer = new RobotContainer();
-    driveTrain = Drivetrain.getInstance();
+    drivetrain = Drivetrain.getInstance();
 
     // CameraServer is responsible for publishing about cameras/camera servers to Network Tables
 
@@ -57,28 +56,31 @@ public class Robot extends TimedRobot {
       // intakeCamera.setResolution(640, 480);
 
       new Thread(() -> {
-        UsbCamera frontCamera, backCamera;
+        UsbCamera frontCamera = new UsbCamera("front cam", 0);
+        UsbCamera backCamera = new UsbCamera("back cam", 1);
 
         
-        frontCamera = CameraServer.startAutomaticCapture("Camera", 0);
+        // frontCamera = CameraServer.startAutomaticCapture("Front Camera", 0);
       
-          // BACK Orientation
-        backCamera = CameraServer.startAutomaticCapture("Camera", 1);
+        //   // BACK Orientation
+        // backCamera = CameraServer.startAutomaticCapture("Back Camera", 1);
 
-        frontCamera.setResolution(640, 480);
-        backCamera.setResolution(640,480);
+       // frontCamera.setResolution(640, 480);
+        //backCamera.setResolution(640,480);
   
-        CvSink cvSink1 = CameraServer.getVideo(frontCamera);
-        CvSink cvSink2 = CameraServer.getVideo(backCamera);
+        CvSink cvSink1 = new CvSink("front cam sink");
+        cvSink1.setSource(frontCamera);
+        CvSink cvSink2 = new CvSink("back cam sink");
+        cvSink2.setSource(backCamera);
         // Put video Blur -> stream on Shuffleboard
-        CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
+        CvSource outputStream = CameraServer.putVideo("Camera Output", 640, 480);
   
         Mat source = new Mat();
         Mat output = new Mat();
         
         
         while(!Thread.interrupted()) {
-          if(driveTrain.getOrientation() == Drivetrain.driveOrientation.FRONT){
+          if(drivetrain.getOrientation() == Drivetrain.driveOrientation.FRONT){
             if (cvSink1.grabFrame(source) == 0) {
               continue;
             }
@@ -86,7 +88,7 @@ public class Robot extends TimedRobot {
             Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
             outputStream.putFrame(output);
           }
-          if(driveTrain.getOrientation() == Drivetrain.driveOrientation.BACK){
+          if(drivetrain.getOrientation() == Drivetrain.driveOrientation.BACK){
             if (cvSink2.grabFrame(source) == 0) {
               continue;
             }
@@ -120,8 +122,8 @@ public class Robot extends TimedRobot {
 
   private void updateShuffleboard() {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
-    //SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
-    //SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+   SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
   }
 
 
