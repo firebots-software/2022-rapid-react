@@ -58,22 +58,25 @@ public class Robot extends TimedRobot {
       new Thread(() -> {
         UsbCamera frontCamera = new UsbCamera("front cam", 0);
         UsbCamera backCamera = new UsbCamera("back cam", 1);
-
+        frontCamera.setFPS(30);
+        backCamera.setFPS(30);
+        frontCamera.setBrightness(10);
+        backCamera.setBrightness(10);
         
         // frontCamera = CameraServer.startAutomaticCapture("Front Camera", 0);
       
         //   // BACK Orientation
         // backCamera = CameraServer.startAutomaticCapture("Back Camera", 1);
 
-       // frontCamera.setResolution(640, 480);
-        //backCamera.setResolution(640,480);
+       frontCamera.setResolution(160, 120);
+       backCamera.setResolution(160,120);
   
         CvSink cvSink1 = new CvSink("front cam sink");
         cvSink1.setSource(frontCamera);
         CvSink cvSink2 = new CvSink("back cam sink");
         cvSink2.setSource(backCamera);
         // Put video Blur -> stream on Shuffleboard
-        CvSource outputStream = CameraServer.putVideo("Camera Output", 640, 480);
+        CvSource outputStream = CameraServer.putVideo("Camera Output", 160, 120);
   
         Mat source = new Mat();
         Mat output = new Mat();
@@ -84,19 +87,20 @@ public class Robot extends TimedRobot {
             if (cvSink1.grabFrame(source) == 0) {
               continue;
             }
-            // Image processing goes here
-            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-            outputStream.putFrame(output);
           }
           if(drivetrain.getOrientation() == Drivetrain.driveOrientation.BACK){
             if (cvSink2.grabFrame(source) == 0) {
               continue;
-            }
-            // Image processing goes here
-            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-            outputStream.putFrame(output);
+            }    
           }
+
+          // Image processing goes here
+          Imgproc.cvtColor(source, output, Imgproc.COLOR_BGRA2BGR);
+          outputStream.putFrame(output);
         }
+
+        cvSink1.close();
+        cvSink2.close();
       }).start();
       Shuffleboard.update();
     } catch(Exception e){
