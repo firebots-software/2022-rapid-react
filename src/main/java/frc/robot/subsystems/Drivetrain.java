@@ -111,7 +111,7 @@ public class Drivetrain extends SubsystemBase {
     frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
     rotation = restrictToRange(rotation, -1, 1);
 
-    robotDrive.arcadeDrive(frontBackSpeed, rotation, false);
+    robotDrive.arcadeDrive(frontBackSpeed, rotation);
     // previousRotation = rotation;
     // previousThrust = frontBackSpeed;
   }

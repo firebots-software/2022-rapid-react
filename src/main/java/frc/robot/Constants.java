@@ -41,8 +41,8 @@ public final class Constants {
         public final static int rightMasterPort = 4;
         public final static int rightFollowerPort = 3;
 
-        public static double driveP = 0.0153, driveI = 0, driveD = 0;
-        public static double distanceToleranceMeters = 0.3;
-        public static double velocityToleranceMetersPerSec = 0.5;
+        public static double driveP = 0.77, driveI = 0, driveD = 0.0153;
+        public static double distanceToleranceMeters = 0.2;
+        public static double velocityToleranceMetersPerSec = 0.1;
     }
 }
