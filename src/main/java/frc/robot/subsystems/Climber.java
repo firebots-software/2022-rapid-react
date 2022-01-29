@@ -5,27 +5,30 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
   private static Climber instance;
   
-  private final int CLIMBERSPEED = 1;
   private static double leftEncoderVal, rightEncoderVal;
 
 
-  private final WPI_TalonFX leftClimber, rightClimber;
+  private final WPI_TalonSRX leftClimber, rightClimber;
+  private static DigitalInput bottomHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
+  private static DigitalInput topHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
 
   private static MotorControllerGroup climber;
 
 
 
+
   private Climber() {
-    this.leftClimber = new WPI_TalonFX(Constants.Climber.leftClimberPort);
-    this.rightClimber = new WPI_TalonFX(Constants.Climber.rightClimberPort);
+    this.leftClimber = new WPI_TalonSRX(Constants.Climber.arbitraryPortNum);
+    this.rightClimber = new WPI_TalonSRX(Constants.Climber.arbitraryPortNum);
     leftEncoderVal = leftClimber.getSelectedSensorPosition();
     rightEncoderVal = rightClimber.getSelectedSensorPosition();
 
@@ -44,10 +47,19 @@ public class Climber extends SubsystemBase {
     return instance;
   }
   
-  public void climbToMiddle() {
-    climber.set(CLIMBERSPEED);
-  }
+  public void climbToHangar(int climbSpeed, double height) {
+    leftEncoderVal = leftClimber.getSelectedSensorPosition();
+    rightEncoderVal = rightClimber.getSelectedSensorPosition();
 
+    if (leftEncoderVal < height && rightEncoderVal < height && climbSpeed == 1) {
+      climber.set(climbSpeed);
+    } else if (leftEncoderVal > 0 && rightEncoderVal > 0 && climbSpeed == -1) {
+      climber.set(climbSpeed);
+    } else {
+      climber.stopMotor();
+    }
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

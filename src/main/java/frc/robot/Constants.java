@@ -44,7 +44,7 @@ public final class Constants {
     }
 
     public static final class Climber {
-        public final static int leftClimberPort = 9999;
-        public final static int rightClimberPort = 9998;  //Both of these are random numbers replace when we actually now the correct port
+        public final static int arbitraryPortNum = 9999;
+          //Both of these are random numbers replace when we actually now the correct port
     }
 }
