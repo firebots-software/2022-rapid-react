@@ -13,7 +13,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double TICKS_PER_METER = 26199.13932126;
+    public static final double TICKS_PER_METER = 26199.13932126; // * (1.339280 / 2.13);
     public static final double TICKS_PER_INCH = 76.1120944;
     public static class OI {
         public static final int PS4_CONTROLLER_PORT = 3;
@@ -41,8 +41,10 @@ public final class Constants {
         public final static int rightMasterPort = 4;
         public final static int rightFollowerPort = 3;
 
-        public static double driveP = 0.77, driveI = 0, driveD = 0.0153;
-        public static double distanceToleranceMeters = 0.2;
-        public static double velocityToleranceMetersPerSec = 0.1;
+        public static double driveP = 0.2, driveI = 0, driveD = 0;
+        public static double distanceToleranceMeters = 0.05;
+        public static double velocityToleranceMetersPerSec = 1;
+        public static double pidMotorDeadzone = 0.3;
+        public static double pidMinMotorVal = 0.35;
     }
 }

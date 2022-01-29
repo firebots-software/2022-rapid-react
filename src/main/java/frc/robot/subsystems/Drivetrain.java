@@ -58,6 +58,8 @@ public class Drivetrain extends SubsystemBase {
     configTalons();
 
 
+
+
     this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     this.gyro.calibrate();
     this.gyro.reset();
@@ -107,11 +109,19 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
-  public void PIDarcadeDrive(double frontBackSpeed, double rotation) {
-    frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
-    rotation = restrictToRange(rotation, -1, 1);
+  public void PIDarcadeDrive(double leftSpeed, double rightSpeed) {
+    rightSpeed = restrictToRange(rightSpeed, -1, 1);
+    leftSpeed = restrictToRange(leftSpeed, -1, 1);
 
-    robotDrive.arcadeDrive(frontBackSpeed, rotation);
+    if(leftSpeed<=Constants.Drivetrain.pidMotorDeadzone){
+      leftSpeed = Constants.Drivetrain.pidMinMotorVal;
+    }
+
+    if(rightSpeed<=Constants.Drivetrain.pidMotorDeadzone){
+      rightSpeed = Constants.Drivetrain.pidMinMotorVal;
+    }
+
+    robotDrive.tankDrive(leftSpeed, rightSpeed);
     // previousRotation = rotation;
     // previousThrust = frontBackSpeed;
   }
@@ -178,7 +188,4 @@ public class Drivetrain extends SubsystemBase {
     return rightRearMaster.getSelectedSensorVelocity() * 10 / Constants.TICKS_PER_METER;
   } 
 
-  public double getAvgEncoderVal(){
-    return (getRightEncoderCountMeters() + getLeftEncoderCountMeters())/2;
-  }
 }

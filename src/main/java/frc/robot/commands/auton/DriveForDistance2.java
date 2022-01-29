@@ -6,6 +6,8 @@ package frc.robot.commands.auton;
 
 import java.util.Set;
 
+import javax.sound.midi.Soundbank;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -15,15 +17,21 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DriveForDistance2 extends CommandBase {
   private Drivetrain drivetrain;
-  private PIDController pid;
-
+  private PIDController pidLeft, pidRight;
+  private double targetMeters;
 
   /** Creates a new DriveForDistance2. */
   public DriveForDistance2(double targetMeters) {
     drivetrain = Drivetrain.getInstance();
-    pid = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD);
-    pid.setSetpoint(targetMeters);
-    pid.setTolerance(Constants.Drivetrain.distanceToleranceMeters);
+    pidLeft = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD);
+    pidLeft.setSetpoint(targetMeters);
+    pidLeft.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
+    
+
+    pidRight = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD);
+    pidRight.setSetpoint(targetMeters);
+    pidRight.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
+    this.targetMeters = targetMeters;
 
     System.out.println("drive for dist constructor");
   }
@@ -32,35 +40,45 @@ public class DriveForDistance2 extends CommandBase {
   @Override
   public void initialize() {
     drivetrain.resetEncoders();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double output = pid.calculate(drivetrain.getAvgEncoderVal());
-    drivetrain.PIDarcadeDrive(output, 0);
+    double outputLeft = pidLeft.calculate(drivetrain.getLeftEncoderCountMeters());
+    double outputRight = pidRight.calculate(drivetrain.getRightEncoderCountMeters());
+    System.out.print("pid left output: " + outputLeft);
+    System.out.print("pid right output: " + outputRight);
+    SmartDashboard.putNumber("Left Position Error: ", pidLeft.getPositionError());
+    SmartDashboard.putNumber("Right Position Error: ", pidRight.getPositionError());
+    drivetrain.PIDarcadeDrive(outputLeft, outputRight);
 
-    SmartDashboard.putNumber("pid output", output);
+    SmartDashboard.putNumber("pid left output", outputLeft);
+    SmartDashboard.putNumber("pid right output", outputRight);
 
     SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
     SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
+    SmartDashboard.putNumber("dfd2 pid error", drivetrain.getRightEncoderCountMeters());
+    SmartDashboard.putNumber("dfd2 pid setpoint", drivetrain.getRightEncoderVelocityMetersPerSec());
+ 
+    SmartDashboard.putBoolean("at setpoint", pidLeft.atSetpoint());
 
-    SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
-    SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
+    SmartDashboard.putNumber("Average encoder value", drivetrain.getLeftEncoderCountMeters());
+    //SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
      
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("done with pid loop electric boogaloo");
     drivetrain.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return pid.atSetpoint();
+    return (pidLeft.atSetpoint() && pidRight.atSetpoint());
   }
 
   @Override
