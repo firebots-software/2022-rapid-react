@@ -38,5 +38,9 @@ public final class Constants {
         public final static int leftMasterPort = 2;
         public final static int rightMasterPort = 4;
         public final static int rightFollowerPort = 3;
+
+        public final static double smallTurnP = 0.7; 
+        public final static double smallTurnI = 0.7; 
+        public final static double smallTurnD = 0.7; 
     }
 }
