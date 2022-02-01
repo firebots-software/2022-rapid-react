@@ -10,7 +10,7 @@ public class Shooter extends SubsystemBase {
   private static Shooter instance;
 
   
-  /** Creates a new Shooter. */
+  /** Creates a new Shooter.  */
   private Shooter() {}
 
   /**
