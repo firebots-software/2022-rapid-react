@@ -51,7 +51,7 @@ public class DriveForDistance2 extends CommandBase {
     System.out.print("pid right output: " + outputRight);
     SmartDashboard.putNumber("Left Position Error: ", pidLeft.getPositionError());
     SmartDashboard.putNumber("Right Position Error: ", pidRight.getPositionError());
-    drivetrain.PIDarcadeDrive(outputLeft, outputRight);
+    drivetrain.PIDtankDrive(outputLeft, outputRight);
 
     SmartDashboard.putNumber("pid left output", outputLeft);
     SmartDashboard.putNumber("pid right output", outputRight);

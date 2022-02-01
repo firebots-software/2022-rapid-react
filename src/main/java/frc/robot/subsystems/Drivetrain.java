@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -109,22 +111,28 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
-  public void PIDarcadeDrive(double leftSpeed, double rightSpeed) {
+  public void PIDtankDrive(double leftSpeed, double rightSpeed) {
     rightSpeed = restrictToRange(rightSpeed, -1, 1);
     leftSpeed = restrictToRange(leftSpeed, -1, 1);
 
-    if(leftSpeed<=Constants.Drivetrain.pidMotorDeadzone){
-      leftSpeed = Constants.Drivetrain.pidMinMotorVal;
-    }
+    // if(leftSpeed<=Constants.Drivetrain.pidMotorDeadzone){
+    //   leftSpeed = Constants.Drivetrain.pidMinMotorVal;
+    // }
 
-    if(rightSpeed<=Constants.Drivetrain.pidMotorDeadzone){
-      rightSpeed = Constants.Drivetrain.pidMinMotorVal;
-    }
+    // if(rightSpeed<=Constants.Drivetrain.pidMotorDeadzone){
+    //   rightSpeed = Constants.Drivetrain.pidMinMotorVal;
+    // }
 
     robotDrive.tankDrive(leftSpeed, rightSpeed);
-    // previousRotation = rotation;
-    // previousThrust = frontBackSpeed;
   }
+
+  public void PIDarcadeDrive(double frontBackSpeed){
+    frontBackSpeed = restrictToRange(frontBackSpeed, -1,1);
+
+    arcadeDrive(frontBackSpeed, 0);
+  }
+
+
 
   public void resetEncoders() {
     leftFrontMaster.setSelectedSensorPosition(0);
@@ -151,6 +159,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
+    setMotorNeutralMode(NeutralMode.Coast);
     // robotDrive.setRightSideInverted(true); 
     // THIS IS BROCKEN IN 2022!!!!!! either invert rightSide motorcontrollergroup or invert individual motors
 }
@@ -188,4 +197,14 @@ public class Drivetrain extends SubsystemBase {
     return rightRearMaster.getSelectedSensorVelocity() * 10 / Constants.TICKS_PER_METER;
   } 
 
+  public double getAvgEncoderCountMeters(){
+    return (getLeftEncoderCountMeters()+getRightEncoderCountMeters())/2;
+  }
+
+  public void setMotorNeutralMode(NeutralMode neutralMode){
+    rightFollower.setNeutralMode(neutralMode);
+    leftFollower.setNeutralMode(neutralMode);
+    leftFrontMaster.setNeutralMode(neutralMode);
+    rightRearMaster.setNeutralMode(neutralMode);
+  }
 }

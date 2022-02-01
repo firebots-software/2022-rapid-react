@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.auton.DriveBackForTime;
 import frc.robot.commands.auton.DriveForDistance2;
+import frc.robot.commands.auton.DriveForDistanceSingleController;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.subsystems.Drivetrain;
 
@@ -47,6 +48,7 @@ public class RobotContainer {
     autonChooser.setDefaultOption("Drive Back for Time", new DriveBackForTime(-0.5, 2));
     autonChooser.addOption("Drive Forward for Time", new DriveBackForTime(0.5, 2));
     autonChooser.addOption("Drive for Distance Test 2", new DriveForDistance2(2.13));
+    autonChooser.addOption("Drive for Distance Test Single Controller", new DriveForDistanceSingleController(2.13));
 
   }
 
