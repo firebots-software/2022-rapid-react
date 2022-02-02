@@ -49,12 +49,13 @@ public class AlignToTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    counter++; 
     drivetrain.arcadeDrive(0, pid.calculate(limelight.getTX()));
     if (counter % 10 == 0) {
       limelight.refreshValues();
       pid.setSetpoint(limelight.getTX());
     }
+
+    counter++; 
   }
 
   // Called once the command ends or is interrupted.
