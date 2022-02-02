@@ -7,6 +7,7 @@ package frc.robot.commands.climber;
 //import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 
 import java.util.Collections;
@@ -15,7 +16,7 @@ import java.util.Set;
 
 public class ClimbToLow extends CommandBase {
   public Climber climber;
-  public int ClimberSpeed = 0;
+  public double ClimberSpeed = 1;
 
   public double maxLowHeight = 50;
 
@@ -26,15 +27,17 @@ public class ClimbToLow extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    /*
    if (ClimberSpeed < 1) {
      ClimberSpeed = 1;
    } else {
      ClimberSpeed = -1;
    }
+   */
   }
 
   public void execute() {
-    climber.climbToHangar(ClimberSpeed, maxLowHeight);
+    climber.climbToHangar(Constants.Climber.globalClimbSpeed, maxLowHeight);
   }
 
   // Called once the command ends or is interrupted.
@@ -48,8 +51,8 @@ public class ClimbToLow extends CommandBase {
   }
 
   @Override
-    public Set<Subsystem> getRequirements() {
-        return Collections.emptySet();
-        // do not require drivetrain here
-    }
+  public Set<Subsystem> getRequirements() {
+    return Collections.emptySet();
+    // do not require drivetrain here
+  }
 }
