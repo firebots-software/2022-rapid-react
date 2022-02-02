@@ -19,13 +19,37 @@ public class Limelight extends SubsystemBase {
   be as many tables as you like and exist to make it easier to organize
   your data. In this case, it's a table called datatable. */
   private NetworkTable table = instance.getTable("limelight");
-  double tx; 
-  double ty; 
 
-  
+  // A network table entry that stores the tx value
+  private NetworkTableEntry tx;
+
+  // A network table entry that stores the ty value
+  private NetworkTableEntry ty;
+
+  // A network table entry that stores the tv value
+  private NetworkTableEntry tv;
+
+  // A network table entry that stores the ta value
+  private NetworkTableEntry ta;
+
+  // The value of tx to be returned if no value is found
+  private final double DEFAULT_VALUE_TX = 0.0;
+
+  // The value of ty to be returned if no value is found
+  private final double DEFAULT_VALUE_TY = 0.0;
+
+  // The value of tv to be returned if no target is found
+  private final double DEFAULT_VALUE_TV = 0;
+
+  // The value of ta to be returned if no target is found
+  private final double DEFAULT_VALUE_TA = 0;
+
   /** Creates a new Limelight. */
   public Limelight() {
-    
+    tx.setDouble(DEFAULT_VALUE_TX);
+    ty.setDouble(DEFAULT_VALUE_TY);
+    tv.setDouble(DEFAULT_VALUE_TV);
+    ta.setDouble(DEFAULT_VALUE_TA);
   }
 
     /**
@@ -47,86 +71,48 @@ public class Limelight extends SubsystemBase {
   }
 
   /**
-   * Refreshes (updates) the myContoursReport Network Table
+   * Refreshes (updates) the tx and ty values
    */
-
   public void refreshValues(){
-    tx = table.getEntry("tx").getDouble(0); 
-    ty = table.getEntry("ty").getDouble(0); 
+    tx = table.getEntry("tx");
+    ty = table.getEntry("ty");
+    tv = table.getEntry("tv");
+    ta = table.getEntry("ta");
   }
 
-  public double getTX(){
-    return tx;  
+   /**
+     * Returns the horizontal offset from the crosshair to the target (-27 degrees to 27 degrees).
+     * @return Horizontal offset in degrees.
+     */
+  public double getTx() {
+    return tx.getDouble(DEFAULT_VALUE_TX);
   }
 
-  public double getTY(){
-    return ty;  
+   /**
+     * Returns the vertical offset from the crosshair to the target (-20.5 degrees to 20.5 degrees). 
+     * @return Vertical offset in degrees.
+     */
+  public double getTy() {
+    return ty.getDouble(DEFAULT_VALUE_TY);
   }
 
-  /**
-  public double[][] getContours(){
-    double[] areaArr = table.getEntry("area").getDoubleArray(new double[]{}); 
-    double[] centerXArr = table.getEntry("centerX").getDoubleArray(new double[]{}); 
-    double[] centerYArr = table.getEntry("centerY").getDoubleArray(new double[]{}); 
-    double[] widthArr = table.getEntry("width").getDoubleArray(new double[]{}); 
-    double[] heightArr = table.getEntry("height").getDoubleArray(new double[]{}); 
-    double[] solidityArr = table.getEntry("solidity").getDoubleArray(new double[]{}); 
-    double[] degreeOffsetArr = new double[centerXArr.length];
 
-    // Horizontal FOV is 59.6 degrees
-    // Hardware Zoom is 3x
-    // Pixels is 320 x 240 fps, center is 159.5th column
-    // Detect centerX at certain point
-    
-    for (int i = 0; i < degreeOffsetArr.length; i++) {
-      degreeOffsetArr[i] = (centerXArr[i] - 159.5) * 0.18625; 
-    } 
+   /**
+     * Returns the target area. (From 0% of the image to 100% of the image) 
+     * @return Target area as a percentage.
+     */
+    public double getTa() {
+      return ta.getDouble(DEFAULT_VALUE_TA);
+    }
 
-    return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr, degreeOffsetArr};
-  }
-  */
 
-  /*
-  // Get endpoints of two furthest contours
-  public double[] getEndpoints(){
-
-      double[][] contours = getContours();
-      double[] centerXArr = contours[1];
-      double[] widthArr = contours[3];
-
-      if(centerXArr.length == 1){
-        return new double[]{
-          centerXArr[0] - (0.5 * widthArr[0]), centerXArr[0] + (0.5 * widthArr[0])
-        };
-      }
-
-      double xMax = centerXArr[0], xMin = centerXArr[0];
-      double minWidth = 0, maxWidth = 0;
-
-      for (int i = 1; i < centerXArr.length; i++) {
-        if(xMax < centerXArr[i]) {
-          xMax = centerXArr[i];
-          maxWidth = widthArr[i];
-        }
-        if(xMin > centerXArr[i]) {
-          xMin = centerXArr[i];
-          minWidth = widthArr[i];
-        }
-      }
-      
-      return new double[]{
-        xMin - (0.5 * minWidth), xMax + (0.5 * maxWidth)
-      };
-      
-
-  }
-  */
-
-    // Subsystem Calculations
-    // public double getXOffset() {
-    //   //TODO: get the centerX from Network Table and return
-    // }
-
+   /**
+     * Returns whether the Limelight has any valid targets (0 or 1). This means that the Limelight has a valid target, or is not. 
+     * @return Boolean value for if limelight has a target.
+     */
+    public boolean getTv() {
+      return tv.getDouble(DEFAULT_VALUE_TV) == 1;
+    }
 
   @Override
   public void periodic() {

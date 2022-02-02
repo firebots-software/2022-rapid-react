@@ -26,7 +26,6 @@ public class GetCoordinates extends CommandBase {
   @Override
   public void execute() {
     limelight.refreshValues();
-    
   }
 
   // Called once the command ends or is interrupted.
