@@ -21,16 +21,16 @@ public class Limelight extends SubsystemBase {
   private NetworkTable table = instance.getTable("limelight");
 
   // A network table entry that stores the tx value
-  private NetworkTableEntry tx;
+  private double tx;
 
   // A network table entry that stores the ty value
-  private NetworkTableEntry ty;
+  private double ty;
 
   // A network table entry that stores the tv value
-  private NetworkTableEntry tv;
+  private double tv;
 
   // A network table entry that stores the ta value
-  private NetworkTableEntry ta;
+  private double ta;
 
   // The value of tx to be returned if no value is found
   private final double DEFAULT_VALUE_TX = 0.0;
@@ -46,10 +46,7 @@ public class Limelight extends SubsystemBase {
 
   /** Creates a new Limelight. */
   public Limelight() {
-    tx.setDouble(DEFAULT_VALUE_TX);
-    ty.setDouble(DEFAULT_VALUE_TY);
-    tv.setDouble(DEFAULT_VALUE_TV);
-    ta.setDouble(DEFAULT_VALUE_TA);
+   
   }
 
     /**
@@ -74,10 +71,10 @@ public class Limelight extends SubsystemBase {
    * Refreshes (updates) the tx and ty values
    */
   public void refreshValues(){
-    tx = table.getEntry("tx");
-    ty = table.getEntry("ty");
-    tv = table.getEntry("tv");
-    ta = table.getEntry("ta");
+    tx = table.getEntry("tx").getDouble(DEFAULT_VALUE_TX);
+    ty = table.getEntry("ty").getDouble(DEFAULT_VALUE_TY);
+    tv = table.getEntry("tv").getDouble(DEFAULT_VALUE_TV);
+    ta = table.getEntry("ta").getDouble(DEFAULT_VALUE_TA);
   }
 
    /**
@@ -85,7 +82,7 @@ public class Limelight extends SubsystemBase {
      * @return Horizontal offset in degrees.
      */
   public double getTx() {
-    return tx.getDouble(DEFAULT_VALUE_TX);
+    return tx;
   }
 
    /**
@@ -93,7 +90,7 @@ public class Limelight extends SubsystemBase {
      * @return Vertical offset in degrees.
      */
   public double getTy() {
-    return ty.getDouble(DEFAULT_VALUE_TY);
+    return ty;
   }
 
 
@@ -102,7 +99,7 @@ public class Limelight extends SubsystemBase {
      * @return Target area as a percentage.
      */
     public double getTa() {
-      return ta.getDouble(DEFAULT_VALUE_TA);
+      return ta;
     }
 
 
@@ -111,7 +108,7 @@ public class Limelight extends SubsystemBase {
      * @return Boolean value for if limelight has a target.
      */
     public boolean getTv() {
-      return tv.getDouble(DEFAULT_VALUE_TV) == 1;
+      return tv == 1;
     }
 
   @Override
