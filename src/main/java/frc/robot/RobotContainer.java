@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.ClimbToMiddle;
+import frc.robot.commands.climber.HoldClimb;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
@@ -69,6 +70,10 @@ public class RobotContainer {
 
     final Button climbToMid = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     climbToMid.whenPressed(new ClimbToMiddle());
+
+    final Button climbHold = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    climbToMid.whenHeld(new HoldClimb());
+
 
   }
 

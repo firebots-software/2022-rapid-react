@@ -45,6 +45,7 @@ public final class Constants {
 
     public static final class Climber {
         public final static int arbitraryPortNum = 9999;
+        public final static double globalClimbSpeed = 0.85;
           //Both of these are random numbers replace when we actually now the correct port
     }
 }

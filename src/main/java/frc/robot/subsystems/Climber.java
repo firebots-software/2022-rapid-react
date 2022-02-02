@@ -18,8 +18,8 @@ public class Climber extends SubsystemBase {
 
 
   private final WPI_TalonSRX leftClimber, rightClimber;
-  private static DigitalInput bottomHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
-  private static DigitalInput topHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
+  private static DigitalInput rightHallEffect;
+  private static DigitalInput leftHallEffect;
 
   private static MotorControllerGroup climber;
 
@@ -27,12 +27,12 @@ public class Climber extends SubsystemBase {
 
 
   private Climber() {
+    rightHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
+    leftHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
+    
     this.leftClimber = new WPI_TalonSRX(Constants.Climber.arbitraryPortNum);
     this.rightClimber = new WPI_TalonSRX(Constants.Climber.arbitraryPortNum);
-    leftEncoderVal = leftClimber.getSelectedSensorPosition();
-    rightEncoderVal = rightClimber.getSelectedSensorPosition();
 
-    climber = new MotorControllerGroup(leftClimber, rightClimber);
   }
 
   /**
@@ -47,17 +47,31 @@ public class Climber extends SubsystemBase {
     return instance;
   }
   
-  public void climbToHangar(int climbSpeed, double height) {
+  public void climbToHangar(double climbSpeed, double height) {
+
     leftEncoderVal = leftClimber.getSelectedSensorPosition();
     rightEncoderVal = rightClimber.getSelectedSensorPosition();
 
-    if (leftEncoderVal < height && rightEncoderVal < height && climbSpeed == 1) {
-      climber.set(climbSpeed);
-    } else if (leftEncoderVal > 0 && rightEncoderVal > 0 && climbSpeed == -1) {
-      climber.set(climbSpeed);
+    if (leftEncoderVal < height && climbSpeed == 1) {
+      leftClimber.set(climbSpeed);
+    } else if (leftEncoderVal > 0 && climbSpeed == -1) {
+      leftClimber.set(climbSpeed);
     } else {
-      climber.stopMotor();
+      leftClimber.stopMotor();
     }
+
+    if (rightEncoderVal < height && climbSpeed == 1) {
+      rightClimber.set(climbSpeed);
+    } else if (leftEncoderVal > 0 && climbSpeed == -1) {
+      rightClimber.set(climbSpeed);
+    } else {
+      rightClimber.stopMotor();
+    }
+  }
+
+  public void setClimb (double climbSpeed) {
+    leftClimber.set(climbSpeed);
+    rightClimber.set(climbSpeed);
   }
   
   @Override
