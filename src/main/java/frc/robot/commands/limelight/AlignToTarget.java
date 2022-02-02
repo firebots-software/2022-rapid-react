@@ -4,11 +4,8 @@
 
 package frc.robot.commands.limelight;
 
-import java.io.Console;
-import java.sql.Driver;
 import java.util.Set;
 
-import edu.wpi.first.math.Drake;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -35,7 +32,7 @@ public class AlignToTarget extends CommandBase {
     ki = Constants.Drivetrain.smallTurnI; 
     kd = Constants.Drivetrain.smallTurnD; 
     pid = new PIDController(kp, ki, kd); 
-    
+    pid.setTolerance(tolerance, velocityTol);
     counter = 0; 
     
     // Use addRequirements() here to declare subsystem dependencies.
