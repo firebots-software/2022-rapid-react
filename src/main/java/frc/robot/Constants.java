@@ -43,4 +43,12 @@ public final class Constants {
         public final static double smallTurnI = 0.7; 
         public final static double smallTurnD = 0.7; 
     }
+
+    public static final class Limelight {
+        public final static double alignP = 0;
+        public final static double alignI = 0;
+        public final static double alignD = 0;
+        public final static double alignPosTol = 0;
+        public final static double alignVelTol = 0;
+    }
 }

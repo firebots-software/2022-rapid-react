@@ -18,9 +18,6 @@ public class AlignToTarget extends CommandBase {
   private Drivetrain drivetrain; 
   private PIDController pid; 
 
-  private double kp, ki, kd; 
-  private double tolerance; 
-  private double velocityTol; 
   int counter; 
 
   /** Creates a new AlignToTarget. */
@@ -28,11 +25,8 @@ public class AlignToTarget extends CommandBase {
     limelight = Limelight.getInstance(); 
     drivetrain = Drivetrain.getInstance(); 
 
-    kp = Constants.Drivetrain.smallTurnP; 
-    ki = Constants.Drivetrain.smallTurnI; 
-    kd = Constants.Drivetrain.smallTurnD; 
-    pid = new PIDController(kp, ki, kd); 
-    pid.setTolerance(tolerance, velocityTol);
+    pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD); 
+    pid.setTolerance(Constants.Limelight.alignPosTol, Constants.Limelight.alignVelTol);
     counter = 0; 
     
     // Use addRequirements() here to declare subsystem dependencies.
