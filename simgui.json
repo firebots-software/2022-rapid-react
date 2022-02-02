@@ -34,6 +34,21 @@
       "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/Auton chooser": "String Chooser"
+    },
+    "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "SmartDashboard": {
+      "Auton chooser": {
+        "open": true
+      },
+      "open": true
     }
   }
 }

@@ -11,13 +11,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
   // constants
-  private static final double DEADZONE_RANGE = 0.3;
+  private static final double DEADZONE_RANGE = 0.25;
   private final double SLOW_MODE_CONSTANT = 0.4;
   private final double RAMPING_CONSTANT = 0.25;
 
@@ -106,7 +107,7 @@ public class Drivetrain extends SubsystemBase {
       }
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
-
+      SmartDashboard.putNumber("frontBackSpeed", frontBackSpeed);
       robotDrive.arcadeDrive(frontBackSpeed, rotation);
     }
   }
@@ -128,8 +129,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void PIDarcadeDrive(double frontBackSpeed){
     frontBackSpeed = restrictToRange(frontBackSpeed, -1,1);
-
-    arcadeDrive(frontBackSpeed, 0);
+    // if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) {
+    //   robotDrive.stopMotor();
+    // }
+    robotDrive.arcadeDrive(frontBackSpeed, 0);
   }
 
 

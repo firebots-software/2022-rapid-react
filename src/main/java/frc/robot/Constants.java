@@ -41,9 +41,9 @@ public final class Constants {
         public final static int rightMasterPort = 4;
         public final static int rightFollowerPort = 3;
 
-        public static double driveP = 2, driveI = 0, driveD = 0;
+        public static double driveP = 1, driveI = 0, driveD = 0;
         public static double distanceToleranceMeters = 0.05;
-        public static double velocityToleranceMetersPerSec = 1;
+        public static double velocityToleranceMetersPerSec = 0.35;
         public static double pidMotorDeadzone = 0.3;
         public static double pidMinMotorVal = 0.35;
     }
