@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
+import frc.robot.commands.shooter.LoadBall;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -65,6 +66,13 @@ public class RobotContainer {
 
     final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
     slowMode.whenHeld(new ToggleSlowMode());
+
+    final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT); //TODO: change button accordingly
+    loadBall.whenHeld(new LoadBall());
+
+    
+
+
 
   }
 
