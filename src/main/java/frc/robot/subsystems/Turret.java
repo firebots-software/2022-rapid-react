@@ -4,40 +4,55 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
-public class Turret extends CommandBase {
-  private TalonSRX turretmotor; 
+public class Turret extends SubsystemBase {
+    private TalonFX motor;
+    private static Turret instance;
 
   /** Creates a new Turret. */
-  public Turret() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    turretmotor = new TalonSRX(Constants.Turret.turretID);
+  private Turret() {
+    this.motor = new TalonFX(Constants.Turret.motorPortNumber);
+    motor.configFactoryDefault();
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+  public static Turret getInstance(){
+    if (instance == null) {
+      instance = new Turret();
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-
+    return instance;
   }
 
-  // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    
+  public void periodic() {
+    // This method will be called once per scheduler run
   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+  public void setMotorSpeed(double speed) {
+    motor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void stopMotor() {
+    setMotorSpeed(0);
+  }
+
+  public void zeroEncoder() {
+    motor.setSelectedSensorPosition(0);
+  }
+
+  public double getEncoderValTicks() {
+    return motor.getSelectedSensorPosition();
+  }
+
+  public double getEncoderValDegrees() {
+    return motor.getSelectedSensorPosition() / Constants.Turret.encoderTicksPerDegree;
   }
 }

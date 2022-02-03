@@ -5,16 +5,19 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
 public class SpinUpShooter extends CommandBase {
   private final Shooter shooter;
-  private double desired; //goal angle/point
-  private double P; //CONSTANT - magic number, figure out thru testing
+  private double desiredSpeed, currentSpeed, error; //goal angle/point
+  private double P = 1; //CONSTANT - magic number, figure out thru testing
+
   /** Creates a new SpinUpShooter. */
-  public SpinUpShooter() {
+  public SpinUpShooter(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
+    desiredSpeed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -24,19 +27,26 @@ public class SpinUpShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double current = shooter.getRPM();
-    double error = desired - current; // desired = desired aimed position we want
-    double newVal = P * (error); //magic number P (proportionality constant)
-    shooter.setVal(newVal); //
+    currentSpeed = shooter.getRPM();
+    error = desiredSpeed - currentSpeed; // desired = desired aimed position we want
+    double newVal = P * error; //magic number P (proportionality constant)
+    shooter.setSpeed(newVal); //
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (Math.abs(error) < Constants.Shooter.motorSpeedToleranceRPM) {
+        shooter.setAtTargetSpeed(true);
+
+    }
+
     return false;
   }
 }

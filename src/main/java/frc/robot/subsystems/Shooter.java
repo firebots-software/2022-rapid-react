@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -16,12 +17,15 @@ public class Shooter extends SubsystemBase {
   private static Shooter instance;
   private Solenoid piston; 
   private TalonFX motor;
+  private boolean atTargetSpeed;
 
   
   /** Creates a new Shooter.  */
   private Shooter() {
     this.piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Shooter.shooterPistonPort);
-    this.motor = new TalonFX(Constants.Shooter.ShooterMotorPort);
+    this.motor = new TalonFX(Constants.Shooter.shooterMotorPort);
+    atTargetSpeed = false;
+
   }
 
   /**
@@ -43,20 +47,21 @@ public class Shooter extends SubsystemBase {
   }
 
 public double getRPM() {
-	return motor.getSelectedSensorVelocity();  //motor speed convert 
+	return (motor.getSelectedSensorVelocity() * 600.0) /Constants.Shooter.shooterEncoderTicksPerRev;  //per 100ms * 600 = per min
  }
 
-public void setVal(double newVal) {
+public void setSpeed(double speed) {
+  motor.set(ControlMode.PercentOutput, speed);
   // value to move to aimed point
+}
 
+public void stopMotor() {
+  setSpeed(0);
 }
 
 
 //ask command or method
-public void lockTarget(){
-  //when reached, stop motor and stop aiming 
 
-}
 
 public void extendPiston(){
   piston.set(true);
@@ -68,6 +73,14 @@ public void retractPiston(){
 
 public void togglePiston(){
   piston.toggle();
+}
+
+public void setAtTargetSpeed(boolean atTarget) {
+  this.atTargetSpeed = atTarget;
+}
+
+public boolean isAtTargetSpeed() {
+  return atTargetSpeed;
 }
 
 //extend/ retract piston --> binds to button 
