@@ -20,7 +20,7 @@ public class Drivetrain extends SubsystemBase {
   // constants
   private static final double DEADZONE_RANGE = 0.25;
   private final double SLOW_MODE_CONSTANT = 0.4;
-  private final double RAMPING_CONSTANT = 0.25;
+  private final double RAMPING_CONSTANT = 1;
 
 
   // fields
@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
-
+  
   public enum driveOrientation {
     FRONT, BACK;
 
@@ -59,6 +59,7 @@ public class Drivetrain extends SubsystemBase {
     MotorControllerGroup rightSide = new MotorControllerGroup(rightFollower, rightRearMaster);
     robotDrive = new DifferentialDrive(leftSide, rightSide);
     configTalons();
+    setMotorNeutralMode(NeutralMode.Coast);
 
 
 

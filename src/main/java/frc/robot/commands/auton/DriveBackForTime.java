@@ -44,7 +44,7 @@ public class DriveBackForTime extends CommandBase {
    */
   @Override
   public void execute() {
-    drivetrain.arcadeDrive(speed, 0);
+    drivetrain.PIDarcadeDrive(speed);
   }
 
   /**
