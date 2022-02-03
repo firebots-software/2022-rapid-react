@@ -11,7 +11,7 @@ import frc.robot.subsystems.Shooter;
 public class SpinUpShooter extends CommandBase {
   private final Shooter shooter;
   private double desiredSpeed, currentSpeed, error; //goal angle/point
-  private double P = 1; //CONSTANT - magic number, figure out thru testing
+  private double P = 1/2000; //CONSTANT - magic number, figure out thru testing; should be pretty small
 
   /** Creates a new SpinUpShooter. */
   public SpinUpShooter(double speed) {
@@ -44,7 +44,7 @@ public class SpinUpShooter extends CommandBase {
   public boolean isFinished() {
     if (Math.abs(error) < Constants.Shooter.motorSpeedToleranceRPM) {
         shooter.setAtTargetSpeed(true);
-
+        // if interrupted then return true --> loadBall 
     }
 
     return false;

@@ -16,6 +16,7 @@ import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.commands.shooter.LoadBall;
+import frc.robot.commands.shooter.TurntoAngle;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -70,6 +71,10 @@ public class RobotContainer {
     final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT); //TODO: change button accordingly
     loadBall.whenHeld(new LoadBall());
 
+    final JoystickButton moveTurret = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    moveTurret.whileHeld( new TurntoAngle(90));
+
+    
     
 
 
