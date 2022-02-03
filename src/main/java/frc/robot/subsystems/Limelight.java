@@ -28,10 +28,24 @@ public class Limelight extends SubsystemBase {
   // Limelight tv value - whether or not there is a valid target - 1 for yes, 0 for no
   private double tv;  
 
-  
+  // Limelight ta value - returns the percent of the FOV that the target occupies
+  private double ta; 
+
+  // The value of tx to be returned if no value is found
+  private final double DEFAULT_VALUE_TX = 0.0;
+
+  // The value of ty to be returned if no value is found
+  private final double DEFAULT_VALUE_TY = 0.0;
+
+  // The value of tv to be returned if no target is found
+  private final double DEFAULT_VALUE_TV = 0;
+
+  // The value of ta to be returned if no target is found
+  private final double DEFAULT_VALUE_TA = 0;
+
   /** Creates a new Limelight. */
   public Limelight() {
-    
+   
   }
 
     /**
@@ -55,24 +69,35 @@ public class Limelight extends SubsystemBase {
   /**
    * Refreshes (updates) Limelight tx and ty values
    */
-
   public void refreshValues(){
-    tx = table.getEntry("tx").getDouble(0); 
-    ty = table.getEntry("ty").getDouble(0); 
-    tv = table.getEntry("tv").getDouble(0); 
+    tx = table.getEntry("tx").getDouble(DEFAULT_VALUE_TX);
+    ty = table.getEntry("ty").getDouble(DEFAULT_VALUE_TY);
+    tv = table.getEntry("tv").getDouble(DEFAULT_VALUE_TV);
   }
 
-  public double getTX(){
-    return tx;  
+   /**
+     * Returns the horizontal offset from the crosshair to the target (-27 degrees to 27 degrees).
+     * @return Horizontal offset in degrees.
+     */
+  public double getTx() {
+    return tx;
   }
 
-  public double getTY(){
-    return ty;  
+   /**
+     * Returns the vertical offset from the crosshair to the target (-20.5 degrees to 20.5 degrees). 
+     * @return Vertical offset in degrees.
+     */
+  public double getTy() {
+    return ty;
   }
 
-  public double getTV(){
-    return tv; 
-  }
+   /**
+     * Returns whether the Limelight has any valid targets (0 or 1). This means that the Limelight has a valid target, or is not. 
+     * @return Boolean value for if limelight has a target.
+     */
+    public boolean getTv() {
+      return tv == 1;
+    }
 
   @Override
   public void periodic() {

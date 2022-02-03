@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drivetrain.JoystickDrive;
+import frc.robot.commands.limelight.AlignToTarget;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -41,7 +42,11 @@ public class RobotContainer {
                   () -> ps4_controller.getRawAxis(1),
                   () -> ps4_controller.getRawAxis(2)));
 
+    autonChooser.setDefaultOption("limelightAim", new AlignToTarget());
+
     SmartDashboard.putData("Auton chooser", autonChooser);
+
+
 
   }
 

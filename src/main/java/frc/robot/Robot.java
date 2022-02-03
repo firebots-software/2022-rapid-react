@@ -76,8 +76,8 @@ public class Robot extends TimedRobot {
     }
     */
     limelight.refreshValues();
-    SmartDashboard.putNumber("tx", limelight.getTX()); 
-    SmartDashboard.putNumber("ty", limelight.getTY()); 
+    SmartDashboard.putNumber("tx", limelight.getTx()); 
+    SmartDashboard.putNumber("ty", limelight.getTy()); 
 
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
   }

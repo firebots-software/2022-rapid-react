@@ -27,6 +27,8 @@ public class AlignToTarget extends CommandBase {
 
     pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD); 
     pid.setTolerance(Constants.Limelight.angleTolerance, Constants.Limelight.velocityTolerance);   
+
+    counter = 0; 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -41,13 +43,14 @@ public class AlignToTarget extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  // Counter refreshes every 200 ms
   @Override
   public void execute() {
     if (counter % 10 == 0) {
       limelight.refreshValues();
     }
 
-    turret.setMotorSpeed(pid.calculate(limelight.getTX()*Constants.Turret.encoderTicksPerDegree)); 
+    turret.setMotorSpeed(pid.calculate(limelight.getTx()*Constants.Turret.encoderTicksPerDegree)); 
 
     counter++; 
   }
