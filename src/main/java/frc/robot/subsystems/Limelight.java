@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -19,8 +18,15 @@ public class Limelight extends SubsystemBase {
   be as many tables as you like and exist to make it easier to organize
   your data. In this case, it's a table called datatable. */
   private NetworkTable table = instance.getTable("limelight");
-  double tx; 
-  double ty; 
+  
+  // Limelight tx value - x degree offset
+  private double tx; 
+
+  // Limelight ty value - y degree offset
+  private double ty;
+
+  // Limelight tv value - whether or not there is a valid target - 1 for yes, 0 for no
+  private double tv;  
 
   
   /** Creates a new Limelight. */
@@ -47,12 +53,13 @@ public class Limelight extends SubsystemBase {
   }
 
   /**
-   * Refreshes (updates) the myContoursReport Network Table
+   * Refreshes (updates) Limelight tx and ty values
    */
 
   public void refreshValues(){
     tx = table.getEntry("tx").getDouble(0); 
     ty = table.getEntry("ty").getDouble(0); 
+    tv = table.getEntry("tv").getDouble(0); 
   }
 
   public double getTX(){
@@ -63,70 +70,9 @@ public class Limelight extends SubsystemBase {
     return ty;  
   }
 
-  /**
-  public double[][] getContours(){
-    double[] areaArr = table.getEntry("area").getDoubleArray(new double[]{}); 
-    double[] centerXArr = table.getEntry("centerX").getDoubleArray(new double[]{}); 
-    double[] centerYArr = table.getEntry("centerY").getDoubleArray(new double[]{}); 
-    double[] widthArr = table.getEntry("width").getDoubleArray(new double[]{}); 
-    double[] heightArr = table.getEntry("height").getDoubleArray(new double[]{}); 
-    double[] solidityArr = table.getEntry("solidity").getDoubleArray(new double[]{}); 
-    double[] degreeOffsetArr = new double[centerXArr.length];
-
-    // Horizontal FOV is 59.6 degrees
-    // Hardware Zoom is 3x
-    // Pixels is 320 x 240 fps, center is 159.5th column
-    // Detect centerX at certain point
-    
-    for (int i = 0; i < degreeOffsetArr.length; i++) {
-      degreeOffsetArr[i] = (centerXArr[i] - 159.5) * 0.18625; 
-    } 
-
-    return new double[][]{areaArr, centerXArr, centerYArr, widthArr, heightArr, solidityArr, degreeOffsetArr};
+  public double getTV(){
+    return tv; 
   }
-  */
-
-  /*
-  // Get endpoints of two furthest contours
-  public double[] getEndpoints(){
-
-      double[][] contours = getContours();
-      double[] centerXArr = contours[1];
-      double[] widthArr = contours[3];
-
-      if(centerXArr.length == 1){
-        return new double[]{
-          centerXArr[0] - (0.5 * widthArr[0]), centerXArr[0] + (0.5 * widthArr[0])
-        };
-      }
-
-      double xMax = centerXArr[0], xMin = centerXArr[0];
-      double minWidth = 0, maxWidth = 0;
-
-      for (int i = 1; i < centerXArr.length; i++) {
-        if(xMax < centerXArr[i]) {
-          xMax = centerXArr[i];
-          maxWidth = widthArr[i];
-        }
-        if(xMin > centerXArr[i]) {
-          xMin = centerXArr[i];
-          minWidth = widthArr[i];
-        }
-      }
-      
-      return new double[]{
-        xMin - (0.5 * minWidth), xMax + (0.5 * maxWidth)
-      };
-      
-
-  }
-  */
-
-    // Subsystem Calculations
-    // public double getXOffset() {
-    //   //TODO: get the centerX from Network Table and return
-    // }
-
 
   @Override
   public void periodic() {

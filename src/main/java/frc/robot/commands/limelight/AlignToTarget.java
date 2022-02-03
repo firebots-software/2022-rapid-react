@@ -10,50 +10,44 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Turret;
 
 public class AlignToTarget extends CommandBase {
   private Limelight limelight; 
-  private Drivetrain drivetrain; 
+  private Turret turret; 
   private PIDController pid; 
 
-  private double kp, ki, kd; 
-  private double tolerance; 
-  private double velocityTol; 
-  int counter; 
+  private int counter; 
 
   /** Creates a new AlignToTarget. */
   public AlignToTarget() {
-    limelight = Limelight.getInstance(); 
-    drivetrain = Drivetrain.getInstance(); 
+    limelight = Limelight.getInstance();
+    turret = Turret.getInstance(); 
 
-    kp = Constants.Drivetrain.smallTurnP; 
-    ki = Constants.Drivetrain.smallTurnI; 
-    kd = Constants.Drivetrain.smallTurnD; 
-    pid = new PIDController(kp, ki, kd); 
-    pid.setTolerance(tolerance, velocityTol);
-    counter = 0; 
-    
+    pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD); 
+    pid.setTolerance(Constants.Limelight.angleTolerance, Constants.Limelight.velocityTolerance);   
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drivetrain.resetEncoders();
+    turret.resetEncoders();
     limelight.refreshValues();
     pid.setSetpoint(0);
+
+    counter = 0; 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.arcadeDrive(0, pid.calculate(limelight.getTX()));
     if (counter % 10 == 0) {
       limelight.refreshValues();
-      pid.setSetpoint(limelight.getTX());
     }
+
+    turret.setMotorSpeed(pid.calculate(limelight.getTX()*Constants.Turret.encoderTicksPerDegree)); 
 
     counter++; 
   }
@@ -61,7 +55,7 @@ public class AlignToTarget extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.stop();
+    turret.stopMotor();
   }
 
   // Returns true when the command should end.
@@ -72,7 +66,6 @@ public class AlignToTarget extends CommandBase {
 
   @Override
   public Set<Subsystem> getRequirements() {
-      // TODO Auto-generated method stub
-      return Set.of(limelight, drivetrain);
+      return Set.of(limelight, turret);
   }
 }
