@@ -25,7 +25,6 @@ public class Turret extends SubsystemBase {
     if (instance == null) {
       instance = new Turret();
     }
-
     return instance;
   }
 
@@ -48,6 +47,10 @@ public class Turret extends SubsystemBase {
 
   public void zeroEncoder() {
     motor.setSelectedSensorPosition(0);
+  }
+
+  public void turnForDegrees(){
+    
   }
 
   public double getEncoderValTicks() {

@@ -7,6 +7,7 @@ package frc.robot.commands.limelight;
 import java.util.Set;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -37,8 +38,7 @@ public class AlignToTarget extends CommandBase {
   public void initialize() {
     turret.resetEncoders();
     limelight.refreshValues();
-    pid.setSetpoint(0);
-
+    pid.setSetpoint(getOutputTicks());
     counter = 0; 
   }
 
@@ -49,10 +49,18 @@ public class AlignToTarget extends CommandBase {
     if (counter % 10 == 0) {
       limelight.refreshValues();
     }
-
-    turret.setMotorSpeed(pid.calculate(limelight.getTx()*Constants.Turret.encoderTicksPerDegree)); 
-
+    turret.setMotorSpeed(
+      pid.calculate(
+        pid.getSetpoint() - getOutputTicks()
+      )
+    ); 
+    SmartDashboard.setDefaultNumber("ATT: Output Ticks", getOutputTicks());
     counter++; 
+  }
+
+
+  private double getOutputTicks(){
+    return limelight.getTx()*Constants.Turret.encoderTicksPerDegree;
   }
 
   // Called once the command ends or is interrupted.
