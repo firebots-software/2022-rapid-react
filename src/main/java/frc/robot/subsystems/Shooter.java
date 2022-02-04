@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -16,15 +17,16 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
   private static Shooter instance;
   private Solenoid piston; 
-  private TalonFX motor;
+  private TalonSRX motor;
   private boolean atTargetSpeed;
 
   
   /** Creates a new Shooter.  */
   private Shooter() {
     this.piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Shooter.shooterPistonPort);
-    this.motor = new TalonFX(Constants.Shooter.shooterMotorPort);
+    this.motor = new TalonSRX(Constants.Shooter.shooterMotorPort);
     atTargetSpeed = false;
+
   }
 
   /**
@@ -46,7 +48,7 @@ public class Shooter extends SubsystemBase {
   }
 
 public double getRPM() {
-	return (motor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev;  //per 100ms * 600 = per min
+	return (motor.getSelectedSensorVelocity() * 600.0) /Constants.Shooter.shooterEncoderTicksPerRev;  //per 100ms * 600 = per min
  }
 
 public void setSpeed(double speed) {
@@ -56,22 +58,6 @@ public void setSpeed(double speed) {
 
 public void stopMotor() {
   setSpeed(0);
-}
-
-
-//ask command or method
-
-
-public void extendPiston(){
-  piston.set(true);
-}
-
-public void retractPiston(){
-  piston.set(false);
-}
-
-public void togglePiston(){
-  piston.toggle();
 }
 
 public void setAtTargetSpeed(boolean atTarget) {

@@ -5,7 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,6 +21,7 @@ public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
   private Turret() {
     this.motor = new TalonFX(Constants.Turret.motorPortNumber);
+    motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     motor.configFactoryDefault();
   }
 
@@ -37,20 +41,12 @@ public class Turret extends SubsystemBase {
     motor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void resetEncoders() {
-    motor.setSelectedSensorPosition(0); 
-  }
-
   public void stopMotor() {
     setMotorSpeed(0);
   }
 
   public void zeroEncoder() {
     motor.setSelectedSensorPosition(0);
-  }
-
-  public void turnForDegrees(){
-    
   }
 
   public double getEncoderValTicks() {
@@ -60,4 +56,5 @@ public class Turret extends SubsystemBase {
   public double getEncoderValDegrees() {
     return motor.getSelectedSensorPosition() / Constants.Turret.encoderTicksPerDegree;
   }
+
 }

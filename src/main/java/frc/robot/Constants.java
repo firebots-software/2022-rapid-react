@@ -51,6 +51,9 @@ public final class Constants {
 
         public static final double angleTolerance = 5; 
         public static final double velocityTolerance = 45; 
+        public final static double turnToleranceDeg = 1;
+        public static final double turnRateToleranceDegPerS = 45;
+        public static double smallTurnP = 0.01, smallTurnI = 0.0, smallTurnD = 0.0036569; //todo: verify if correct values 
     }
 
     public static final class Shooter{
@@ -64,10 +67,10 @@ public final class Constants {
     }
     public static final class Turret{
         public final static int motorPortNumber = 5; //TODO: change to actual ID 
-        public static final double turretGearRatio = 45; //TODO: change real number
+        public static final double turretGearRatio = 45.0 * 14.0; //(small gear ration * big gear ratio )
         public static final double encoderTicksPerRev = 2048 * turretGearRatio;
         public static final double encoderTicksPerDegree = encoderTicksPerRev / 360.0;
-        public static final double pidPositionToleranceDegrees = 3.0;
+        public static final double pidPositionToleranceDegrees = 1.0;
         public static final double pidVelToleranceDegPerSecond = 10;
 
     

@@ -4,25 +4,27 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
   // constants
-  private static final double DEADZONE_RANGE = 0.3;
-  private final double SLOW_MODE_CONSTANT = 0.4;
+  private static final double DEADZONE_RANGE = 0.1;
+  private final double SLOW_MODE_CONSTANT = 0.35;
   private final double RAMPING_CONSTANT = 0.25;
 
 
   // fields
-  private final WPI_TalonFX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
-  // private ADXRS450_Gyro gyro;
+  private final WPI_TalonSRX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
+  private ADXRS450_Gyro gyro;
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -38,6 +40,10 @@ public class Drivetrain extends SubsystemBase {
 
   private driveOrientation orientation;
 
+  // robot status
+  private boolean brakeMode;
+
+
   /**
    * The Singleton instance of this Drivetrain. External classes should
    * use the {@link #getInstance()} method to get the instance.
@@ -46,10 +52,10 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   private Drivetrain() {
-    this.leftFollower = new WPI_TalonFX(Constants.Drivetrain.leftFollowerPort);
-    this.leftFrontMaster = new WPI_TalonFX(Constants.Drivetrain.leftMasterPort);
-    this.rightRearMaster = new WPI_TalonFX(Constants.Drivetrain.rightMasterPort);
-    this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
+    this.leftFollower = new WPI_TalonSRX(Constants.Drivetrain.leftFollowerPort);
+    this.leftFrontMaster = new WPI_TalonSRX(Constants.Drivetrain.leftMasterPort);
+    this.rightRearMaster = new WPI_TalonSRX(Constants.Drivetrain.rightMasterPort);
+    this.rightFollower = new WPI_TalonSRX(Constants.Drivetrain.rightFollowerPort);
     resetEncoders();
 
     MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
@@ -85,28 +91,40 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
-    if (rotation > 1) rotation = 1.0;
-    if (rotation < -1) rotation = -1.0;
-    
-    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
+    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
+    rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
       robotDrive.stopMotor();
     } else {
       if (orientation == driveOrientation.BACK) {
         frontBackSpeed *= -1;
       }
       if (isSlowMode) {
-        frontBackSpeed *= SLOW_MODE_CONSTANT;
+       frontBackSpeed *= SLOW_MODE_CONSTANT;
         rotation *= SLOW_MODE_CONSTANT;
+
       } else {
-        frontBackSpeed *= 0.7;
+        frontBackSpeed *= 0.5;
         rotation *= 0.5;
       }
+
+
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
 
+      SmartDashboard.putNumber("frontbackspeed",frontBackSpeed);
+      SmartDashboard.putNumber("rotationspeed",rotation);
+
       robotDrive.arcadeDrive(frontBackSpeed, rotation);
+
     }
   }
+
+  public void PIDarcadeDrive(double frontBackSpeed, double rotation) {
+    frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
+    rotation = restrictToRange(rotation, -1, 1);
+
+    robotDrive.arcadeDrive(frontBackSpeed, rotation, false);
+}
 
   public void resetEncoders() {
     leftFrontMaster.setSelectedSensorPosition(0);
@@ -133,16 +151,62 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
-    // robotDrive.setRightSideInverted(true); 
-    // THIS IS BROCKEN IN 2022!!!!!! either invert rightSide motorcontrollergroup or invert individual motors
+    //robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
 }
 
+public boolean getBrakeModeStatus() {
+  return brakeMode;
+}
+
+//todo: why is setBrakeMode commented out
+public void setBrakeMode(boolean newBrakeMode) {
+  //       if (newBrakeMode) {
+  //        rightRearMaster.set(NeutralMode.Brake, 0);
+  // }
+}
+
+public driveOrientation getDriveOrientation() {
+  return orientation;
+}
+
+public void setDriveOrientation(driveOrientation orientation) {
+  this.orientation = orientation;
+}
+
+public void toggleDriveOrientation() {
+  this.orientation = orientation.toggle();
+}
+
+public boolean getSlowModeStatus() {
+  return isSlowMode;
+}
+
+/**
+* Sets the drivetrain's slow mode status. If slow mode is on, all velocity values will be reduced.
+*
+* @param isSlowMode
+*/
+public void setSlowMode(boolean isSlowMode) {
+  this.isSlowMode = isSlowMode;
+}
 
   public void stop() {
     leftFollower.set(0);
     rightRearMaster.set(0);
     leftFrontMaster.set(0);
     rightFollower.set(0);
+}
+
+  public void resetGyro() {
+    this.gyro.reset();
+  }
+
+  public double getHeading() {
+    if (gyro != null) {
+        return -gyro.getAngle(); //todo: why gyro angle = -heading?
+    } else {
+        return 0;
+    }
 }
 
   private double restrictToRange(double n, int min, int max) {

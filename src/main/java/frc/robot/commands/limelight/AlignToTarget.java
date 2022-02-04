@@ -36,7 +36,7 @@ public class AlignToTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    turret.resetEncoders();
+    turret.zeroEncoder();
     limelight.refreshValues();
     pid.setSetpoint(limelight.getTx());
     counter = 0; 
@@ -48,7 +48,7 @@ public class AlignToTarget extends CommandBase {
   public void execute() {
     if (counter % 10 == 0) {
       limelight.refreshValues();
-      turret.resetEncoders();
+      turret.zeroEncoder();
       // turret.setMotorSpeed(
       //   pid.calculate(
           
