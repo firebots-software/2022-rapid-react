@@ -49,13 +49,12 @@ public class AlignToTarget extends CommandBase {
     if (counter % 10 == 0) {
       limelight.refreshValues();
       turret.zeroEncoder();
-      // turret.setMotorSpeed(
-      //   pid.calculate(
-          
-      //   )
-      // ); 
+      pid.setSetpoint(limelight.getTx());
     }
     // SmartDashboard.setDefaultNumber("ATT: Output Ticks", getOutputTicks());
+    double pidOutput = pid.calculate(turret.getEncoderValDegrees());
+    SmartDashboard.putNumber("turret pid output", pidOutput);
+    turret.setMotorSpeed(pidOutput); 
     counter++; 
   }
 
