@@ -51,8 +51,8 @@ public class ClimbToMiddle extends CommandBase {
   }
 
   @Override
-    public Set<Subsystem> getRequirements() {
-        return Collections.emptySet();
-        // do not require drivetrain here
-    }
+  public Set<Subsystem> getRequirements() {
+    return Collections.emptySet();
+    // do not require drivetrain here
+  }
 }

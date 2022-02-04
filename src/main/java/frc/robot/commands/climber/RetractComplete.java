@@ -4,10 +4,21 @@
 
 package frc.robot.commands.climber;
 
+//import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.Climber;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class RetractComplete extends CommandBase {
-  /** Creates a new RetractComplete. */
+  public Climber climber;
+  public double ClimberSpeed = 0;
+
+  public double maxMiddleHeight = 100;
+
   public RetractComplete() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -16,9 +27,11 @@ public class RetractComplete extends CommandBase {
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
+  
   @Override
-  public void execute() {}
+  public void execute() {
+    climber.climbToHangar(-Constants.Climber.globalClimbSpeed, maxMiddleHeight);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -28,5 +41,10 @@ public class RetractComplete extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  public Set<Subsystem> getRequirements() {
+    return Collections.emptySet();
+    // do not require drivetrain here
   }
 }
