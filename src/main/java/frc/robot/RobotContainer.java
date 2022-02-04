@@ -16,7 +16,6 @@ import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.commands.shooter.LoadBall;
-import frc.robot.commands.shooter.RotateTurretOneRevolution;
 import frc.robot.commands.shooter.TurnTurretAtSpeed;
 import frc.robot.commands.shooter.TurntoAngle;
 import frc.robot.subsystems.Drivetrain;
