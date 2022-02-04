@@ -25,7 +25,6 @@ public class Shooter extends SubsystemBase {
     this.piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Shooter.shooterPistonPort);
     this.motor = new TalonFX(Constants.Shooter.shooterMotorPort);
     atTargetSpeed = false;
-
   }
 
   /**
