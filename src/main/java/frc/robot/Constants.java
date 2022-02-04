@@ -45,7 +45,7 @@ public final class Constants {
     }
 
     public static final class Limelight {
-        public static final double alignP = 0.0075; 
+        public static final double alignP = 0.5; 
         public static final double alignI = 0; 
         public static final double alignD = 0; 
 
