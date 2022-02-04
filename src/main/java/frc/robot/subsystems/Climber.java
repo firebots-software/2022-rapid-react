@@ -18,8 +18,8 @@ public class Climber extends SubsystemBase {
 
 
   private final WPI_TalonSRX leftClimber, rightClimber;
-  private static DigitalInput rightHallEffect;
-  private static DigitalInput leftHallEffect;
+  private static DigitalInput rightHallEffect, leftHallEffect;
+  private static boolean leftHallEffectVal, rightHallEffectVal;
 
   private static MotorControllerGroup climber;
 
@@ -52,24 +52,48 @@ public class Climber extends SubsystemBase {
     leftEncoderVal = leftClimber.getSelectedSensorPosition();
     rightEncoderVal = rightClimber.getSelectedSensorPosition();
 
-    if (leftEncoderVal < height && climbSpeed == 1) {
+    leftHallEffectVal = leftHallEffect.get();
+    rightHallEffectVal = rightHallEffect.get();
+
+    if (leftEncoderVal < height && climbSpeed > 0) {
       leftClimber.set(climbSpeed);
-    } else if (leftEncoderVal > 0 && climbSpeed == -1) {
+    } else if (leftEncoderVal > 0 && climbSpeed < 0) {
       leftClimber.set(climbSpeed);
     } else {
       leftClimber.stopMotor();
     }
 
-    if (rightEncoderVal < height && climbSpeed == 1) {
+    if (rightEncoderVal < height && climbSpeed > 0) {
       rightClimber.set(climbSpeed);
-    } else if (leftEncoderVal > 0 && climbSpeed == -1) {
+    } else if (leftEncoderVal > 0 && climbSpeed < 0) {
       rightClimber.set(climbSpeed);
     } else {
+      rightClimber.stopMotor();
+    }
+
+    if (leftHallEffectVal && climbSpeed < 0 && leftEncoderVal < 40) {
+      leftEncoderVal = 0;
+      leftClimber.stopMotor();
+    }
+
+    if (leftHallEffectVal && climbSpeed > 0 && leftEncoderVal > 300) {
+      leftEncoderVal = 330;
+      leftClimber.stopMotor();
+    }
+
+    if (rightHallEffectVal && climbSpeed < 0 && leftEncoderVal < 40) {
+      rightEncoderVal = 0;
+      rightClimber.stopMotor();
+    }
+
+    if (rightHallEffectVal && climbSpeed > 0 && leftEncoderVal > 300) {
+      rightEncoderVal = 330;
       rightClimber.stopMotor();
     }
   }
 
   public void setClimb (double climbSpeed) {
+
     leftClimber.set(climbSpeed);
     rightClimber.set(climbSpeed);
   }
