@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -23,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
 
   // fields
   private final WPI_TalonFX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
-  private ADXRS450_Gyro gyro;
+  // private ADXRS450_Gyro gyro;
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -59,9 +59,9 @@ public class Drivetrain extends SubsystemBase {
     configTalons();
 
 
-    this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-    this.gyro.calibrate();
-    this.gyro.reset();
+    // this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    // this.gyro.calibrate();
+    // this.gyro.reset();
 
     this.orientation = driveOrientation.FRONT; // default value
     this.isSlowMode = false; // default value
