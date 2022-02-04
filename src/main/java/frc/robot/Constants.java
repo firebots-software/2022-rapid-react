@@ -63,8 +63,8 @@ public final class Constants {
     
     }
     public static final class Turret{
-        public final static int motorPortNumber = 2; //TODO: change to actual ID 
-        public static final double turretGearRatio = 45.0; 
+        public final static int motorPortNumber = 5; //TODO: change to actual ID 
+        public static final double turretGearRatio = 45; //TODO: change real number
         public static final double encoderTicksPerRev = 2048 * turretGearRatio;
         public static final double encoderTicksPerDegree = encoderTicksPerRev / 360.0;
         public static final double pidPositionToleranceDegrees = 3.0;
