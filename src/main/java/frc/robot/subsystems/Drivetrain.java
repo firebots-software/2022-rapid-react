@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -88,6 +87,7 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double frontBackSpeed, double rotation) {
     if (rotation > 1) rotation = 1.0;
     if (rotation < -1) rotation = -1.0;
+    
     if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
       robotDrive.stopMotor();
     } else {
