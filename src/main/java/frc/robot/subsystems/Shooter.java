@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -16,14 +17,14 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
   private static Shooter instance;
   private Solenoid piston; 
-  private TalonFX motor;
+  private TalonSRX motor;
   private boolean atTargetSpeed;
 
   
   /** Creates a new Shooter.  */
   private Shooter() {
     this.piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Shooter.shooterPistonPort);
-    this.motor = new TalonFX(Constants.Shooter.shooterMotorPort);
+    this.motor = new TalonSRX(Constants.Shooter.shooterMotorPort);
     atTargetSpeed = false;
 
   }

@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -23,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
 
 
   // fields
-  private final WPI_TalonFX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
+  private final WPI_TalonSRX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
   private ADXRS450_Gyro gyro;
 
   private final DifferentialDrive robotDrive;
@@ -52,10 +52,10 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   private Drivetrain() {
-    this.leftFollower = new WPI_TalonFX(Constants.Drivetrain.leftFollowerPort);
-    this.leftFrontMaster = new WPI_TalonFX(Constants.Drivetrain.leftMasterPort);
-    this.rightRearMaster = new WPI_TalonFX(Constants.Drivetrain.rightMasterPort);
-    this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
+    this.leftFollower = new WPI_TalonSRX(Constants.Drivetrain.leftFollowerPort);
+    this.leftFrontMaster = new WPI_TalonSRX(Constants.Drivetrain.leftMasterPort);
+    this.rightRearMaster = new WPI_TalonSRX(Constants.Drivetrain.rightMasterPort);
+    this.rightFollower = new WPI_TalonSRX(Constants.Drivetrain.rightFollowerPort);
     resetEncoders();
 
     MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
