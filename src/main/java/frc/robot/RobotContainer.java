@@ -71,7 +71,7 @@ public class RobotContainer {
     final Button climbToMid = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     climbToMid.whenPressed(new ClimbToMiddle());
 
-    final Button climbHold = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    final Button climbHold = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
     climbToMid.whenHeld(new HoldClimb());
 
 
