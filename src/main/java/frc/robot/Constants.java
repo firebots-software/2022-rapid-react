@@ -39,4 +39,12 @@ public final class Constants {
         public final static int rightMasterPort = 4;
         public final static int rightFollowerPort = 3;
     }
+
+    public static final class Intake {
+        public final static int LEFT_PISTON_PORT = 0;
+        public final static int RIGHT_PISTON_PORT = 1;
+
+        public static final double INTAKE_SPEED_FORWARDS = -0.9;
+        public static final double INTAKE_SPEED_BACKWARDS = 0.9;
+    }
 }
