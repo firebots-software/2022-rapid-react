@@ -50,6 +50,7 @@ public final class Constants {
         public static final double motorSpeedToleranceRPM = 5.0; //todo: change to real tolerance
 
         public static final double DEFAULT_SHOOTER_SPEED = 0.5;
+        public static final double SHOOTER_TARGET_SPEED = 0.7; 
     
     }
     public static final class Turret{
