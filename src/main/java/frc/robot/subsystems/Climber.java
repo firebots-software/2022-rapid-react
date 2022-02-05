@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.DigitalInput;
-
+import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
@@ -17,6 +17,7 @@ public class Climber extends SubsystemBase {
   private final WPI_TalonSRX leftClimber, rightClimber;
   private static DigitalInput rightHallEffect, leftHallEffect;
   private static boolean leftHallEffectVal, rightHallEffectVal;
+  //private Encoder leftEncoder = new Encoder();
 
   private Climber() {
     rightHallEffect = new DigitalInput(Constants.Climber.rightHallEffectPort);
@@ -46,6 +47,14 @@ public class Climber extends SubsystemBase {
     return Constants.Climber.encoderConversionRateToCm * rightClimber.getSelectedSensorPosition();
   }
 
+  public void setLeftHeight(double height) {
+    rightClimber.setSelectedSensorPosition(height);
+  }
+
+  public void setRightHeight(double height) {
+    rightClimber.setSelectedSensorPosition(height);
+  }
+
   public double getAverageHeight()  {
     return (getLeftHeight() + getRightHeight())/2;
   }
@@ -71,8 +80,11 @@ public class Climber extends SubsystemBase {
    * @param climbSpeed Motor voltage values between -1 and 1 inclusive
    */
   public void setClimberSpeed(double climbSpeed) {
+    System.out.println("Method Accessed");
     leftClimber.set(climbSpeed);
+    System.out.println("LeftCLimber is working");
     rightClimber.set(climbSpeed);
+    System.out.println("RightCLimber is working");
   }
   
   @Override

@@ -17,7 +17,7 @@ public class RetractComplete extends ClimbToHeight {
 
   public RetractComplete() {
     // Use addRequirements() here to declare subsystem dependencies.
-    super(-Constants.Climber.globalClimbSpeed, 90.0);
+    super(-Constants.Climber.globalClimbSpeed, 0);
   }
 
   // Called when the command is initially scheduled.

@@ -59,16 +59,20 @@ public class ClimbToHeight extends CommandBase {
 
     if(leftHallEffectVal && leftHeight < 50 && motorVoltage < 0) {
       climber.setLeftClimberSpeed(0);
+      climber.setLeftHeight(0);
     }
     if(leftHallEffectVal && leftHeight > 350 && motorVoltage > 0) {
       climber.setLeftClimberSpeed(0);
+      climber.setLeftHeight(400);
     }
 
     if(rightHallEffectVal && rightHeight < 50 && motorVoltage < 0) {
       climber.setRightClimberSpeed(0);
+      climber.setRightHeight(0);
     }
     if(rightHallEffectVal && rightHeight > 350 && motorVoltage > 0) {
       climber.setRightClimberSpeed(0);
+      climber.setRightHeight(400);
     }
 
 
