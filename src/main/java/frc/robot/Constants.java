@@ -39,9 +39,13 @@ public final class Constants {
         public final static int rightMasterPort = 4;
         public final static int rightFollowerPort = 3;
 
-        public final static double smallTurnP = 0.7; 
-        public final static double smallTurnI = 0.7; 
-        public final static double smallTurnD = 0.7; 
+        public static final double TICKS_PER_METER = 26199.13932126; // * (1.339280 / 2.13);
+
+        public static double driveP = 0.3, driveI = 0, driveD = 0;
+        public static double distanceToleranceMeters = 0.02;
+        public static double velocityToleranceMetersPerSec = 0.35;
+        public static double pidMotorDeadzone = 0.3;
+        public static double pidMinMotorVal = 0.35;
     }
 
     public static final class Limelight {
@@ -49,10 +53,10 @@ public final class Constants {
         public static final double alignI = 0; 
         public static final double alignD = 0; 
 
-        public final static double turnToleranceDeg = 1;
+        public final static double turnToleranceDeg = 2;
         public static final double turnRateToleranceDegPerS = 45; // TODO: understand why this is 45 (might be wrong)
 
-        public static final double limelightAngleOffset = 10; // TODO: change limelight angle offset to match actual thing\
+        public static final double limelightAngleOffset = 74; // TODO: change limelight angle offset to match actual thing\
         public static final double heightOfTarget = 2.64; // in meters 
     }
 

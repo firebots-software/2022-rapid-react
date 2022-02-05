@@ -3,9 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.limelight;
-
-import java.sql.Driver;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -21,8 +18,7 @@ public class MoveToTargetDistance extends CommandBase {
   public MoveToTargetDistance() {
     limelight = Limelight.getInstance(); 
     drivetrain = Drivetrain.getInstance();
-    pid = new PIDController(kp, ki, kd); 
-    pid.setSetpoint(getDistanceToTarget());
+    pid = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD); 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -31,18 +27,15 @@ public class MoveToTargetDistance extends CommandBase {
   public void initialize() {
     limelight.refreshValues();
     drivetrain.resetEncoders();
-  }
-
-  public double getDistanceToTarget() {
-    double limelightYOffset = limelight.getTx(); 
-    double ratio = Math.tan(limelightYOffset + Constants.Limelight.limelightAngleOffset); 
-    return ratio * Constants.Limelight.heightOfTarget; 
+    pid.setSetpoint(limelight.getDistanceToTarget());
+    pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.PIDarcadeDrive(pid.calculate(drivetrain.getAverageEncoderPosition()), 0);
+    double pidOutput = pid.calculate(drivetrain.getAvgEncoderCountMeters()); 
+    drivetrain.PIDarcadeDrive(pidOutput, 0);
   }
 
   // Called once the command ends or is interrupted.

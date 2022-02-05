@@ -24,7 +24,7 @@ public class Drivetrain extends SubsystemBase {
 
   // fields
   private final WPI_TalonSRX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
-  private ADXRS450_Gyro gyro;
+  // private ADXRS450_Gyro gyro;
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -181,6 +181,30 @@ public boolean getSlowModeStatus() {
   return isSlowMode;
 }
 
+public double getLeftEncoderCountMeters() {
+  return leftFrontMaster.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_PER_METER;
+}
+
+public double getRightEncoderCountMeters() {
+  return rightRearMaster.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_PER_METER;
+}
+
+public double getRightEncoderTicks() {
+  return rightRearMaster.getSelectedSensorPosition();
+}
+
+public double getLeftEncoderVelocityMetersPerSec() {
+  return leftFrontMaster.getSelectedSensorVelocity() * 10 / Constants.Drivetrain.TICKS_PER_METER;
+}
+
+public double getRightEncoderVelocityMetersPerSec() {
+  return rightRearMaster.getSelectedSensorVelocity() * 10 / Constants.Drivetrain.TICKS_PER_METER;
+} 
+
+public double getAvgEncoderCountMeters(){
+  return (getLeftEncoderCountMeters()+getRightEncoderCountMeters())/2;
+}
+
 /**
 * Sets the drivetrain's slow mode status. If slow mode is on, all velocity values will be reduced.
 *
@@ -197,17 +221,17 @@ public void setSlowMode(boolean isSlowMode) {
     rightFollower.set(0);
 }
 
-  public void resetGyro() {
-    this.gyro.reset();
-  }
+  // public void resetGyro() {
+  //   this.gyro.reset();
+  // }
 
-  public double getHeading() {
-    if (gyro != null) {
-        return -gyro.getAngle(); //todo: why gyro angle = -heading?
-    } else {
-        return 0;
-    }
-}
+  // public double getHeading() {
+  //   if (gyro != null) {
+  //       return -gyro.getAngle(); //todo: why gyro angle = -heading?
+  //   } else {
+  //       return 0;
+  //   }
+
 
   private double restrictToRange(double n, int min, int max) {
     if (n > max) return max;

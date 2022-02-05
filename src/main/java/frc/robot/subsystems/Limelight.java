@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Limelight extends SubsystemBase {
 
@@ -91,6 +92,12 @@ public class Limelight extends SubsystemBase {
      */
     public boolean getTv() {
       return tv == 1;
+    }
+
+    public double getDistanceToTarget() {
+      double limelightYOffset = this.getTx(); 
+      double ratio = Math.tan(limelightYOffset + Constants.Limelight.limelightAngleOffset); 
+      return ratio * Constants.Limelight.heightOfTarget; 
     }
 
   @Override

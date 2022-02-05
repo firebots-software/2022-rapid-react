@@ -78,6 +78,9 @@ public class RobotContainer {
 
     final Button turnClockwise = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
     turnClockwise.whenHeld(new TurnTurretAtSpeed(0.5));
+
+    final Button alignToTarget = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT); 
+    alignToTarget.whenPressed(new AlignToTarget()); 
   }
 
   /**
