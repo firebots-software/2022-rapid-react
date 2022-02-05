@@ -18,7 +18,7 @@ public class AlignToTarget extends CommandBase {
   private Limelight limelight; 
   private Turret turret; 
   private PIDController pid; 
-  private final int LIMELIGHT_REFRESH_INTERVAL = 10; // number of loops before refreshing Limelight
+  private final int LIMELIGHT_REFRESH_INTERVAL = 5; // number of loops before refreshing Limelight
 
   private int feedbackDelayCounter; 
 
@@ -69,11 +69,6 @@ public class AlignToTarget extends CommandBase {
   }
 
   // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return pid.atSetpoint();
-  }
-
   @Override
   public Set<Subsystem> getRequirements() {
       return Set.of(limelight, turret);

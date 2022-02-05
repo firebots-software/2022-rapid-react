@@ -49,16 +49,17 @@ public final class Constants {
     }
 
     public static final class Limelight {
-        public static final double alignP = 0.5; 
-        public static final double alignI = 0; 
-        public static final double alignD = 0; 
+        public static final double alignP = 0.2; 
+        public static final double alignI = 0.0; 
+        public static final double alignD = 0.0071; 
 
-        public final static double turnToleranceDeg = 2;
+        public final static double turnToleranceDeg = 3;
         public static final double turnRateToleranceDegPerS = 45; // TODO: understand why this is 45 (might be wrong)
 
         public static final double limelightAngleOffset = 74; // TODO: change limelight angle offset to match actual thing\
         public static final double heightOfTarget = 2.64; // in meters 
-    }
+        // public static final double turretSpeedConstant = 0.1; 
+    }   
 
     public static final class Shooter{
         public final static int shooterPistonPort = 2; //TODO: change to actual port 
@@ -74,7 +75,7 @@ public final class Constants {
         public static final double turretGearRatio = 45.0 * 14.0; //(small gear ration * big gear ratio )
         public static final double encoderTicksPerRev = 2048 * turretGearRatio;
         public static final double encoderTicksPerDegree = encoderTicksPerRev / 360.0;
-        public static final double pidPositionToleranceDegrees = 1.0;
+        public static final double pidPositionToleranceDegrees = 2;
         public static final double pidVelToleranceDegPerSecond = 10;
     }
 }
