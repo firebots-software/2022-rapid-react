@@ -49,11 +49,8 @@ public final class Constants {
         public static final double alignI = 0; 
         public static final double alignD = 0; 
 
-        public static final double angleTolerance = 5; 
-        public static final double velocityTolerance = 45; 
         public final static double turnToleranceDeg = 1;
-        public static final double turnRateToleranceDegPerS = 45;
-        public static double smallTurnP = 0.01, smallTurnI = 0.0, smallTurnD = 0.0036569; //todo: verify if correct values 
+        public static final double turnRateToleranceDegPerS = 45; // TODO: understand why this is 45 (might be wrong)
     }
 
     public static final class Shooter{

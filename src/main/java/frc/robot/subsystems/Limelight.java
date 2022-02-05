@@ -19,17 +19,14 @@ public class Limelight extends SubsystemBase {
   your data. In this case, it's a table called datatable. */
   private NetworkTable table = instance.getTable("limelight");
   
-  // Limelight tx value - x degree offset
+  // Limelight tx value - x degree offset of target center from viewport center
   private double tx; 
 
-  // Limelight ty value - y degree offset
+  // Limelight ty value - y degree offset of target center from viewport center
   private double ty;
 
   // Limelight tv value - whether or not there is a valid target - 1 for yes, 0 for no
   private double tv;  
-
-  // Limelight ta value - returns the percent of the FOV that the target occupies
-  private double ta; 
 
   // The value of tx to be returned if no value is found
   private final double DEFAULT_VALUE_TX = 0.0;
@@ -39,9 +36,6 @@ public class Limelight extends SubsystemBase {
 
   // The value of tv to be returned if no target is found
   private final double DEFAULT_VALUE_TV = 0;
-
-  // The value of ta to be returned if no target is found
-  private final double DEFAULT_VALUE_TA = 0;
 
   /** Creates a new Limelight. */
   public Limelight() {

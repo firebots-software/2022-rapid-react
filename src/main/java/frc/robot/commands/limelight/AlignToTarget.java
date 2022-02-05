@@ -18,8 +18,9 @@ public class AlignToTarget extends CommandBase {
   private Limelight limelight; 
   private Turret turret; 
   private PIDController pid; 
+  private final int LIMELIGHT_REFRESH_INTERVAL = 10; // number of loops before refreshing Limelight
 
-  private int counter; 
+  private int feedbackDelayCounter; 
 
   /** Creates a new AlignToTarget. */
   public AlignToTarget() {
@@ -27,9 +28,9 @@ public class AlignToTarget extends CommandBase {
     turret = Turret.getInstance(); 
 
     pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD); 
-    pid.setTolerance(Constants.Limelight.angleTolerance, Constants.Limelight.velocityTolerance);   
+    pid.setTolerance(Constants.Limelight.turnToleranceDeg, Constants.Limelight.turnRateToleranceDegPerS);   
 
-    counter = 0; 
+    feedbackDelayCounter = 0; 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -39,14 +40,14 @@ public class AlignToTarget extends CommandBase {
     turret.zeroEncoder();
     limelight.refreshValues();
     pid.setSetpoint(limelight.getTx());
-    counter = 0; 
+    feedbackDelayCounter = 0; 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   // Counter refreshes every 200 ms
   @Override
   public void execute() {
-    if (counter % 10 == 0) {
+    if (feedbackDelayCounter % LIMELIGHT_REFRESH_INTERVAL == 0) {
       limelight.refreshValues();
       turret.zeroEncoder();
       pid.setSetpoint(limelight.getTx());
@@ -55,7 +56,7 @@ public class AlignToTarget extends CommandBase {
     double pidOutput = pid.calculate(turret.getEncoderValDegrees());
     SmartDashboard.putNumber("turret pid output", pidOutput);
     turret.setMotorSpeed(pidOutput); 
-    counter++; 
+    feedbackDelayCounter++; 
   }
 
 
