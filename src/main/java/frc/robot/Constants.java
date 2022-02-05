@@ -44,7 +44,10 @@ public final class Constants {
     }
 
     public static final class Climber {
-        public final static int arbitraryPortNum = 9999;
+        public final static int rightHallEffectPort = 15; //todo
+        public final static int leftHallEffectPort = 16; //todo
+        public final static int leftClimberMotorPort = 17; //todo
+        public final static int rightClimberMotorPort = 15; //todo
         public final static double globalClimbSpeed = 0.85;
           //Both of these are random numbers replace when we actually now the correct port
     }
