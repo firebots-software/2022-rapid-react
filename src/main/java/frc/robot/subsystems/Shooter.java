@@ -16,7 +16,7 @@ public class Shooter extends SubsystemBase {
   private static Shooter instance;
   // private Solenoid piston;
   // TODO: changing to roller motor
-  private TalonSRX motor;
+  private TalonSRX motor, rollerMotor;
   private boolean atTargetSpeed;
   private double targetSpeed;
 
@@ -25,6 +25,7 @@ public class Shooter extends SubsystemBase {
     // this.piston = new Solenoid(PneumaticsModuleType.CTREPCM,
     // Constants.Shooter.shooterPistonPort);
     this.motor = new TalonSRX(Constants.Shooter.shooterMotorPort);
+    this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
     atTargetSpeed = false;
     this.targetSpeed = 0;
 
@@ -50,8 +51,12 @@ public class Shooter extends SubsystemBase {
  /* 
   * Returns motor RPM from selected sensor velocity.
   */
-  public double getRPM() {
+  public double getShooterRPM() {
     return (motor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
+  }
+
+  public void setRollerMotorSpeed(double speed){
+   rollerMotor.set(ControlMode.PercentOutput, speed);
   }
 
  /* 
@@ -68,6 +73,10 @@ public class Shooter extends SubsystemBase {
   */
   public void stopMotor() {
     setSpeed(0);
+  }
+
+  public void stopRollerMotor(){
+    setRollerMotorSpeed(0.0);
   }
 
   // ask command or method
@@ -99,7 +108,7 @@ public class Shooter extends SubsystemBase {
   * @param marginOfError bounded MoE between motor RPM and target speed
   */
   public boolean isAtTargetSpeed(double marginOfError) {
-    double error = getRPM() - getTargetSpeed();
+    double error = getShooterRPM() - getTargetSpeed();
     return Math.abs(error) <= marginOfError;
   }
 

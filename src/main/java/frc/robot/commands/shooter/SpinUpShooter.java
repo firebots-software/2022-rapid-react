@@ -27,7 +27,7 @@ public class SpinUpShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double error = shooter.getTargetSpeed() - shooter.getRPM();; // desired = desired aimed position we want
+    double error = shooter.getTargetSpeed() - shooter.getShooterRPM();; // desired = desired aimed position we want
     double newVal = P * error; //magic number P (proportionality constant)
     shooter.setSpeed(newVal); //
   }
