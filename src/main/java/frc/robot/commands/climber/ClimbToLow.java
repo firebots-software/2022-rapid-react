@@ -14,14 +14,10 @@ import java.util.Collections;
 import java.util.Set;
 
 
-public class ClimbToLow extends CommandBase {
-  public Climber climber;
-  public double ClimberSpeed = 1;
-
-  public double maxLowHeight = 50;
+public class ClimbToLow extends ClimbToHeight {
 
   public ClimbToLow() {
-    this.climber = Climber.getInstance();
+    super(Constants.Climber.globalClimbSpeed, Constants.Climber.lowBarHeight);
   }
 
   // Called when the command is initially scheduled.
@@ -37,7 +33,7 @@ public class ClimbToLow extends CommandBase {
   }
 
   public void execute() {
-    climber.climbToHangar(Constants.Climber.globalClimbSpeed, maxLowHeight);
+    
   }
 
   // Called once the command ends or is interrupted.
