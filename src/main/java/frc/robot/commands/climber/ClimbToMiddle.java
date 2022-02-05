@@ -14,30 +14,20 @@ import java.util.Collections;
 import java.util.Set;
 
 
-public class ClimbToMiddle extends CommandBase {
-  public Climber climber;
-  public double ClimberSpeed = 0;
+public class ClimbToMiddle extends ClimbToHeight {
 
-  public double maxMiddleHeight = 100;
-  
   public ClimbToMiddle() {
-    this.climber = Climber.getInstance();
+    super(Constants.Climber.globalClimbSpeed, Constants.Climber.middleBarHeight);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    /*
-    if (ClimberSpeed < 1) {
-      ClimberSpeed = 1;
-    } else {
-      ClimberSpeed = -1;
-    }
-    */
+    
   }
 
   public void execute() {
-    climber.climbToHangar(Constants.Climber.globalClimbSpeed, maxMiddleHeight);
+    new ClimbToHeight(Constants.Climber.globalClimbSpeed, Constants.Climber.middleBarHeight);
   }
 
   // Called once the command ends or is interrupted.
