@@ -9,7 +9,7 @@ public class AimAndShoot extends SequentialCommandGroup  {
 
     public AimAndShoot() {
         addCommands(
-            // Aim Turret w/ Linelight
+            // Aim Turret w/ Limelight
             new SpinUpShooter(SHOOTER_TARGET_SPEED),
             new SpinWheelAndRunRoller()
         );
