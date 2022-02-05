@@ -38,16 +38,16 @@ public class Climber extends SubsystemBase {
     return instance;
   }
   
-  public double getLeftEncoderValue() {
-    return leftClimber.getSelectedSensorPosition();
+  public double getLeftHeight() {
+    return Constants.Climber.encoderConversionRateToCm * leftClimber.getSelectedSensorPosition();
   }
 
-  public double getRightEncoderValue() {
-    return rightClimber.getSelectedSensorPosition();
+  public double getRightHeight() {
+    return Constants.Climber.encoderConversionRateToCm * rightClimber.getSelectedSensorPosition();
   }
 
-  public double getAverageEncoderValues()  {
-    return (getLeftEncoderValue() + getRightEncoderValue())/2;
+  public double getAverageHeight()  {
+    return (getLeftHeight() + getRightHeight())/2;
   }
 
   public boolean getLeftHallEffectValue() {
@@ -57,45 +57,13 @@ public class Climber extends SubsystemBase {
   public boolean getRightHallEffectValue() {
     return rightHallEffect.get();
   }
-  
-  public void climbToHangar(double climbSpeed, double height) {
-    double leftEncoderVal = getLeftEncoderValue();
-    double rightEncoderVal = getRightEncoderValue();
 
-    boolean leftHallEffectVal = getLeftHallEffectValue();
-    boolean rightHallEffectVal = getRightHallEffectValue();
+  public void setLeftClimberSpeed(double climbSpeed) {
+    leftClimber.set(climbSpeed);
+  }
 
-    // if (leftEncoderVal < height && climbSpeed > 0) {
-    //   leftClimber.set(climbSpeed);
-    // } else if (leftEncoderVal > 0 && climbSpeed < 0) {
-    //   leftClimber.set(climbSpeed);
-    // } else {
-    //   leftClimber.stopMotor();
-    // }
-
-    // if (rightEncoderVal < height && climbSpeed > 0) {
-    //   rightClimber.set(climbSpeed);
-    // } else if (leftEncoderVal > 0 && climbSpeed < 0) {
-    //   rightClimber.set(climbSpeed);
-    // } else {
-    //   rightClimber.stopMotor();
-    // }
-
-    if (leftEncoderVal < height && climbSpeed > 0 && leftHallEffectVal) {
-      leftClimber.set(climbSpeed);
-    } else if (leftEncoderVal > 0 && climbSpeed < 0) {
-      leftClimber.set(climbSpeed);
-    } else {
-      leftClimber.stopMotor();
-    }
-
-    if (rightEncoderVal < height && climbSpeed > 0 && rightHallEffectVal) {
-      rightClimber.set(climbSpeed);
-    } else if (leftEncoderVal > 0 && climbSpeed < 0) {
-      rightClimber.set(climbSpeed);
-    } else {
-      rightClimber.stopMotor();
-    }
+  public void setRightClimberSpeed(double climbSpeed) {
+    rightClimber.set(climbSpeed);
   }
 
   /***
