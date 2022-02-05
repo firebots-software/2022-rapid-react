@@ -28,7 +28,7 @@ public class AlignToTarget extends CommandBase {
     turret = Turret.getInstance(); 
 
     pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD); 
-    pid.setTolerance(Constants.Limelight.turnToleranceDeg, Constants.Limelight.turnRateToleranceDegPerS);   
+    pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);   
 
     feedbackDelayCounter = 0; 
     // Use addRequirements() here to declare subsystem dependencies.

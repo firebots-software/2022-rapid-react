@@ -51,6 +51,9 @@ public final class Constants {
 
         public final static double turnToleranceDeg = 1;
         public static final double turnRateToleranceDegPerS = 45; // TODO: understand why this is 45 (might be wrong)
+
+        public static final double limelightAngleOffset = 10; // TODO: change limelight angle offset to match actual thing\
+        public static final double heightOfTarget = 2.64; // in meters 
     }
 
     public static final class Shooter{
@@ -69,7 +72,5 @@ public final class Constants {
         public static final double encoderTicksPerDegree = encoderTicksPerRev / 360.0;
         public static final double pidPositionToleranceDegrees = 1.0;
         public static final double pidVelToleranceDegPerSecond = 10;
-
-    
     }
 }
