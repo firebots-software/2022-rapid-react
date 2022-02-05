@@ -17,6 +17,7 @@ public class SpinUpShooter extends CommandBase {
   public SpinUpShooter(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
+    shooter.setTargetSpeed(speed);
   }
 
   // Called when the command is initially scheduled.
