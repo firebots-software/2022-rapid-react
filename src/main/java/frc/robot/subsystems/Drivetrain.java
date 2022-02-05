@@ -205,6 +205,11 @@ public class Drivetrain extends SubsystemBase {
     return (getLeftEncoderCountMeters()+getRightEncoderCountMeters())/2;
   }
 
+  public double getGyroAngle(){
+    System.out.println(gyro.getAngle());
+    return gyro.getAngle();
+  }
+
   public void setMotorNeutralMode(NeutralMode neutralMode){
     rightFollower.setNeutralMode(neutralMode);
     leftFollower.setNeutralMode(neutralMode);

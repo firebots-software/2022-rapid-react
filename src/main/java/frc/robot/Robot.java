@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
     SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
+    SmartDashboard.putNumber("Gyro Value", drivetrain.getGyroAngle());
   }
 
 
