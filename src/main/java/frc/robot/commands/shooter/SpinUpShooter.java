@@ -9,6 +9,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
 public class SpinUpShooter extends CommandBase {
+  // keep spinning after aimed and during load ball --> toggleFlywheel
   private final Shooter shooter;
   private double desiredSpeed, currentSpeed, error; //goal angle/point
   private double P = 1/2000; //CONSTANT - magic number, figure out thru testing; should be pretty small
@@ -43,7 +44,7 @@ public class SpinUpShooter extends CommandBase {
   @Override
   public boolean isFinished() {
     if (Math.abs(error) < Constants.Shooter.motorSpeedToleranceRPM) {
-        shooter.setAtTargetSpeed(true);
+       // shooter.setAtTargetSpeed(true);
         // if interrupted then return true --> loadBall 
     }
 

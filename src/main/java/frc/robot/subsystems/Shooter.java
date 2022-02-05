@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -15,16 +15,19 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   private static Shooter instance;
-  private Solenoid piston; 
-  private TalonFX motor;
+  //private Solenoid piston; 
+  //TODO: changing to roller motor
+  private TalonSRX motor;
   private boolean atTargetSpeed;
+  private double targetSpeed;
 
   
   /** Creates a new Shooter.  */
   private Shooter() {
-    this.piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Shooter.shooterPistonPort);
-    this.motor = new TalonFX(Constants.Shooter.shooterMotorPort);
+    //this.piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Shooter.shooterPistonPort);
+    this.motor = new TalonSRX(Constants.Shooter.shooterMotorPort);
     atTargetSpeed = false;
+    this.targetSpeed = 0; 
 
   }
 
@@ -63,24 +66,25 @@ public void stopMotor() {
 //ask command or method
 
 
-public void extendPiston(){
-  piston.set(true);
-}
-
-public void retractPiston(){
-  piston.set(false);
-}
-
-public void togglePiston(){
-  piston.toggle();
-}
-
-public void setAtTargetSpeed(boolean atTarget) {
+/*public void setAtTargetSpeed(boolean atTarget) {
   this.atTargetSpeed = atTarget;
 }
+*/
+// add threshold for target speed
 
-public boolean isAtTargetSpeed() {
-  return atTargetSpeed;
+public double getTargetSpeed(){
+  return this.targetSpeed; 
+}
+
+public void setTargetSpeed(double targetSpeed){
+  this.targetSpeed = targetSpeed; 
+}
+
+
+
+public boolean isAtTargetSpeed(double marginOfError) { 
+ double error = getRPM() - getTargetSpeed();
+    return Math.abs(error) <= marginOfError;
 }
 
 //extend/ retract piston --> binds to button 
