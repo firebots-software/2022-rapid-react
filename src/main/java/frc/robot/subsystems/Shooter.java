@@ -12,22 +12,21 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
 public class Shooter extends SubsystemBase {
   private static Shooter instance;
-  //private Solenoid piston; 
-  //TODO: changing to roller motor
+  // private Solenoid piston;
+  // TODO: changing to roller motor
   private TalonSRX motor;
   private boolean atTargetSpeed;
   private double targetSpeed;
 
-  
-  /** Creates a new Shooter.  */
+  /** Creates a new Shooter. */
   private Shooter() {
-    //this.piston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Shooter.shooterPistonPort);
+    // this.piston = new Solenoid(PneumaticsModuleType.CTREPCM,
+    // Constants.Shooter.shooterPistonPort);
     this.motor = new TalonSRX(Constants.Shooter.shooterMotorPort);
     atTargetSpeed = false;
-    this.targetSpeed = 0; 
+    this.targetSpeed = 0;
 
   }
 
@@ -43,53 +42,67 @@ public class Shooter extends SubsystemBase {
     return instance;
   }
 
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
-public double getRPM() {
-	return (motor.getSelectedSensorVelocity() * 600.0) /Constants.Shooter.shooterEncoderTicksPerRev;  //per 100ms * 600 = per min
- }
+ /* 
+  * Returns motor RPM from selected sensor velocity.
+  */
+  public double getRPM() {
+    return (motor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
+  }
 
-public void setSpeed(double speed) {
-  motor.set(ControlMode.PercentOutput, speed);
-  // value to move to aimed point
-}
+ /* 
+  * Sets speed of the motor as a setpoint value.
+  * @param speed the specified speed to set the motor to
+  */
+  public void setSpeed(double speed) {
+    motor.set(ControlMode.PercentOutput, speed);
+    // value to move to aimed point
+  }
 
-public void stopMotor() {
-  setSpeed(0);
-}
+ /* 
+  * Stops motor. Sets speed of the motor to zero.
+  */
+  public void stopMotor() {
+    setSpeed(0);
+  }
 
+  // ask command or method
 
-//ask command or method
+  /*
+   * public void setAtTargetSpeed(boolean atTarget) {
+   * this.atTargetSpeed = atTarget;
+   * }
+   */
+  // add threshold for target speed
 
+ /* 
+  * Accessor for targetSpeed member variable.
+  */
+  public double getTargetSpeed() {
+    return this.targetSpeed;
+  }
 
-/*public void setAtTargetSpeed(boolean atTarget) {
-  this.atTargetSpeed = atTarget;
-}
-*/
-// add threshold for target speed
+ /* 
+  * Mutates target speed to new specified target speed.
+  * @param targetSpeed new specified target speed
+  */
+  public void setTargetSpeed(double targetSpeed) {
+    this.targetSpeed = targetSpeed;
+  }
 
-public double getTargetSpeed(){
-  return this.targetSpeed; 
-}
-
-public void setTargetSpeed(double targetSpeed){
-  this.targetSpeed = targetSpeed; 
-}
-
-
-
-public boolean isAtTargetSpeed(double marginOfError) { 
- double error = getRPM() - getTargetSpeed();
+ /* 
+  * Checks whether motor RPM is within a specified MoE of target speed.
+  * @param marginOfError bounded MoE between motor RPM and target speed
+  */
+  public boolean isAtTargetSpeed(double marginOfError) {
+    double error = getRPM() - getTargetSpeed();
     return Math.abs(error) <= marginOfError;
-}
+  }
 
-//extend/ retract piston --> binds to button 
-
-
-
+  // extend/ retract piston --> binds to button
 
 }
