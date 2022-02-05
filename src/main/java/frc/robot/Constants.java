@@ -49,6 +49,9 @@ public final class Constants {
         public final static int leftClimberMotorPort = 17; //todo
         public final static int rightClimberMotorPort = 15; //todo
         public final static double globalClimbSpeed = 0.85;
+        public final static double lowBarHeight = 50; //todo: find height in centimeters
+        public final static double middleBarHeight = 100; //todo: find height in centimeters
+        public final static double encoderConversionRateToCm = 99; //todo: find encoder conversion rate
           //Both of these are random numbers replace when we actually now the correct port
     }
 }
