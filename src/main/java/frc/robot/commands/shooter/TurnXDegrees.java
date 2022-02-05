@@ -10,7 +10,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Turret;
 
 // manual alignment of robot with hub 
-public class TurntoAngle extends CommandBase {
+public class TurnXDegrees extends CommandBase {
   private Turret turret;
   private double targetAngle;
   private PIDController pid;
@@ -20,7 +20,7 @@ public class TurntoAngle extends CommandBase {
   private double kI = 0;
   private double kD = 0;
   
-  public TurntoAngle(double targetAngle) {
+  public TurnXDegrees(double targetAngle) {
     turret = Turret.getInstance();
     this.targetAngle = targetAngle;
 

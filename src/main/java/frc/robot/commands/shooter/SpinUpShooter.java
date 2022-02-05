@@ -11,14 +11,12 @@ import frc.robot.subsystems.Shooter;
 public class SpinUpShooter extends CommandBase {
   // keep spinning after aimed and during load ball --> toggleFlywheel
   private final Shooter shooter;
-  private double desiredSpeed, currentSpeed, error; //goal angle/point
-  private double P = 1/2000; //CONSTANT - magic number, figure out thru testing; should be pretty small
+  private final double P = 1/2000.0; //CONSTANT - magic number, figure out thru testing; should be pretty small
 
   /** Creates a new SpinUpShooter. */
   public SpinUpShooter(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
-    desiredSpeed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -28,8 +26,7 @@ public class SpinUpShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currentSpeed = shooter.getRPM();
-    error = desiredSpeed - currentSpeed; // desired = desired aimed position we want
+    double error = shooter.getTargetSpeed() - shooter.getRPM();; // desired = desired aimed position we want
     double newVal = P * error; //magic number P (proportionality constant)
     shooter.setSpeed(newVal); //
   }
@@ -43,11 +40,8 @@ public class SpinUpShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(error) < Constants.Shooter.motorSpeedToleranceRPM) {
-       // shooter.setAtTargetSpeed(true);
-        // if interrupted then return true --> loadBall 
-    }
-
-    return false;
+    return shooter.isAtTargetSpeed(Constants.Shooter.motorSpeedToleranceRPM);
+        // possible return false and change it in the command group
+        //  TODO: command group - if interrupted then return true --> loadBall
   }
 }

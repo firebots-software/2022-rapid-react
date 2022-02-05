@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Shooter;
 
-public class LoadBall extends CommandBase {
+public class LaunchBall extends CommandBase {
+
+  //using roller
   private final Shooter shooter;
   /** Creates a new LoadBall. */
-  public LoadBall() {
+  public LaunchBall() {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
   }
