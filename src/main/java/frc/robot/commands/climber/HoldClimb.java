@@ -28,13 +28,13 @@ public class HoldClimb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setClimb(Constants.Climber.globalClimbSpeed);
+    climber.setClimberSpeed(Constants.Climber.globalClimbSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.setClimb(0);
+    climber.setClimberSpeed(0);
   }
 
   // Returns true when the command should end.
