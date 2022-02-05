@@ -13,26 +13,17 @@ import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
   private static Climber instance;
-  
-  private static double leftEncoderVal, rightEncoderVal;
-
 
   private final WPI_TalonSRX leftClimber, rightClimber;
   private static DigitalInput rightHallEffect;
   private static DigitalInput leftHallEffect;
 
-  private static MotorControllerGroup climber;
-
-
-
-
   private Climber() {
-    rightHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
-    leftHallEffect = new DigitalInput(Constants.Climber.arbitraryPortNum);
+    rightHallEffect = new DigitalInput(Constants.Climber.rightHallEffectPort);
+    leftHallEffect = new DigitalInput(Constants.Climber.leftHallEffectPort);
     
-    this.leftClimber = new WPI_TalonSRX(Constants.Climber.arbitraryPortNum);
-    this.rightClimber = new WPI_TalonSRX(Constants.Climber.arbitraryPortNum);
-
+    this.leftClimber = new WPI_TalonSRX(Constants.Climber.leftClimberMotorPort);
+    this.rightClimber = new WPI_TalonSRX(Constants.Climber.rightClimberMotorPort);
   }
 
   /**
@@ -47,29 +38,71 @@ public class Climber extends SubsystemBase {
     return instance;
   }
   
+  public double getLeftEncoderValue() {
+    return leftClimber.getSelectedSensorPosition();
+  }
+
+  public double getRightEncoderValue() {
+    return rightClimber.getSelectedSensorPosition();
+  }
+
+  public double getAverageEncoderValues()  {
+    return (getLeftEncoderValue() + getRightEncoderValue())/2;
+  }
+
+  public boolean getLeftHallEffectValue() {
+    return leftHallEffect.get();
+  }
+
+  public boolean getRightHallEffectValue() {
+    return rightHallEffect.get();
+  }
+  
   public void climbToHangar(double climbSpeed, double height) {
+    double leftEncoderVal = getLeftEncoderValue();
+    double rightEncoderVal = getRightEncoderValue();
 
-    leftEncoderVal = leftClimber.getSelectedSensorPosition();
-    rightEncoderVal = rightClimber.getSelectedSensorPosition();
+    boolean leftHallEffectVal = getLeftHallEffectValue();
+    boolean rightHallEffectVal = getRightHallEffectValue();
 
-    if (leftEncoderVal < height && climbSpeed == 1) {
+    // if (leftEncoderVal < height && climbSpeed > 0) {
+    //   leftClimber.set(climbSpeed);
+    // } else if (leftEncoderVal > 0 && climbSpeed < 0) {
+    //   leftClimber.set(climbSpeed);
+    // } else {
+    //   leftClimber.stopMotor();
+    // }
+
+    // if (rightEncoderVal < height && climbSpeed > 0) {
+    //   rightClimber.set(climbSpeed);
+    // } else if (leftEncoderVal > 0 && climbSpeed < 0) {
+    //   rightClimber.set(climbSpeed);
+    // } else {
+    //   rightClimber.stopMotor();
+    // }
+
+    if (leftEncoderVal < height && climbSpeed > 0 && leftHallEffectVal) {
       leftClimber.set(climbSpeed);
-    } else if (leftEncoderVal > 0 && climbSpeed == -1) {
+    } else if (leftEncoderVal > 0 && climbSpeed < 0) {
       leftClimber.set(climbSpeed);
     } else {
       leftClimber.stopMotor();
     }
 
-    if (rightEncoderVal < height && climbSpeed == 1) {
+    if (rightEncoderVal < height && climbSpeed > 0 && rightHallEffectVal) {
       rightClimber.set(climbSpeed);
-    } else if (leftEncoderVal > 0 && climbSpeed == -1) {
+    } else if (leftEncoderVal > 0 && climbSpeed < 0) {
       rightClimber.set(climbSpeed);
     } else {
       rightClimber.stopMotor();
     }
   }
 
-  public void setClimb (double climbSpeed) {
+  /***
+   * Sets the left and right climber motors to a specific voltage
+   * @param climbSpeed Motor voltage values between -1 and 1 inclusive
+   */
+  public void setClimberSpeed(double climbSpeed) {
     leftClimber.set(climbSpeed);
     rightClimber.set(climbSpeed);
   }
