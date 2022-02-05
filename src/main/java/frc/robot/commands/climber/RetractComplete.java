@@ -13,14 +13,11 @@ import frc.robot.subsystems.Climber;
 import java.util.Collections;
 import java.util.Set;
 
-public class RetractComplete extends CommandBase {
-  public Climber climber;
-  public double ClimberSpeed = 0;
-
-  public double maxMiddleHeight = 100;
+public class RetractComplete extends ClimbToHeight {
 
   public RetractComplete() {
     // Use addRequirements() here to declare subsystem dependencies.
+    super(-Constants.Climber.globalClimbSpeed, 90.0);
   }
 
   // Called when the command is initially scheduled.
@@ -30,7 +27,7 @@ public class RetractComplete extends CommandBase {
   
   @Override
   public void execute() {
-    climber.climbToHangar(-Constants.Climber.globalClimbSpeed, maxMiddleHeight);
+    
   }
 
   // Called once the command ends or is interrupted.
