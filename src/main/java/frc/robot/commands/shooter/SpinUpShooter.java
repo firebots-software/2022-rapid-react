@@ -17,6 +17,7 @@ public class SpinUpShooter extends CommandBase {
   public SpinUpShooter(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
+    shooter.setTargetSpeed(speed);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +27,7 @@ public class SpinUpShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double error = shooter.getTargetSpeed() - shooter.getRPM();; // desired = desired aimed position we want
+    double error = shooter.getTargetSpeed() - shooter.getShooterRPM();; // desired = desired aimed position we want
     double newVal = P * error; //magic number P (proportionality constant)
     shooter.setSpeed(newVal); //
   }
