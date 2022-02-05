@@ -15,8 +15,8 @@ public class Climber extends SubsystemBase {
   private static Climber instance;
 
   private final WPI_TalonSRX leftClimber, rightClimber;
-  private static DigitalInput rightHallEffect;
-  private static DigitalInput leftHallEffect;
+  private static DigitalInput rightHallEffect, leftHallEffect;
+  private static boolean leftHallEffectVal, rightHallEffectVal;
 
   private Climber() {
     rightHallEffect = new DigitalInput(Constants.Climber.rightHallEffectPort);
