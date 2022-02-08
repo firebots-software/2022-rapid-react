@@ -81,6 +81,6 @@ public class ClimbToHeight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return climber.getLeftHeight() == targetHeight && climber.getRightHeight() == targetHeight;
   }
 }
