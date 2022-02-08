@@ -1,0 +1,39 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "Talon SRX[15]/Quad Encoder": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[17]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[17]/Analog In": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[17]/Quad Encoder": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Climber": "Subsystem",
+      "/LiveWindow/Drivetrain": "Subsystem",
+      "/LiveWindow/Ungrouped/ADXRS450_Gyro[0]": "Gyro",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[15]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[16]": "Digital Input",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Auton chooser": "String Chooser"
+    }
+  }
+}

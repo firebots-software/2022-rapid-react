@@ -6,6 +6,7 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 
 import java.util.Collections;
@@ -57,18 +58,22 @@ public class ClimbToHeight extends CommandBase {
       climber.setRightClimberSpeed(0);
     }
 
-    if(leftHallEffectVal && leftHeight < 50 && motorVoltage < 0) {
+    if(leftHallEffectVal && leftHeight < Constants.Climber.encoderErrorRange && motorVoltage < 0) {
       climber.setLeftClimberSpeed(0);
+      climber.setLeftHeight(0);
     }
-    if(leftHallEffectVal && leftHeight > 350 && motorVoltage > 0) {
+    if(leftHallEffectVal && leftHeight > Constants.Climber.maxClimberHeight - Constants.Climber.encoderErrorRange && motorVoltage > 0) {
       climber.setLeftClimberSpeed(0);
+      climber.setLeftHeight(Constants.Climber.maxClimberHeight);
     }
 
-    if(rightHallEffectVal && rightHeight < 50 && motorVoltage < 0) {
+    if(rightHallEffectVal && rightHeight < Constants.Climber.encoderErrorRange && motorVoltage < 0) {
       climber.setRightClimberSpeed(0);
+      climber.setRightHeight(0);
     }
-    if(rightHallEffectVal && rightHeight > 350 && motorVoltage > 0) {
+    if(rightHallEffectVal && rightHeight > Constants.Climber.maxClimberHeight - Constants.Climber.encoderErrorRange && motorVoltage > 0) {
       climber.setRightClimberSpeed(0);
+      climber.setRightHeight(Constants.Climber.maxClimberHeight);
     }
 
 

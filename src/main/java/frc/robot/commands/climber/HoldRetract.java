@@ -14,7 +14,7 @@ public class HoldRetract extends CommandBase {
   public Climber climber;
 
   public HoldRetract() {
-    // Use addRequirements() here to declare subsystem dependencies.
+    climber = Climber.getInstance();
   }
 
   // Called when the command is initially scheduled.

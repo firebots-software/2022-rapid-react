@@ -18,7 +18,7 @@ public class HoldClimb extends CommandBase {
   public Climber climber;
 
   public HoldClimb() {
-    // Use addRequirements() here to declare subsystem dependencies.
+    climber = Climber.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -28,6 +28,7 @@ public class HoldClimb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println(Constants.Climber.globalClimbSpeed);
     climber.setClimberSpeed(Constants.Climber.globalClimbSpeed);
   }
 
