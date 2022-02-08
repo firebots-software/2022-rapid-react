@@ -80,11 +80,8 @@ public class Climber extends SubsystemBase {
    * @param climbSpeed Motor voltage values between -1 and 1 inclusive
    */
   public void setClimberSpeed(double climbSpeed) {
-    System.out.println("Method Accessed");
     leftClimber.set(climbSpeed);
-    System.out.println("LeftCLimber is working");
     rightClimber.set(climbSpeed);
-    System.out.println("RightCLimber is working");
   }
   
   @Override
