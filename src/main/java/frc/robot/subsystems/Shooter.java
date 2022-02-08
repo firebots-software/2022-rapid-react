@@ -18,6 +18,7 @@ public class Shooter extends SubsystemBase {
    * should be used -- {@code Shooter.getInstance();} -- by external
    * classes, rather than the constructor to get the instance of this class.
    */
+
   public static Shooter getInstance() {
     if (instance == null) {
       instance = new Shooter();
@@ -25,7 +26,10 @@ public class Shooter extends SubsystemBase {
     return instance;
   }
 
-
+  // spinup flywheel 
+  // lock target 
+  // TurntoAngle: turnright and turnleft 
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
