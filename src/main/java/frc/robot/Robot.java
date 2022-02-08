@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
   private void updateShuffleboard() {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
     SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
     SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
   }
 

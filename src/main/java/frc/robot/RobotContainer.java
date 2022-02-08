@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.drivetrain.CurvatureDrive;
+import frc.robot.commands.drivetrain.DriveFlip;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
@@ -40,7 +42,7 @@ public class RobotContainer {
         // Configure default commands
         // Set the default drive command to split-stick arcade drive
         drivetrain.setDefaultCommand(
-          new JoystickDrive(
+          new CurvatureDrive(
                   () -> ps4_controller.getRawAxis(1),
                   () -> ps4_controller.getRawAxis(2)));
 
@@ -65,6 +67,9 @@ public class RobotContainer {
 
     final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
     slowMode.whenHeld(new ToggleSlowMode());
+
+    final Button driveMode = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    driveMode.whenPressed(new DriveFlip(ps4_controller));
 
 
   }

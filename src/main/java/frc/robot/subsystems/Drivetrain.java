@@ -8,12 +8,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
+import frc.robot.commands.drivetrain.CurvatureDrive;
+import frc.robot.commands.drivetrain.JoystickDrive;
 
 public class Drivetrain extends SubsystemBase {
   // constants
@@ -50,8 +53,11 @@ public class Drivetrain extends SubsystemBase {
    */
   private static Drivetrain instance;
 
+  private boolean curvatureDriveOn;
   /** Creates a new Drivetrain. */
   private Drivetrain() {
+    curvatureDriveOn = true;
+
     this.leftFollower = new WPI_TalonFX(Constants.Drivetrain.leftFollowerPort);
     this.leftFrontMaster = new WPI_TalonFX(Constants.Drivetrain.leftMasterPort);
     this.rightRearMaster = new WPI_TalonFX(Constants.Drivetrain.rightMasterPort);
@@ -115,6 +121,45 @@ public class Drivetrain extends SubsystemBase {
       SmartDashboard.putNumber("rotationspeed",rotation);
 
       robotDrive.arcadeDrive(frontBackSpeed, rotation);
+
+    }
+  }
+
+  public void curvatureDrive(double frontBackSpeed, double rotation) {
+    boolean quickTurn = false;
+    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
+    rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
+      robotDrive.stopMotor();
+      
+    } else {
+      if (orientation == driveOrientation.BACK) {
+        frontBackSpeed *= -1;
+        
+      }
+      if (isSlowMode) {
+        frontBackSpeed *= SLOW_MODE_CONSTANT;
+        rotation *= SLOW_MODE_CONSTANT;
+
+      } else {
+        frontBackSpeed *= 0.5;
+        rotation *= 0.5;
+      }
+
+      if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) {
+        quickTurn = true;
+        rotation *= 0.5;
+      } else {
+        quickTurn = false;
+      }
+
+      frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
+      rotation = restrictToRange(rotation, -1, 1);
+
+      SmartDashboard.putNumber("frontbackspeed",frontBackSpeed);
+      SmartDashboard.putNumber("rotationspeed",rotation);
+      SmartDashboard.putBoolean("quickTurnEnabled", quickTurn);
+
+      robotDrive.curvatureDrive(frontBackSpeed, rotation, quickTurn);
 
     }
   }
@@ -207,12 +252,32 @@ public void setSlowMode(boolean isSlowMode) {
     } else {
         return 0;
     }
-}
+  }
+
+  public boolean getDriveStatus() {
+    return curvatureDriveOn;
+  }
 
   private double restrictToRange(double n, int min, int max) {
     if (n > max) return max;
     if (n < min) return min;
     return n;
+  }
+
+  public void toggleDefaultCommand(Joystick ps4) {
+    if (curvatureDriveOn) {
+      this.setDefaultCommand( new JoystickDrive(
+        () -> ps4.getRawAxis(1),
+        () -> ps4.getRawAxis(2)));
+
+        curvatureDriveOn = false;
+    } else {
+      this.setDefaultCommand( new CurvatureDrive(
+        () -> ps4.getRawAxis(1),
+        () -> ps4.getRawAxis(2)));
+
+        curvatureDriveOn = true;
+    }
   }
 
 }
