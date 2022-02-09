@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -16,7 +17,8 @@ public class Shooter extends SubsystemBase {
   private static Shooter instance;
   // private Solenoid piston;
   // TODO: changing to roller motor
-  private TalonSRX motor, rollerMotor;
+  private TalonSRX rollerMotor;
+  private TalonFX topMotor, bottomMotor; 
   private boolean atTargetSpeed;
   private double targetSpeed;
 
@@ -24,7 +26,8 @@ public class Shooter extends SubsystemBase {
   private Shooter() {
     // this.piston = new Solenoid(PneumaticsModuleType.CTREPCM,
     // Constants.Shooter.shooterPistonPort);
-    this.motor = new TalonSRX(Constants.Shooter.shooterMotorPort);
+    this.topMotor = new TalonFX(Constants.Shooter.shooterTopMotorPort);
+    this.bottomMotor = new TalonFX(Constants.Shooter.shooterBottomMotorPort);
     this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
     atTargetSpeed = false;
     this.targetSpeed = 0;
@@ -51,8 +54,11 @@ public class Shooter extends SubsystemBase {
  /* 
   * Returns motor RPM from selected sensor velocity.
   */
-  public double getShooterRPM() {
-    return (motor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
+  public double getTopShooterRPM() {
+    return (topMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
+  }
+  public double getBottomShooterRPM() {
+    return (bottomMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
   }
 
   public void setRollerMotorSpeed(double speed){
@@ -63,17 +69,27 @@ public class Shooter extends SubsystemBase {
   * Sets speed of the motor as a setpoint value.
   * @param speed the specified speed to set the motor to
   */
-  public void setSpeed(double speed) {
-    motor.set(ControlMode.PercentOutput, speed);
+  public void setTopMotorSpeed(double speed) {
+    topMotor.set(ControlMode.PercentOutput, speed);
+    // value to move to aimed point
+  }
+
+  public void setBottomMotorSpeed(double speed) {
+    bottomMotor.set(ControlMode.PercentOutput, speed);
     // value to move to aimed point
   }
 
  /* 
   * Stops motor. Sets speed of the motor to zero.
   */
-  public void stopMotor() {
-    setSpeed(0);
+  public void stopTopMotor() {
+    setTopMotorSpeed(0);
   }
+
+  public void stopBottomMotor() {
+    setTopMotorSpeed(0);
+  }
+
 
   public void stopRollerMotor(){
     setRollerMotorSpeed(0.0);
@@ -108,8 +124,9 @@ public class Shooter extends SubsystemBase {
   * @param marginOfError bounded MoE between motor RPM and target speed
   */
   public boolean isAtTargetSpeed(double marginOfError) {
-    double error = getShooterRPM() - getTargetSpeed();
-    return Math.abs(error) <= marginOfError;
+    double topError = getTopShooterRPM() - getTargetSpeed();
+    double bottomError = getBottomShooterRPM() - getTargetSpeed();
+    return (Math.abs(topError) <= marginOfError) && (Math.abs(bottomError) <= marginOfError); //both motors 
   }
 
   // extend/ retract piston --> binds to button

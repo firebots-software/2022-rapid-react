@@ -16,6 +16,7 @@ import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.commands.shooter.LaunchBall;
+import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.commands.shooter.TurnXDegrees;
 import frc.robot.subsystems.Drivetrain;
 
@@ -74,10 +75,12 @@ public class RobotContainer {
     final JoystickButton moveTurret = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     moveTurret.whenPressed( new TurnXDegrees(90));
 
+    final Button spinShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
+    spinShooter.whenPressed(new SpinUpShooter(Constants.Shooter.SHOOTER_TARGET_SPEED));
+
     /*
     for shooting: Aim and Shoot : whenPressed once - shoot one ball; whenHeld - shoot until empty 
     */
-
 
 
     //final Button turnClockwise = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);

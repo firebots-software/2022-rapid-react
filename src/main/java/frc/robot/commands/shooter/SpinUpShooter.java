@@ -13,11 +13,12 @@ public class SpinUpShooter extends CommandBase {
   private final Shooter shooter;
   private final double P = 1/2000.0; //CONSTANT - magic number, figure out thru testing; should be pretty small
 
+
   /** Creates a new SpinUpShooter. */
-  public SpinUpShooter(double speed) {
+  public SpinUpShooter(double speed) { //speed in RPM
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
-    shooter.setTargetSpeed(speed);
+    shooter.setTargetSpeed(speed); 
   }
 
   // Called when the command is initially scheduled.
@@ -27,9 +28,13 @@ public class SpinUpShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double error = shooter.getTargetSpeed() - shooter.getShooterRPM();; // desired = desired aimed position we want
-    double newVal = P * error; //magic number P (proportionality constant)
-    shooter.setSpeed(newVal); //
+    double topError = shooter.getTargetSpeed() - shooter.getTopShooterRPM();; // desired = desired aimed position we want
+    double bottomError = shooter.getTargetSpeed() - shooter.getBottomShooterRPM();; // desired = desired aimed position we want
+
+    double newValTop = P * topError; //magic number P (proportionality constant)
+    double newValBottom = P * bottomError; 
+    shooter.setTopMotorSpeed(newValTop); //
+    shooter.setBottomMotorSpeed(newValBottom);
   }
 
   // Called once the command ends or is interrupted.
