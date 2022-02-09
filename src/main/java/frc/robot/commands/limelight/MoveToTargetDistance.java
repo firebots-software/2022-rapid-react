@@ -13,12 +13,14 @@ public class MoveToTargetDistance extends CommandBase {
   private Limelight limelight; 
   private Drivetrain drivetrain; 
   private PIDController pid; 
+  private double tempTargetMeters; 
 
   /** Creates a new MoveToTargetDistance. */
   public MoveToTargetDistance() {
     limelight = Limelight.getInstance(); 
     drivetrain = Drivetrain.getInstance();
     pid = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD); 
+    tempTargetMeters = 2; 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,7 +29,8 @@ public class MoveToTargetDistance extends CommandBase {
   public void initialize() {
     limelight.refreshValues();
     drivetrain.resetEncoders();
-    pid.setSetpoint(limelight.getDistanceToTarget());
+    // pid.setSetpoint(limelight.getDistanceToTarget());
+    pid.setSetpoint(tempTargetMeters);
     pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);
   }
 
