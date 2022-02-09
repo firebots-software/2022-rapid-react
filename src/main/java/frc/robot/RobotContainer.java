@@ -79,13 +79,6 @@ public class RobotContainer {
     turnClockwise.whenHeld(new TurnTurretAtSpeed(0.5));
 
 
-    final Button rotateOneRev = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    rotateOneRev.whenPressed(new RotateTurretOneRevolution());
-
-    
-    
-
-
 
   }
 
