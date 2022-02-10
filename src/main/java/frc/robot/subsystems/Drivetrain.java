@@ -8,13 +8,19 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.SPI;
 
 public class Drivetrain extends SubsystemBase {
   // constants
@@ -23,6 +29,18 @@ public class Drivetrain extends SubsystemBase {
   private final double RAMPING_CONSTANT = 1;
 
 
+/*
+    MOTION PROFILING
+     */
+    private final DifferentialDriveOdometry odometry;
+
+    DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH_METERS);
+    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(2.0, 0, 1.0); // 2 m/s and 1 rad/s
+    // convert chassis speeds to wheel speeds
+    DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
+    double leftVelocity = wheelSpeeds.leftMetersPerSecond;
+    double rightVelocity = wheelSpeeds.rightMetersPerSecond;
+  
   // fields
   private final WPI_TalonSRX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
   private ADXRS450_Gyro gyro;
@@ -61,12 +79,11 @@ public class Drivetrain extends SubsystemBase {
     configTalons();
     setMotorNeutralMode(NeutralMode.Coast);
 
-
-
-
     this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     this.gyro.calibrate();
     this.gyro.reset();
+
+    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), new Pose2d());
 
     this.orientation = driveOrientation.FRONT; // default value
     this.isSlowMode = false; // default value
@@ -88,6 +105,8 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderCountMeters(),
+                getRightEncoderCountMeters());
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
@@ -205,8 +224,7 @@ public class Drivetrain extends SubsystemBase {
     return (getLeftEncoderCountMeters()+getRightEncoderCountMeters())/2;
   }
 
-  public double getGyroAngle(){
-    System.out.println(gyro.getAngle());
+  public double getHeading(){
     return gyro.getAngle();
   }
 
@@ -216,4 +234,47 @@ public class Drivetrain extends SubsystemBase {
     leftFrontMaster.setNeutralMode(neutralMode);
     rightRearMaster.setNeutralMode(neutralMode);
   }
+
+  public Pose2d getPose() {
+    return odometry.getPoseMeters();
+}
+
+public void setMaxOutput(double max) {
+    robotDrive.setMaxOutput(max);
+}
+
+/**
+ * Returns the current wheel speeds of the robot.
+ *
+ * @return The current wheel speeds.
+ */
+public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(this.getLeftEncoderVelocityMetersPerSec(), this.getRightEncoderVelocityMetersPerSec());
+}
+
+/**
+ * Resets the odometry to the specified pose.
+ *
+ * @param pose The pose to which to set the odometry.
+ */
+public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+}
+
+/**
+ * Controls the left and right sides of the drive directly with voltages.
+ *
+ * @param leftVolts  the commanded left output
+ * @param rightVolts the commanded right output
+ */
+public void tankDriveVolts(double leftVolts, double rightVolts) {
+    SmartDashboard.putNumber("leftvolts", leftVolts);
+    SmartDashboard.putNumber("rightvolts", rightVolts);
+    leftFrontMaster.setVoltage(leftVolts);
+    rightRearMaster.setVoltage(rightVolts);
+
+
+    instance.robotDrive.feed();
+}
 }

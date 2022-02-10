@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,7 +58,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
     SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
-    SmartDashboard.putNumber("Gyro Value", drivetrain.getGyroAngle());
+    SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
   }
 
 
@@ -76,6 +77,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    drivetrain.resetOdometry(new Pose2d());
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

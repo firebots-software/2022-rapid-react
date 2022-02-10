@@ -35,6 +35,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     this.ps4_controller = new Joystick(Constants.OI.PS4_CONTROLLER_PORT);
+    Paths.generate();
     configureButtonBindings();
 
         // Configure default commands
@@ -49,6 +50,7 @@ public class RobotContainer {
     autonChooser.addOption("Drive Forward for Time", new DriveBackForTime(0.7, 5));
     autonChooser.addOption("Drive for Distance Test 2", new DriveForDistance2(2.13));
     autonChooser.addOption("Drive for Distance Test Single Controller", new DriveForDistanceSingleController(2.13));
+    autonChooser.addOption("Motion Profiling Test", RamseteGenerator.generateCommandForPath(Paths.test));
 
   }
 

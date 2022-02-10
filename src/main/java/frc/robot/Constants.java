@@ -4,6 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -46,5 +52,55 @@ public final class Constants {
         public static double velocityToleranceMetersPerSec = 0.35;
         public static double pidMotorDeadzone = 0.3;
         public static double pidMinMotorVal = 0.35;
+
+        public static final double TRACK_WIDTH_METERS = 0.612775;
+
+        public static final DifferentialDriveKinematics kinematics =
+                new DifferentialDriveKinematics(TRACK_WIDTH_METERS);
+        public static double kMaxSpeedMetersPerSecond = 0.3;
+        public static double kMaxAccelerationMetersPerSecondSquared = 0.5;
+
+        // ramsete values from wpilib docs
+        public static double kRamseteB = 2.0;
+        public static double kRamseteZeta = 0.7;
+        public static double kPDriveVel = 12.582;
+
+        public static final double ksVolts = 0.92082;
+        public static final double kvVoltSecondsPerMeter = 8.4475;
+        public static final double kaVoltSecondsSquaredPerMeter = 1.6459;
+
+        public static DifferentialDriveVoltageConstraint autoVoltageConstraint =
+                new DifferentialDriveVoltageConstraint(
+                        new SimpleMotorFeedforward(ksVolts,
+                                kvVoltSecondsPerMeter,
+                                kaVoltSecondsSquaredPerMeter),
+                        kinematics,
+                        10);
+
+        public static TrajectoryConfig MotionProfilingConfig = new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                // Add kinematics to ensure max speed is actually obeyed
+                .setKinematics(kinematics)
+                // Apply the voltage constraint
+                .addConstraint(autoVoltageConstraint)
+                .setReversed(false);
+
+
+        public static TrajectoryConfig MotionProfilingConfigReversed = new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                // Add kinematics to ensure max speed is actually obeyed
+                .setKinematics(kinematics)
+                // Apply the voltage constraint
+                .addConstraint(autoVoltageConstraint)
+                .setReversed(true);
+    }
+    
+    public static class Ramsete {
+        public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Drivetrain.ksVolts,
+                Constants.Drivetrain.kvVoltSecondsPerMeter,
+                Constants.Drivetrain.kaVoltSecondsSquaredPerMeter);
+
+        public static RamseteController ramseteController = new RamseteController(Constants.Drivetrain.kRamseteB, Constants.Drivetrain.kRamseteZeta);
+
     }
 }
