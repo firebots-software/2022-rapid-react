@@ -213,11 +213,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftEncoderVelocityMetersPerSec() {
-    return leftFrontMaster.getSelectedSensorVelocity() * 10 / Constants.TICKS_PER_METER;
+    return (leftFrontMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
   }
 
   public double getRightEncoderVelocityMetersPerSec() {
-    return rightRearMaster.getSelectedSensorVelocity() * 10 / Constants.TICKS_PER_METER;
+    return (rightRearMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
   } 
 
   public double getAvgEncoderCountMeters(){

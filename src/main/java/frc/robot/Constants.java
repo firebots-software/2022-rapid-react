@@ -19,8 +19,8 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double TICKS_PER_METER = 26199.13932126; // * (1.339280 / 2.13);
-    public static final double TICKS_PER_INCH = 76.1120944;
+    public static final double TICKS_PER_METER = 3000; // 26199.13932126; // * (1.339280 / 2.13);
+    public static final double TICKS_PER_INCH = 76.2;//76.1120944;
     public static class OI {
         public static final int PS4_CONTROLLER_PORT = 3;
 
