@@ -9,14 +9,14 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 
-public class MoveToTargetDistance extends CommandBase {
+public class MoveToTargetDistancePID extends CommandBase {
   private Limelight limelight; 
   private Drivetrain drivetrain; 
   private PIDController pid; 
   private double tempTargetMeters; 
 
   /** Creates a new MoveToTargetDistance. */
-  public MoveToTargetDistance() {
+  public MoveToTargetDistancePID() {
     limelight = Limelight.getInstance(); 
     drivetrain = Drivetrain.getInstance();
     pid = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD); 

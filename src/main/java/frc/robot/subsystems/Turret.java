@@ -17,12 +17,14 @@ import frc.robot.Constants;
 public class Turret extends SubsystemBase {
     private TalonFX motor;
     private static Turret instance;
+    private final double RAMPING_CONSTANT = 0.25;
 
   /** Creates a new Turret. */
   private Turret() {
     this.motor = new TalonFX(Constants.Turret.motorPortNumber);
     motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     motor.configFactoryDefault();
+    motor.configOpenloopRamp(RAMPING_CONSTANT); 
   }
 
   public static Turret getInstance(){
