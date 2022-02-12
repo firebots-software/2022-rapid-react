@@ -97,7 +97,7 @@ public class Limelight extends SubsystemBase {
     public double getDistanceToTarget() {
       double limelightYOffset = this.getTx(); 
       double ratio = Math.tan(limelightYOffset + Constants.Limelight.limelightAngleOffset); 
-      return ratio * Constants.Limelight.heightOfTarget; 
+      return ratio * Constants.Limelight.heightOfTargetFromLimelight; 
     }
 
   @Override
