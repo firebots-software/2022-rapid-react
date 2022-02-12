@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.limelight.AlignToTarget;
+import frc.robot.commands.limelight.MoveToTargetDistanceMotionProfiling;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.commands.shooter.TurnTurretAtSpeed;
 import frc.robot.commands.shooter.TurntoAngle;
@@ -81,6 +82,9 @@ public class RobotContainer {
 
     final Button alignToTarget = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT); 
     alignToTarget.whenPressed(new AlignToTarget()); 
+
+    final Button moveToTargetDistanceMotionProfiling = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT); 
+    moveToTargetDistanceMotionProfiling.whenPressed(new RamseteGenerator.generateCommandForPath(Paths.moveToTargetDistance); 
   }
 
   /**

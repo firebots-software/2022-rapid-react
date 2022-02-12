@@ -26,6 +26,7 @@ public class MoveToTargetDistanceMotionProfiling extends CommandBase {
   public MoveToTargetDistanceMotionProfiling() {
     limelight = Limelight.getInstance(); 
     drivetrain = Drivetrain.getInstance(); 
+    ramseteGenerator = new RamseteGenerator(); 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -34,7 +35,9 @@ public class MoveToTargetDistanceMotionProfiling extends CommandBase {
   public void initialize() {
     drivetrain.resetEncoders();
     limelight.refreshValues();
-    Trajectory moveToTargetDistance = generatePaths(limelight.getDistanceToTarget()); 
+    Trajectory moveToTargetDistanceTrajectory = generatePaths(limelight.getDistanceToTarget()); 
+    RamseteCommand moveToTargetDistanceCommand = ramseteGenerator.generateCommandForPath(moveToTargetDistanceTrajectory); 
+    
   }
 
   public static Trajectory generatePaths(double distanceNeeded) {
@@ -48,7 +51,7 @@ public class MoveToTargetDistanceMotionProfiling extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    
   }
 
   // Called once the command ends or is interrupted.
