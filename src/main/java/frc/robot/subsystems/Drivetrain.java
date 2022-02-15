@@ -201,23 +201,23 @@ public class Drivetrain extends SubsystemBase {
     return n;
   }
   public double getLeftEncoderCountMeters() {
-    return leftFrontMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+    return -leftFrontMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
   }
 
   public double getRightEncoderCountMeters() {
-    return rightRearMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+    return -rightRearMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
   }
 
   public double getRightEncoderTicks() {
-    return rightRearMaster.getSelectedSensorPosition();
+    return -rightRearMaster.getSelectedSensorPosition();
   }
 
   public double getLeftEncoderVelocityMetersPerSec() {
-    return (leftFrontMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
+    return (-leftFrontMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
   }
 
   public double getRightEncoderVelocityMetersPerSec() {
-    return (rightRearMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
+    return (-rightRearMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
   } 
 
   public double getAvgEncoderCountMeters(){
@@ -225,7 +225,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getHeading(){
-    return gyro.getAngle();
+    return -gyro.getAngle();
+  }
+
+  public void resetGyro() {
+    gyro.reset();
   }
 
   public void setMotorNeutralMode(NeutralMode neutralMode){
@@ -259,6 +263,7 @@ public DifferentialDriveWheelSpeeds getWheelSpeeds() {
  */
 public void resetOdometry(Pose2d pose) {
     resetEncoders();
+    resetGyro();
     odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
 }
 
@@ -272,7 +277,9 @@ public void tankDriveVolts(double leftVolts, double rightVolts) {
     SmartDashboard.putNumber("leftvolts", leftVolts);
     SmartDashboard.putNumber("rightvolts", rightVolts);
     leftFrontMaster.setVoltage(leftVolts);
+    leftFollower.setVoltage(leftVolts);
     rightRearMaster.setVoltage(rightVolts);
+    rightFollower.setVoltage(rightVolts);
 
 
     instance.robotDrive.feed();
