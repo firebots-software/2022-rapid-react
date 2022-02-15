@@ -46,8 +46,8 @@ public final class Constants {
     public static final class Shooter{
         public final static int shooterPistonPort = 2; //TODO: change to actual port 
         public final static int rollerMotorPort = 3; //TODO: change to actual port
-        public final static int shooterTopMotorPort = 1; //TODO: change port number
-        public final static int shooterBottomMotorPort = 1; //TODO: change port number
+        public final static int shooterTopMotorPort = 7; //TODO: change port number
+        public final static int shooterBottomMotorPort = 6; //TODO: change port number
         public static final double shooterEncoderTicksPerRev = 2048; //todo: change lol
         public static final double motorSpeedToleranceRPM = 5.0; //todo: change to real tolerance
 

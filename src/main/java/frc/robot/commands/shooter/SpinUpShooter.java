@@ -11,7 +11,7 @@ import frc.robot.subsystems.Shooter;
 public class SpinUpShooter extends CommandBase {
   // keep spinning after aimed and during load ball --> toggleFlywheel
   private final Shooter shooter;
-  private final double P = 1/2000.0; //CONSTANT - magic number, figure out thru testing; should be pretty small
+  private final double P = 0.5; //CONSTANT - magic number, figure out thru testing; should be pretty small
 
 
   /** Creates a new SpinUpShooter. */

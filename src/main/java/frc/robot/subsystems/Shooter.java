@@ -70,12 +70,12 @@ public class Shooter extends SubsystemBase {
   * @param speed the specified speed to set the motor to
   */
   public void setTopMotorSpeed(double speed) {
-    topMotor.set(ControlMode.PercentOutput, speed);
+    topMotor.set(ControlMode.PercentOutput, -speed);
     // value to move to aimed point
   }
 
   public void setBottomMotorSpeed(double speed) {
-    bottomMotor.set(ControlMode.PercentOutput, speed);
+    bottomMotor.set(ControlMode.PercentOutput, -speed);
     // value to move to aimed point
   }
 

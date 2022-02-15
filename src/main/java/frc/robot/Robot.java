@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,6 +23,8 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private Drivetrain drivetrain;
 
+  private Shooter shooter;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -32,6 +35,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     drivetrain = Drivetrain.getInstance();
+    shooter = Shooter.getInstance();
   }
 
   /**
@@ -54,6 +58,9 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
     SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
     SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+
+    SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
+    SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
   }
 
 
