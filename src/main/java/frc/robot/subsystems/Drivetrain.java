@@ -147,11 +147,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void PIDarcadeDrive(double frontBackSpeed){
-    frontBackSpeed = restrictToRange(frontBackSpeed, -1,1);
-    // if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) {
-    //   robotDrive.stopMotor();
-    // }
+    frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
     robotDrive.arcadeDrive(frontBackSpeed, 0);
+  }
+
+  public void PIDarcadeDriveAngle(double angle){
+    angle = restrictToRange(angle, -1, 1);
+    robotDrive.arcadeDrive(0, angle);
   }
 
 

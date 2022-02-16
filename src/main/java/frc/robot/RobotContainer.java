@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.auton.DriveBackForTime;
 import frc.robot.commands.auton.DriveForDistance2;
 import frc.robot.commands.auton.DriveForDistanceSingleController;
+import frc.robot.commands.auton.TurnForAngle;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.SetDrivetrainBrakeMode;
 import frc.robot.subsystems.Drivetrain;
@@ -51,6 +52,7 @@ public class RobotContainer {
     autonChooser.addOption("Drive for Distance Test 2", new DriveForDistance2(1));
     autonChooser.addOption("Drive for Distance Test Single Controller", new DriveForDistanceSingleController(1));
     autonChooser.addOption("Motion Profiling Test", RamseteGenerator.generateCommandForPath(Paths.test));
+    autonChooser.addOption("Turn Set Angle", new TurnForAngle(180));
 
   }
 

@@ -42,7 +42,6 @@ public class DriveForDistanceSingleController extends CommandBase {
   @Override
   public void execute() {
     double output = pid.calculate(drivetrain.getAvgEncoderCountMeters());
-    System.out.print("pid output: " + output);
     SmartDashboard.putNumber("Position Error: ", pid.getPositionError());
     drivetrain.PIDarcadeDrive(output);
 
@@ -63,8 +62,6 @@ public class DriveForDistanceSingleController extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("done with pid loop electric boogaloo");
-   //drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     drivetrain.stop();
   }
 

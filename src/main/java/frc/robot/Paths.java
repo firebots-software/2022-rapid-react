@@ -19,7 +19,7 @@ public class Paths {
     public static void generate(){
         test = TrajectoryGenerator.generateTrajectory(
             List.of(new Pose2d(0, 0, new Rotation2d(0)),
-                    new Pose2d(0, 0, new Rotation2d(90))),
+                    new Pose2d(5, 0, new Rotation2d(0))),
             Constants.Drivetrain.MotionProfilingConfig
         );
 
