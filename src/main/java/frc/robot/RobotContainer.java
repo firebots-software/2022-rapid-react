@@ -71,6 +71,9 @@ public class RobotContainer {
     // final Button driveForDist1 = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     // driveForDist1.whenPressed(new DriveForDistance(drivetrain, 2.13));
 
+    final Button motionProfile = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    motionProfile.whenPressed(RamseteGenerator.generateCommandForPath(Paths.test));
+
   }
 
   /**
