@@ -19,8 +19,8 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double TICKS_PER_METER = 3000; // 26199.13932126; // * (1.339280 / 2.13);
-    public static final double TICKS_PER_INCH = 76.2;//76.1120944;
+    public static final double TICKS_PER_METER = 3064; // 26199.13932126; // * (1.339280 / 2.13);
+    public static final double TICKS_PER_INCH = (TICKS_PER_METER / 100.0) * 2.54;//76.1120944;
     public static class OI {
         public static final int PS4_CONTROLLER_PORT = 3;
 
@@ -63,11 +63,11 @@ public final class Constants {
         // ramsete values from wpilib docs
         public static double kRamseteB = 2.0;
         public static double kRamseteZeta = 0.7;
-        public static double kPDriveVel = 12.582;
+        public static double kPDriveVel = 0.073533;
 
-        public static final double ksVolts = 0.92082;
-        public static final double kvVoltSecondsPerMeter = 8.4475;
-        public static final double kaVoltSecondsSquaredPerMeter = 1.6459;
+        public static final double ksVolts = 0.98585;
+        public static final double kvVoltSecondsPerMeter = 2.0628;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.47915;
 
         public static DifferentialDriveVoltageConstraint autoVoltageConstraint =
                 new DifferentialDriveVoltageConstraint(
