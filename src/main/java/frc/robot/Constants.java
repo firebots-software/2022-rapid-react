@@ -57,17 +57,17 @@ public final class Constants {
 
         public static final DifferentialDriveKinematics kinematics =
                 new DifferentialDriveKinematics(TRACK_WIDTH_METERS);
-        public static double kMaxSpeedMetersPerSecond = 0.3;
+        public static double kMaxSpeedMetersPerSecond = 2;
         public static double kMaxAccelerationMetersPerSecondSquared = 0.5;
 
         // ramsete values from wpilib docs
         public static double kRamseteB = 2.0;
         public static double kRamseteZeta = 0.7;
-        public static double kPDriveVel = 0.073533;
+        public static double kPDriveVel = 5.8082;
 
-        public static final double ksVolts = 0.98585;
-        public static final double kvVoltSecondsPerMeter = 2.0628;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.47915;
+        public static final double ksVolts = 1.5451;
+        public static final double kvVoltSecondsPerMeter = 3.3875;
+        public static final double kaVoltSecondsSquaredPerMeter = 1.2148;
 
         public static DifferentialDriveVoltageConstraint autoVoltageConstraint =
                 new DifferentialDriveVoltageConstraint(

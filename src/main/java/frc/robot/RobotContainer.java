@@ -16,6 +16,7 @@ import frc.robot.commands.auton.DriveBackForTime;
 import frc.robot.commands.auton.DriveForDistance2;
 import frc.robot.commands.auton.DriveForDistanceSingleController;
 import frc.robot.commands.drivetrain.JoystickDrive;
+import frc.robot.commands.drivetrain.SetDrivetrainBrakeMode;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -28,7 +29,6 @@ public class RobotContainer {
   private Joystick ps4_controller;
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
-
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -72,7 +72,13 @@ public class RobotContainer {
     // driveForDist1.whenPressed(new DriveForDistance(drivetrain, 2.13));
 
     final Button motionProfile = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
-    motionProfile.whenPressed(RamseteGenerator.generateCommandForPath(Paths.test));
+    motionProfile.whenPressed(RamseteGenerator.generateCommandForPath(Paths.rotationTest));
+
+    final Button brake = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
+    brake.whenPressed(new SetDrivetrainBrakeMode());
+
+    
+
 
   }
 

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,6 +60,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
     SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
     SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
+
+    SmartDashboard.putBoolean("motion profiling done?", m_robotContainer.getAutonomousCommand().isFinished());
   }
 
 
@@ -65,6 +69,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     updateShuffleboard();
+    drivetrain.setMotorNeutralMode(NeutralMode.Coast);
   }
 
   @Override
@@ -77,6 +82,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     drivetrain.resetOdometry(new Pose2d());
+    drivetrain.setMotorNeutralMode(NeutralMode.Brake);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
