@@ -9,6 +9,7 @@ import java.util.Set;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -37,8 +38,10 @@ public class TurnForAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double output = pid.calculate(drivetrain.getHeading());
+    double output = -pid.calculate(drivetrain.getHeading());
     drivetrain.PIDarcadeDriveAngle(output);
+    SmartDashboard.putNumber("PID output", output); 
+    SmartDashboard.putNumber("PID error", pid.getPositionError());
   }
 
   // Called once the command ends or is interrupted.
@@ -47,10 +50,12 @@ public class TurnForAngle extends CommandBase {
     drivetrain.stop();
   }
 
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return pid.atSetpoint();
+  
   }
 
   @Override
