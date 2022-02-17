@@ -84,7 +84,7 @@ public class RobotContainer {
     alignToTarget.whenPressed(new AlignToTarget()); 
 
     final Button moveToTargetDistanceMotionProfiling = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT); 
-    moveToTargetDistanceMotionProfiling.whenPressed(new RamseteGenerator.generateCommandForPath(Paths.moveToTargetDistance); 
+    moveToTargetDistanceMotionProfiling.whenPressed(new RamseteGenerator(Paths.moveToTargetDistance); 
   }
 
   /**
