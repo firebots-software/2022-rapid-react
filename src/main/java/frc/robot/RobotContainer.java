@@ -77,10 +77,10 @@ public class RobotContainer {
     moveTurret.whenPressed( new TurnXDegrees(90));
 
     final Button spinShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    spinShooter.whenHeld(new RunConstSpeed(1));
+    spinShooter.whenHeld(new RunConstSpeed(0.1));
 
     final Button spinRPM = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
-    spinRPM.whenHeld(new SpinUpShooter(3000));
+    spinRPM.whenPressed(new SpinUpShooter(500));
 
 
   

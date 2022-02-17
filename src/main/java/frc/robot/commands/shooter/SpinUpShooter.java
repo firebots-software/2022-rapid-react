@@ -11,7 +11,7 @@ import frc.robot.subsystems.Shooter;
 public class SpinUpShooter extends CommandBase {
   // keep spinning after aimed and during load ball --> toggleFlywheel
   private final Shooter shooter;
-  private final double P = 0.5; //CONSTANT - magic number, figure out thru testing; should be pretty small
+  private final double P = 0.001; //CONSTANT - magic number, figure out thru testing; should be pretty small
 
 
   /** Creates a new SpinUpShooter. */
@@ -40,13 +40,15 @@ public class SpinUpShooter extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    shooter.stopBottomMotor();
+    shooter.stopTopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return shooter.isAtTargetSpeed(Constants.Shooter.motorSpeedToleranceRPM);
+    return false;
+    // return shooter.isAtTargetSpeed(Constants.Shooter.motorSpeedToleranceRPM);
         // possible return false and change it in the command group
         //  TODO: command group - if interrupted then return true --> loadBall
   }

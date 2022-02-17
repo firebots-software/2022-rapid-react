@@ -55,10 +55,10 @@ public class Shooter extends SubsystemBase {
   * Returns motor RPM from selected sensor velocity.
   */
   public double getTopShooterRPM() {
-    return (topMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
+    return (-topMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
   }
   public double getBottomShooterRPM() {
-    return (bottomMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
+    return (-bottomMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
   }
 
   public void setRollerMotorSpeed(double speed){
@@ -70,11 +70,17 @@ public class Shooter extends SubsystemBase {
   * @param speed the specified speed to set the motor to
   */
   public void setTopMotorSpeed(double speed) {
+    if (speed > 1) speed = 1;
+    if (speed < -1) speed = -1;
+
     topMotor.set(ControlMode.PercentOutput, -speed);
     // value to move to aimed point
   }
 
   public void setBottomMotorSpeed(double speed) {
+    if (speed > 1) speed = 1;
+    if (speed < -1) speed = -1;
+
     bottomMotor.set(ControlMode.PercentOutput, -speed);
     // value to move to aimed point
   }
@@ -129,6 +135,13 @@ public class Shooter extends SubsystemBase {
     return (Math.abs(topError) <= marginOfError) && (Math.abs(bottomError) <= marginOfError); //both motors 
   }
 
+  public double getTopMotorOutput() {
+    return topMotor.getMotorOutputPercent();
+  }
+
+  public double getBottomMotorOutput() {
+    return bottomMotor.getMotorOutputPercent();
+  }
   // extend/ retract piston --> binds to button
 
 }
