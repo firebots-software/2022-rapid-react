@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   private Drivetrain drivetrain;
+  private Climber climber;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -54,6 +56,8 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
     SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
     SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+    SmartDashboard.putNumber("leftEncoderVal:", climber.getLeftHeight());
+    SmartDashboard.putNumber("rightEncoderVal:", climber.getRightHeight());
   }
 
 
