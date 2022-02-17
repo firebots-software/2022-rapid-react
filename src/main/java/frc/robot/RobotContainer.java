@@ -31,6 +31,7 @@ public class RobotContainer {
   private Joystick ps4_controller;
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
+  private double shooterSpeedChooser = 0.0;
 
 
 
@@ -49,7 +50,7 @@ public class RobotContainer {
                   () -> ps4_controller.getRawAxis(2)));
 
     SmartDashboard.putData("Auton chooser", autonChooser);
-
+    SmartDashboard.putNumber("shooter speed", shooterSpeedChooser);
   }
 
   /**
@@ -77,7 +78,7 @@ public class RobotContainer {
     moveTurret.whenPressed( new TurnXDegrees(90));
 
     final Button spinShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    spinShooter.whenHeld(new RunConstSpeed(0.1));
+    spinShooter.whenHeld(new RunConstSpeed(0.0));
 
     final Button spinRPM = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
     spinRPM.whenPressed(new SpinUpShooter(500));

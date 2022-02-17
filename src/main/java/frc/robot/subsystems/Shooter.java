@@ -21,6 +21,7 @@ public class Shooter extends SubsystemBase {
   private TalonFX topMotor, bottomMotor; 
   private boolean atTargetSpeed;
   private double targetSpeed;
+  private final double MAX_SPEED = 0.75;
 
   /** Creates a new Shooter. */
   private Shooter() {
@@ -70,16 +71,16 @@ public class Shooter extends SubsystemBase {
   * @param speed the specified speed to set the motor to
   */
   public void setTopMotorSpeed(double speed) {
-    if (speed > 1) speed = 1;
-    if (speed < -1) speed = -1;
+    if (speed > MAX_SPEED) speed = MAX_SPEED;
+    if (speed < -MAX_SPEED) speed = -MAX_SPEED;
 
     topMotor.set(ControlMode.PercentOutput, -speed);
     // value to move to aimed point
   }
 
   public void setBottomMotorSpeed(double speed) {
-    if (speed > 1) speed = 1;
-    if (speed < -1) speed = -1;
+    if (speed > MAX_SPEED) speed = MAX_SPEED;
+    if (speed < -MAX_SPEED) speed = -MAX_SPEED;
 
     bottomMotor.set(ControlMode.PercentOutput, -speed);
     // value to move to aimed point
@@ -94,6 +95,11 @@ public class Shooter extends SubsystemBase {
 
   public void stopBottomMotor() {
     setTopMotorSpeed(0);
+  }
+
+  public void stopBothMotors() {
+    stopTopMotor();
+    stopBottomMotor();
   }
 
 

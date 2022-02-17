@@ -4,6 +4,7 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
@@ -13,14 +14,16 @@ public class RunConstSpeed extends CommandBase {
   
   /** Creates a new RunConstSpeed. */
   public RunConstSpeed(double speed) {
-    this.speed = speed;
+    this.speed = SmartDashboard.getNumber("shooter speed", 0.0);
     this.shooter = Shooter.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("MOTOR SPEED " + speed);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

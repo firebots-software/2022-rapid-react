@@ -15,7 +15,6 @@ import frc.robot.subsystems.Shooter;
 public class SpinUpShooter extends CommandBase {
   // keep spinning after aimed and during load ball --> toggleFlywheel
   private final Shooter shooter;
-  private final double P = 1/2000.0; //CONSTANT - magic number, figure out thru testing; should be pretty small
   private final PIDController pidTop, pidBottom; 
   private final double kp, ki, kd; 
 
@@ -24,9 +23,9 @@ public class SpinUpShooter extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
     shooter.setTargetSpeed(speed);
-    kp = 1/2000; 
+    kp = 0.0008; 
     ki = 0; 
-    kd = 0; 
+    kd = 0.000014; 
     pidTop = new PIDController(kp, ki, kd); 
     pidBottom = new PIDController(kp, ki, kd); 
     pidTop.setSetpoint(shooter.getTargetSpeed());
@@ -46,19 +45,20 @@ public class SpinUpShooter extends CommandBase {
 
     double outputBottom = pidBottom.calculate(shooter.getBottomShooterRPM()); 
     SmartDashboard.putNumber("shooter bottom motor output", outputBottom); 
-    shooter.setBottomMotorSpeed(outputBottom);
+    // shooter.setBottomMotorSpeed(outputBottom);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    shooter.stopBothMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return shooter.isAtTargetSpeed(Constants.Shooter.motorSpeedToleranceRPM);
+    return false;
+    // return shooter.isAtTargetSpeed(Constants.Shooter.motorSpeedToleranceRPM);
         // possible return false and change it in the command group
         //  TODO: command group - if interrupted then return true --> loadBall
   }
