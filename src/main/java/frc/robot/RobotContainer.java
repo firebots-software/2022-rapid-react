@@ -15,11 +15,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
+import frc.robot.commands.shooter.ChangeShooterTargetRPM;
 import frc.robot.commands.shooter.LaunchBall;
 import frc.robot.commands.shooter.RunConstSpeed;
 import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.commands.shooter.TurnXDegrees;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,6 +34,7 @@ public class RobotContainer {
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
   private double shooterSpeedChooser = 0.0;
+  private Shooter shooter;
 
 
 
@@ -51,6 +54,7 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auton chooser", autonChooser);
     SmartDashboard.putNumber("shooter speed", shooterSpeedChooser);
+    shooter = Shooter.getInstance();
   }
 
   /**
@@ -81,7 +85,20 @@ public class RobotContainer {
     spinShooter.whenHeld(new RunConstSpeed(0.0));
 
     final Button spinRPM = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
-    spinRPM.whenPressed(new SpinUpShooter(500));
+    spinRPM.toggleWhenPressed(new SpinUpShooter(3000, 3000));
+
+
+    final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
+    increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, 500));
+
+    final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -500));
+
+    final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
+    increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, 500));
+
+    final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
+    decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -500));
 
 
   

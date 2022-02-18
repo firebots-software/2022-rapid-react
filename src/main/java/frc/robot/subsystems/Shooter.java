@@ -20,18 +20,24 @@ public class Shooter extends SubsystemBase {
   private TalonSRX rollerMotor;
   private TalonFX topMotor, bottomMotor; 
   private boolean atTargetSpeed;
-  private double targetSpeed;
-  private final double MAX_SPEED = 0.75;
+  private double topTargetRPM, bottomTargetRPM;
+  private final double MAX_SPEED = 1;
+  private final double RAMPING_CONSTANT = 0.25;
 
   /** Creates a new Shooter. */
   private Shooter() {
     // this.piston = new Solenoid(PneumaticsModuleType.CTREPCM,
     // Constants.Shooter.shooterPistonPort);
     this.topMotor = new TalonFX(Constants.Shooter.shooterTopMotorPort);
+    topMotor.configOpenloopRamp(RAMPING_CONSTANT);
     this.bottomMotor = new TalonFX(Constants.Shooter.shooterBottomMotorPort);
+    bottomMotor.configOpenloopRamp(RAMPING_CONSTANT);
+
+
     this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
     atTargetSpeed = false;
-    this.targetSpeed = 0;
+    this.topTargetRPM = 3000;
+    this.bottomTargetRPM = 3000;
 
   }
 
@@ -116,19 +122,13 @@ public class Shooter extends SubsystemBase {
    */
   // add threshold for target speed
 
- /* 
-  * Accessor for targetSpeed member variable.
-  */
-  public double getTargetSpeed() {
-    return this.targetSpeed;
-  }
 
- /* 
-  * Mutates target speed to new specified target speed.
-  * @param targetSpeed new specified target speed
-  */
-  public void setTargetSpeed(double targetSpeed) {
-    this.targetSpeed = targetSpeed;
+  public void setTopTargetRPM(double rpm) {
+    this.topTargetRPM = rpm;
+  }  
+  
+  public void setBottomTargetRPM(double rpm) {
+    this.bottomTargetRPM = rpm;
   }
 
  /* 
@@ -136,9 +136,17 @@ public class Shooter extends SubsystemBase {
   * @param marginOfError bounded MoE between motor RPM and target speed
   */
   public boolean isAtTargetSpeed(double marginOfError) {
-    double topError = getTopShooterRPM() - getTargetSpeed();
-    double bottomError = getBottomShooterRPM() - getTargetSpeed();
-    return (Math.abs(topError) <= marginOfError) && (Math.abs(bottomError) <= marginOfError); //both motors 
+    return bottomAtTargetRPM(marginOfError) && topAtTargetRPM(marginOfError); //both motors 
+  }
+
+  public boolean topAtTargetRPM(double marginOfError) {
+    double error = getTopShooterRPM() - getTopTargetRPM();
+    return Math.abs(error) <= marginOfError; //both motors 
+  }
+
+  public boolean bottomAtTargetRPM(double marginOfError) {
+    double error = getBottomShooterRPM() - getBottomTargetRPM();
+    return Math.abs(error) <= marginOfError; //both motors 
   }
 
   public double getTopMotorOutput() {
@@ -147,6 +155,14 @@ public class Shooter extends SubsystemBase {
 
   public double getBottomMotorOutput() {
     return bottomMotor.getMotorOutputPercent();
+  }
+
+  public double getTopTargetRPM() {
+    return topTargetRPM;
+  }
+
+  public double getBottomTargetRPM() {
+    return bottomTargetRPM;
   }
   // extend/ retract piston --> binds to button
 

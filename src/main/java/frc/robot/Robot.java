@@ -65,6 +65,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("top shooter output", shooter.getTopMotorOutput());
     SmartDashboard.putNumber("bottom shooter output", shooter.getBottomMotorOutput());
 
+    SmartDashboard.putNumber("top shooter target", shooter.getTopTargetRPM());
+    SmartDashboard.putNumber("bottom shooter target", shooter.getBottomTargetRPM());
+
   }
 
 

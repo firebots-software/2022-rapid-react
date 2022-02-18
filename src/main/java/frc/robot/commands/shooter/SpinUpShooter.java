@@ -17,35 +17,42 @@ public class SpinUpShooter extends CommandBase {
   private final Shooter shooter;
   private final PIDController pidTop, pidBottom; 
   private final double kp, ki, kd; 
+  private double currentVoltageTop, currentVoltageBottom;
 
   /** Creates a new SpinUpShooter. */
-  public SpinUpShooter(double speed) {
+  public SpinUpShooter(double topRPM, double bottomRPM) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
-    shooter.setTargetSpeed(speed);
-    kp = 0.0008; 
+    // shooter.setTopTargetRPM(topRPM);
+    // shooter.setBottomTargetRPM(bottomRPM);
+    kp = 0.00001; 
     ki = 0; 
-    kd = 0.000014; 
+    kd = 0.00; 
     pidTop = new PIDController(kp, ki, kd); 
     pidBottom = new PIDController(kp, ki, kd); 
-    pidTop.setSetpoint(shooter.getTargetSpeed());
-    pidBottom.setSetpoint(shooter.getTargetSpeed());
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pidTop.setSetpoint(shooter.getTopTargetRPM());
+    pidBottom.setSetpoint(shooter.getBottomTargetRPM());
+
+    currentVoltageTop = 0;
+    currentVoltageBottom = 0;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double outputTop = pidTop.calculate(shooter.getTopShooterRPM()); 
-    SmartDashboard.putNumber("shooter top motor output", outputTop); 
-    shooter.setTopMotorSpeed(outputTop); 
+    currentVoltageTop += pidTop.calculate(shooter.getTopShooterRPM()); 
+    SmartDashboard.putNumber("shooter top motor output", currentVoltageTop); 
+    shooter.setTopMotorSpeed(currentVoltageTop); 
 
-    double outputBottom = pidBottom.calculate(shooter.getBottomShooterRPM()); 
-    SmartDashboard.putNumber("shooter bottom motor output", outputBottom); 
-    // shooter.setBottomMotorSpeed(outputBottom);
+    currentVoltageBottom += pidBottom.calculate(shooter.getBottomShooterRPM()); 
+    SmartDashboard.putNumber("shooter bottom motor output",  currentVoltageBottom); 
+    shooter.setBottomMotorSpeed(currentVoltageBottom);
   }
 
   // Called once the command ends or is interrupted.
