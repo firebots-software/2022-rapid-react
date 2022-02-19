@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,9 +17,17 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.drivetrain.CurvatureDrive;
+import frc.robot.commands.drivetrain.JoystickDrive;
 import edu.wpi.first.wpilibj.SPI;
 
 public class Drivetrain extends SubsystemBase {
@@ -42,7 +51,7 @@ public class Drivetrain extends SubsystemBase {
   
   // fields
   private final WPI_TalonSRX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
-  private ADXRS450_Gyro gyro;
+  private static Pigeon2 pigeon; 
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -58,29 +67,36 @@ public class Drivetrain extends SubsystemBase {
 
   private driveOrientation orientation;
 
+  // robot status
+  private boolean brakeMode;
+
+
   /**
    * The Singleton instance of this Drivetrain. External classes should
    * use the {@link #getInstance()} method to get the instance.
    */
   private static Drivetrain instance;
 
+  private boolean curvatureDriveOn;
   /** Creates a new Drivetrain. */
   private Drivetrain() {
+    curvatureDriveOn = true;
+
     this.leftFollower = new WPI_TalonSRX(Constants.Drivetrain.leftFollowerPort);
     this.leftFrontMaster = new WPI_TalonSRX(Constants.Drivetrain.leftMasterPort);
     this.rightRearMaster = new WPI_TalonSRX(Constants.Drivetrain.rightMasterPort);
     this.rightFollower = new WPI_TalonSRX(Constants.Drivetrain.rightFollowerPort);
     resetEncoders();
 
+    pigeon = new Pigeon2(Constants.Drivetrain.PIGEON_ID);
+    resetGyro();
+    
     MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
     MotorControllerGroup rightSide = new MotorControllerGroup(rightFollower, rightRearMaster);
     robotDrive = new DifferentialDrive(leftSide, rightSide);
     configTalons();
     setMotorNeutralMode(NeutralMode.Coast);
 
-    this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-    this.gyro.calibrate();
-    this.gyro.reset();
 
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), new Pose2d());
 
@@ -101,6 +117,10 @@ public class Drivetrain extends SubsystemBase {
     return instance;
   }
 
+  public static double getPigeonYaw() {
+    return pigeon.getYaw(); 
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -109,25 +129,31 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
-    if (rotation > 1) rotation = 1.0;
-    if (rotation < -1) rotation = -1.0;
-    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
+    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
+    rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
       robotDrive.stopMotor();
     } else {
       if (orientation == driveOrientation.BACK) {
         frontBackSpeed *= -1;
       }
       if (isSlowMode) {
-        frontBackSpeed *= SLOW_MODE_CONSTANT;
+       frontBackSpeed *= SLOW_MODE_CONSTANT;
         rotation *= SLOW_MODE_CONSTANT;
+
       } else {
-        frontBackSpeed *= 0.7;
+        frontBackSpeed *= 0.5;
         rotation *= 0.5;
       }
+
+
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
-      SmartDashboard.putNumber("frontBackSpeed", frontBackSpeed);
+
+      SmartDashboard.putNumber("frontbackspeed",frontBackSpeed);
+      SmartDashboard.putNumber("rotationspeed",rotation);
+
       robotDrive.arcadeDrive(frontBackSpeed, rotation);
+
     }
   }
 
@@ -157,6 +183,51 @@ public class Drivetrain extends SubsystemBase {
   }
 
 
+  public void curvatureDrive(double frontBackSpeed, double rotation) {
+    boolean quickTurn = false;
+    if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE && 
+    rotation < DEADZONE_RANGE && rotation > -DEADZONE_RANGE) {
+      robotDrive.stopMotor();
+      
+    } else {
+      if (orientation == driveOrientation.BACK) {
+        frontBackSpeed *= -1;
+        
+      }
+      if (isSlowMode) {
+        frontBackSpeed *= SLOW_MODE_CONSTANT;
+        rotation *= SLOW_MODE_CONSTANT;
+
+      } else {
+        frontBackSpeed *= 0.5;
+        rotation *= 0.5;
+      }
+
+      if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) {
+        quickTurn = true;
+        rotation *= 0.5;
+      } else {
+        quickTurn = false;
+      }
+
+      frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
+      rotation = restrictToRange(rotation, -1, 1);
+
+      SmartDashboard.putNumber("frontbackspeed",frontBackSpeed);
+      SmartDashboard.putNumber("rotationspeed",rotation);
+      SmartDashboard.putBoolean("quickTurnEnabled", quickTurn);
+
+      robotDrive.curvatureDrive(frontBackSpeed, rotation, quickTurn);
+
+    }
+  }
+
+  public void PIDarcadeDrive(double frontBackSpeed, double rotation) {
+    frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
+    rotation = restrictToRange(rotation, -1, 1);
+
+    robotDrive.arcadeDrive(frontBackSpeed, rotation, false);
+}
 
   public void resetEncoders() {
     leftFrontMaster.setSelectedSensorPosition(0);
@@ -186,8 +257,44 @@ public class Drivetrain extends SubsystemBase {
     setMotorNeutralMode(NeutralMode.Coast);
     // robotDrive.setRightSideInverted(true); 
     // THIS IS BROCKEN IN 2022!!!!!! either invert rightSide motorcontrollergroup or invert individual motors
+    //robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
 }
 
+public boolean getBrakeModeStatus() {
+  return brakeMode;
+}
+
+//todo: why is setBrakeMode commented out
+public void setBrakeMode(boolean newBrakeMode) {
+  //       if (newBrakeMode) {
+  //        rightRearMaster.set(NeutralMode.Brake, 0);
+  // }
+}
+
+public driveOrientation getDriveOrientation() {
+  return orientation;
+}
+
+public void setDriveOrientation(driveOrientation orientation) {
+  this.orientation = orientation;
+}
+
+public void toggleDriveOrientation() {
+  this.orientation = orientation.toggle();
+}
+
+public boolean getSlowModeStatus() {
+  return isSlowMode;
+}
+
+/**
+* Sets the drivetrain's slow mode status. If slow mode is on, all velocity values will be reduced.
+*
+* @param isSlowMode
+*/
+public void setSlowMode(boolean isSlowMode) {
+  this.isSlowMode = isSlowMode;
+}
 
   public void stop() {
     leftFollower.set(0);
@@ -195,6 +302,22 @@ public class Drivetrain extends SubsystemBase {
     leftFrontMaster.set(0);
     rightFollower.set(0);
 }
+
+  public void resetGyro() {
+    pigeon.setYaw(0);
+  }
+
+  public double getHeading() {
+    if (pigeon != null) {
+        return -pigeon.getYaw(); //todo: why gyro angle = -heading?
+    } else {
+        return 0;
+    }
+  }
+
+  public boolean getDriveStatus() {
+    return curvatureDriveOn;
+  }
 
   private double restrictToRange(double n, int min, int max) {
     if (n > max) return max;
@@ -223,14 +346,6 @@ public class Drivetrain extends SubsystemBase {
 
   public double getAvgEncoderCountMeters(){
     return (getLeftEncoderCountMeters()+getRightEncoderCountMeters())/2;
-  }
-
-  public double getHeading(){
-    return -gyro.getAngle();
-  }
-
-  public void resetGyro() {
-    gyro.reset();
   }
 
   public void setMotorNeutralMode(NeutralMode neutralMode){
@@ -285,4 +400,20 @@ public void tankDriveVolts(double leftVolts, double rightVolts) {
 
     instance.robotDrive.feed();
 }
+  public void toggleDefaultCommand(Joystick ps4) {
+    if (curvatureDriveOn) {
+      this.setDefaultCommand( new JoystickDrive(
+        () -> ps4.getRawAxis(1),
+        () -> ps4.getRawAxis(2)));
+
+        curvatureDriveOn = false;
+    } else {
+      this.setDefaultCommand( new CurvatureDrive(
+        () -> ps4.getRawAxis(1),
+        () -> ps4.getRawAxis(2)));
+
+        curvatureDriveOn = true;
+    }
+  }
+
 }

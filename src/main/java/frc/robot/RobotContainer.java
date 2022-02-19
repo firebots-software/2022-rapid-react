@@ -18,6 +18,10 @@ import frc.robot.commands.auton.DriveForDistanceSingleController;
 import frc.robot.commands.auton.TurnForAngle;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.SetDrivetrainBrakeMode;
+import frc.robot.commands.drivetrain.CurvatureDrive;
+import frc.robot.commands.drivetrain.DriveFlip;
+import frc.robot.commands.drivetrain.FlipOrientation;
+import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -37,12 +41,13 @@ public class RobotContainer {
     // Configure the button bindings
     this.ps4_controller = new Joystick(Constants.OI.PS4_CONTROLLER_PORT);
     Paths.generate();
+    this.drivetrain = Drivetrain.getInstance();
     configureButtonBindings();
 
         // Configure default commands
         // Set the default drive command to split-stick arcade drive
         drivetrain.setDefaultCommand(
-          new JoystickDrive(
+          new CurvatureDrive(
                   () -> ps4_controller.getRawAxis(1),
                   () -> ps4_controller.getRawAxis(2)));
 
@@ -80,6 +85,15 @@ public class RobotContainer {
     brake.whenPressed(new SetDrivetrainBrakeMode());
 
     
+
+    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
+    flipOrientation.whenPressed(new FlipOrientation());
+
+    final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    slowMode.whenHeld(new ToggleSlowMode());
+
+    final Button driveMode = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    driveMode.whenPressed(new DriveFlip(ps4_controller));
 
 
   }

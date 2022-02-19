@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,6 +24,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private Drivetrain drivetrain;
   private RobotContainer m_robotContainer;
+  private Shooter shooter; 
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     drivetrain = Drivetrain.getInstance();
+    shooter = Shooter.getInstance(); 
   }
 
   /**
@@ -62,6 +65,18 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
 
     SmartDashboard.putBoolean("motion profiling done?", m_robotContainer.getAutonomousCommand().isFinished());
+    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
+    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+
+    // SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
+    // SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
+
+    // SmartDashboard.putNumber("top shooter output", shooter.getTopMotorOutput());
+    // SmartDashboard.putNumber("bottom shooter output", shooter.getBottomMotorOutput());
+
+    SmartDashboard.putNumber("gyro yaw value", drivetrain.getPigeonYaw()); 
+
   }
 
 

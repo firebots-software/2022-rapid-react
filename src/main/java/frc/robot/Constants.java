@@ -46,6 +46,7 @@ public final class Constants {
         public final static int leftMasterPort = 2;
         public final static int rightMasterPort = 4;
         public final static int rightFollowerPort = 3;
+        public final static int PIGEON_ID = 8;
 
         public static double driveP = 0.3, driveI = 0, driveD = 0;
         public static double angleP = 0.014, angleI = 0, angleD = 0;
@@ -105,5 +106,13 @@ public final class Constants {
 
         public static RamseteController ramseteController = new RamseteController(Constants.Drivetrain.kRamseteB, Constants.Drivetrain.kRamseteZeta);
 
+        public final static double turnToleranceDeg = 1;
+        public static final double turnRateToleranceDegPerS = 45;
+        public static double smallTurnP = 0.01, smallTurnI = 0.0, smallTurnD = 0.0036569; //todo: verify if correct values
+    }
+
+    public static final class Climber {
+        public final static int leftClimberPort = 9999;
+        public final static int rightClimberPort = 9998;  //Both of these are random numbers replace when we actually now the correct port
     }
 }
