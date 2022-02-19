@@ -117,10 +117,6 @@ public class Drivetrain extends SubsystemBase {
     return instance;
   }
 
-  public static double getPigeonYaw() {
-    return pigeon.getYaw(); 
-  }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -309,7 +305,7 @@ public void setSlowMode(boolean isSlowMode) {
 
   public double getHeading() {
     if (pigeon != null) {
-        return -pigeon.getYaw(); //todo: why gyro angle = -heading?
+        return pigeon.getYaw(); //todo: why gyro angle = -heading?
     } else {
         return 0;
     }

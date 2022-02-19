@@ -3,7 +3,9 @@ package frc.robot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.commands.drivetrain.ResetOdometry;
 import frc.robot.subsystems.Drivetrain;
 
 public class RamseteGenerator {
@@ -15,7 +17,7 @@ public class RamseteGenerator {
      * @param path = trajectory object describing path
      * @return RamseteCommand to drive given path
      */
-    public static RamseteCommand generateCommandForPath(Trajectory path) {
+    public static Command generateCommandForPath(Trajectory path) {
 
         PIDController leftController = new PIDController(Constants.Drivetrain.kPDriveVel, 0, 0);
         PIDController rightController = new PIDController(Constants.Drivetrain.kPDriveVel, 0, 0);
@@ -43,7 +45,7 @@ public class RamseteGenerator {
         );
 
     
-        return ramseteCommand;
+        return new ResetOdometry().andThen(ramseteCommand);
     }
 
 

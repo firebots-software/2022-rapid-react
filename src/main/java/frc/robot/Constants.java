@@ -61,7 +61,7 @@ public final class Constants {
 
         public static final DifferentialDriveKinematics kinematics =
                 new DifferentialDriveKinematics(TRACK_WIDTH_METERS);
-        public static double kMaxSpeedMetersPerSecond = 2;
+        public static double kMaxSpeedMetersPerSecond = 0.5;
         public static double kMaxAccelerationMetersPerSecondSquared = 0.5;
 
         // ramsete values from wpilib docs

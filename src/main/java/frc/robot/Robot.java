@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
     SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
 
-    SmartDashboard.putBoolean("motion profiling done?", m_robotContainer.getAutonomousCommand().isFinished());
+    // SmartDashboard.putBoolean("motion profiling done?", m_robotContainer.getAutonomousCommand().isFinished());
     SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
     SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
     SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
@@ -74,8 +74,6 @@ public class Robot extends TimedRobot {
 
     // SmartDashboard.putNumber("top shooter output", shooter.getTopMotorOutput());
     // SmartDashboard.putNumber("bottom shooter output", shooter.getBottomMotorOutput());
-
-    SmartDashboard.putNumber("gyro yaw value", drivetrain.getPigeonYaw()); 
 
   }
 

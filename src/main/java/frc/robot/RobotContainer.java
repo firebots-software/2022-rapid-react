@@ -56,8 +56,9 @@ public class RobotContainer {
     autonChooser.addOption("Drive Forward for Time", new DriveBackForTime(0.7, 5));
     autonChooser.addOption("Drive for Distance Test 2", new DriveForDistance2(1));
     autonChooser.addOption("Drive for Distance Test Single Controller", new DriveForDistanceSingleController(1));
-    autonChooser.addOption("Motion Profiling Test", RamseteGenerator.generateCommandForPath(Paths.test));
-    autonChooser.addOption("Turn Set Angle", RamseteGenerator.generateCommandForPath(Paths.turnForAngle));
+    autonChooser.addOption("funky motion prof", RamseteGenerator.generateCommandForPath(Paths.test2));
+    autonChooser.addOption("str8 5m motion prof", RamseteGenerator.generateCommandForPath(Paths.test));
+    autonChooser.addOption("turn 90", RamseteGenerator.generateCommandForPath(Paths.turnForAngle));
 
   }
 
@@ -78,8 +79,8 @@ public class RobotContainer {
     // final Button driveForDist1 = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     // driveForDist1.whenPressed(new DriveForDistance(drivetrain, 2.13));
 
-    final Button motionProfile = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
-    motionProfile.whenPressed(RamseteGenerator.generateCommandForPath(Paths.rotationTest));
+    // final Button motionProfile = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    // motionProfile.whenPressed(RamseteGenerator.generateCommandForPath(Paths.rotationTest));
 
     final Button brake = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
     brake.whenPressed(new SetDrivetrainBrakeMode());
