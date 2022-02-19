@@ -14,7 +14,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 
 /** Add your docs here. */
 public class Paths {
-    public static Trajectory test, rotationTest, test2;
+    public static Trajectory test, rotationTest, test2, turnForAngle;
 
     public static void generate(){
         test = TrajectoryGenerator.generateTrajectory(
@@ -34,6 +34,12 @@ public class Paths {
         test2 = TrajectoryGenerator.generateTrajectory(
             List.of(new Pose2d(0, 0, new Rotation2d(0)),
                     new Pose2d(5, -3, new Rotation2d(0))),
+            Constants.Drivetrain.MotionProfilingConfig
+        );
+
+        turnForAngle = TrajectoryGenerator.generateTrajectory(
+            List.of(new Pose2d(0, 0, new Rotation2d(0)),
+                    new Pose2d(0.01, 0, new Rotation2d(180))),
             Constants.Drivetrain.MotionProfilingConfig
         );
 
