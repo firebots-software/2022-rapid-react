@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 import frc.robot.commands.drivetrain.CurvatureDrive;
 import frc.robot.commands.drivetrain.JoystickDrive;
+import com.ctre.phoenix.sensors.Pigeon2;
 
 public class Drivetrain extends SubsystemBase {
   // constants
@@ -28,6 +29,7 @@ public class Drivetrain extends SubsystemBase {
   // fields
   private final WPI_TalonFX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
   private ADXRS450_Gyro gyro;
+  private static Pigeon2 pigeon; 
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -64,6 +66,9 @@ public class Drivetrain extends SubsystemBase {
     this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
     resetEncoders();
 
+    pigeon = new Pigeon2(8);
+    pigeon.setYaw(0); 
+    
     MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
     MotorControllerGroup rightSide = new MotorControllerGroup(rightFollower, rightRearMaster);
     robotDrive = new DifferentialDrive(leftSide, rightSide);
@@ -89,6 +94,10 @@ public class Drivetrain extends SubsystemBase {
       instance = new Drivetrain();
     }
     return instance;
+  }
+
+  public static double getPigeonYaw() {
+    return pigeon.getYaw(); 
   }
 
   @Override
