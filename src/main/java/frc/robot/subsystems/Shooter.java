@@ -65,7 +65,7 @@ public class Shooter extends SubsystemBase {
     return (-topMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
   }
   public double getBottomShooterRPM() {
-    return (-bottomMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
+    return (bottomMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // per 100ms * 600                                                                                         // = per min
   }
 
   public void setRollerMotorSpeed(double speed){
@@ -88,7 +88,7 @@ public class Shooter extends SubsystemBase {
     if (speed > MAX_SPEED) speed = MAX_SPEED;
     if (speed < -MAX_SPEED) speed = -MAX_SPEED;
 
-    bottomMotor.set(ControlMode.PercentOutput, -speed);
+    bottomMotor.set(ControlMode.PercentOutput, speed);
     // value to move to aimed point
   }
 
