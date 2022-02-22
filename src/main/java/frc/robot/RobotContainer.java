@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commandgroups.MoveToBallAndShootingDistance;
+import frc.robot.commandgroups.TaxiAndIntake;
 import frc.robot.commands.auton.DriveBackForTime;
 import frc.robot.commands.auton.DriveForDistance2;
 import frc.robot.commands.auton.DriveForDistanceSingleController;
@@ -64,7 +65,7 @@ public class RobotContainer {
     autonChooser.addOption("Drive for Distance Test Single Controller", new DriveForDistanceSingleController(1));
     autonChooser.addOption("only taxi", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
     autonChooser.addOption("taxi and move to shooting distance", new MoveToBallAndShootingDistance());
-    // autonChooser.addOption("taxi and intake ball", taxiAndIntake);
+    autonChooser.addOption("taxi and intake ball", new TaxiAndIntake());
     // autonChooser.addOption("taxi and shoot ball", taxiAndShoot);
     // autonChooser.addOption("taxi and intake and shoot one ball", taxiIntakeShootOne);
     // autonChooser.addOption("taxi and intake and shoot two balls", taxiIntakeShootTwo);

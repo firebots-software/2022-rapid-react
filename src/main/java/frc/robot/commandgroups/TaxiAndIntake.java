@@ -4,21 +4,26 @@
 
 package frc.robot.commandgroups;
 
+import java.sql.Driver;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Paths;
 import frc.robot.RamseteGenerator;
-import frc.robot.commands.auton.TurnForAngle;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class MoveToBallAndShootingDistance extends SequentialCommandGroup {
+public class TaxiAndIntake extends SequentialCommandGroup {
   private Drivetrain drivetrain; 
-  /** Creates a new MoveFurthestDistance. */
-  public MoveToBallAndShootingDistance() {
+  private Intake intake; 
+  /** Creates a new MoveAndCollectBall. */
+  public TaxiAndIntake() {
+    drivetrain = Drivetrain.getInstance(); 
+    intake = Intake.getInstance(); 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), new TurnForAngle(180), RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall));
+    // addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), new TurnForAngle(180), intake.intakeBall());
   }
 }

@@ -25,7 +25,7 @@ public class Paths {
 
         moveToShootingDistanceFromBall = TrajectoryGenerator.generateTrajectory(
             List.of(new Pose2d(0, 0, new Rotation2d(0)),
-                    new Pose2d(1, 0, new Rotation2d(90))),
+                    new Pose2d(-1, 0, new Rotation2d(0))), // Negative distance because robot facing hoop and moving backwards
             Constants.Drivetrain.MotionProfilingConfig
         );
 
