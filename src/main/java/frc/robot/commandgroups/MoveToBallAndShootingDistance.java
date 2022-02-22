@@ -19,6 +19,8 @@ public class MoveToBallAndShootingDistance extends SequentialCommandGroup {
   public MoveToBallAndShootingDistance() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), new TurnForAngle(180), RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall));
+    addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), 
+                new TurnForAngle(180), 
+                RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall));
   }
 }
