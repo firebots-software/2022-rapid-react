@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     drivetrain = Drivetrain.getInstance();
     shooter = Shooter.getInstance();
+    shooter.stopBothMotors();
   }
 
   /**
@@ -108,6 +109,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    shooter.stopBothMotors();
   }
 
   /** This function is called periodically during operator control. */

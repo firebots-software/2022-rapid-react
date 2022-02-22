@@ -25,7 +25,7 @@ public class SpinUpShooter extends CommandBase {
     this.shooter = Shooter.getInstance();
     // shooter.setTopTargetRPM(topRPM);
     // shooter.setBottomTargetRPM(bottomRPM);
-    kp = 0.00001; 
+    kp = 0.000005; 
     ki = 0; 
     kd = 0.00; 
     pidTop = new PIDController(kp, ki, kd); 
@@ -39,8 +39,8 @@ public class SpinUpShooter extends CommandBase {
     pidTop.setSetpoint(shooter.getTopTargetRPM());
     pidBottom.setSetpoint(shooter.getBottomTargetRPM());
 
-    currentVoltageTop = shooter.getTopVoltage();
-    currentVoltageBottom = shooter.getBottomVoltage();
+    currentVoltageTop = 0;
+    currentVoltageBottom = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
