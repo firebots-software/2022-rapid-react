@@ -164,6 +164,12 @@ public class Shooter extends SubsystemBase {
   public double getBottomTargetRPM() {
     return bottomTargetRPM;
   }
-  // extend/ retract piston --> binds to button
 
+  public double getTopVoltage() {
+    return topMotor.getBusVoltage();
+  }
+
+  public double getBottomVoltage() {
+    return bottomMotor.getBusVoltage();
+  }
 }
