@@ -178,7 +178,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void PIDarcadeDriveAngle(double angle){
     angle = restrictToRange(angle, -1, 1);
-    robotDrive.arcadeDrive(0, angle);
+    robotDrive.arcadeDrive(0, -angle);
   }
 
 
