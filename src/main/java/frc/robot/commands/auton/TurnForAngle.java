@@ -26,6 +26,7 @@ public class TurnForAngle extends CommandBase {
     pid = new PIDController(Constants.Drivetrain.angleP, Constants.Drivetrain.angleI, Constants.Drivetrain.angleD);
     pid.setSetpoint(targetAngleDegrees);
     pid.setTolerance(Constants.Drivetrain.angleToleranceDegrees, Constants.Drivetrain.velocityToleranceDegreesPerSec);
+    pid.enableContinuousInput(-180, 180);
   }
 
   // Called when the command is initially scheduled.
@@ -38,7 +39,9 @@ public class TurnForAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double output = -pid.calculate(drivetrain.getHeading());
+    double output = pid.calculate(drivetrain.getHeading());
+    if (output > 1) output = 1;
+    if (output < -1) output = -1;
     drivetrain.PIDarcadeDriveAngle(output);
     SmartDashboard.putNumber("PID output", output); 
     SmartDashboard.putNumber("PID error", pid.getPositionError());

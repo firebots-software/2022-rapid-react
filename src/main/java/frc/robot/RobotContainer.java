@@ -58,7 +58,7 @@ public class RobotContainer {
     autonChooser.addOption("Drive for Distance Test Single Controller", new DriveForDistanceSingleController(1));
     autonChooser.addOption("funky motion prof", RamseteGenerator.generateCommandForPath(Paths.test2));
     autonChooser.addOption("str8 5m motion prof", RamseteGenerator.generateCommandForPath(Paths.test));
-    autonChooser.addOption("turn 90", RamseteGenerator.generateCommandForPath(Paths.turnForAngle));
+    autonChooser.addOption("turn 180", new TurnForAngle(180));
 
   }
 

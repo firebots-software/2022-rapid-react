@@ -49,7 +49,7 @@ public final class Constants {
         public final static int PIGEON_ID = 8;
 
         public static double driveP = 0.3, driveI = 0, driveD = 0;
-        public static double angleP = 0.014, angleI = 0, angleD = 0;
+        public static double angleP = 0.0055, angleI = 0, angleD = 0.0001;
         public static double distanceToleranceMeters = 0.02;
         public static double angleToleranceDegrees = 1;
         public static double velocityToleranceMetersPerSec = 0.35;
