@@ -6,6 +6,9 @@ package frc.robot;
 
 import javax.sound.sampled.SourceDataLine;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,12 +26,12 @@ import frc.robot.subsystems.Turret;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-  private RobotContainer m_robotContainer;
   private Drivetrain drivetrain;
   private Turret turret;
 
   private Limelight limelight;
+  private RobotContainer m_robotContainer;
+  private Shooter shooter; 
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -41,6 +45,8 @@ public class Robot extends TimedRobot {
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
    // drivetrain = Drivetrain.getInstance();
+    drivetrain = Drivetrain.getInstance();
+    shooter = Shooter.getInstance(); 
   }
 
   /**
@@ -91,6 +97,24 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
     SmartDashboard.putNumber("turret encoder ticks", turret.getEncoderValTicks());
     
+    SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
+    SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
+
+    SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
+    SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
+    SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
+
+    // SmartDashboard.putBoolean("motion profiling done?", m_robotContainer.getAutonomousCommand().isFinished());
+    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
+    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+
+    // SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
+    // SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
+
+    // SmartDashboard.putNumber("top shooter output", shooter.getTopMotorOutput());
+    // SmartDashboard.putNumber("bottom shooter output", shooter.getBottomMotorOutput());
+
   }
 
 
@@ -98,6 +122,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     updateShuffleboard();
+    drivetrain.setMotorNeutralMode(NeutralMode.Coast);
   }
 
   @Override
@@ -109,6 +134,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    drivetrain.resetOdometry(new Pose2d());
+    drivetrain.setMotorNeutralMode(NeutralMode.Brake);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -131,6 +158,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    drivetrain.resetEncoders();
   }
 
   /** This function is called periodically during operator control. */
