@@ -88,17 +88,18 @@ public class RobotContainer {
     spinRPM.toggleWhenPressed(new SpinUpShooter(3000, 3000));
 
 
+    double rpmInterval = 250;
     final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
-    increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, 500));
+    increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, rpmInterval));
 
     final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -500));
+    decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -rpmInterval));
 
     final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
-    increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, 500));
+    increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, rpmInterval));
 
     final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
-    decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -500));
+    decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
 
 
   
