@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.limelight.AlignToTarget;
-import frc.robot.commands.limelight.MoveToTargetDistanceMotionProfiling;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.commands.shooter.TurnTurretAtSpeed;
 import frc.robot.commands.shooter.TurntoAngle;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -30,6 +30,7 @@ import frc.robot.subsystems.Drivetrain;
 public class RobotContainer {
   private Joystick ps4_controller;
   private Drivetrain drivetrain = Drivetrain.getInstance();
+  private Limelight limelight = Limelight.getInstance(); 
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
 
@@ -39,6 +40,7 @@ public class RobotContainer {
     // Configure the button bindings
     this.ps4_controller = new Joystick(Constants.OI.PS4_CONTROLLER_PORT);
     this.drivetrain = Drivetrain.getInstance();
+    this.limelight = Limelight.getInstance(); 
     configureButtonBindings();
 
         // Configure default commands
@@ -81,10 +83,13 @@ public class RobotContainer {
     turnClockwise.whenHeld(new TurnTurretAtSpeed(0.5));
 
     final Button alignToTarget = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT); 
-    alignToTarget.whenPressed(new AlignToTarget()); 
+    alignToTarget.whenPressed(new AlignToTarget());
+    
+    final Button moveToTargetDistance = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT); 
+    moveToTargetDistance.whenPressed(drivetrain.driveForDistance((-1) * (Constants.Limelight.idealDistanceFromTarget - limelight.getDistanceToTarget()))); 
 
-    final Button moveToTargetDistanceMotionProfiling = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT); 
-    moveToTargetDistanceMotionProfiling.whenPressed(new RamseteGenerator(Paths.moveToTargetDistance); 
+    // final Button moveToTargetDistanceMotionProfiling = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT); 
+    // moveToTargetDistanceMotionProfiling.whenPressed(new RamseteGenerator(Paths.moveToTargetDistance); 
   }
 
   /**

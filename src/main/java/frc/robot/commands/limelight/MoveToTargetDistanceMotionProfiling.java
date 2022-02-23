@@ -1,66 +1,60 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// ALSO NOT USING THIS ANYMORE
 
-package frc.robot.commands.limelight;
+// // Copyright (c) FIRST and other WPILib contributors.
+// // Open Source Software; you can modify and/or share it under the terms of
+// // the WPILib BSD license file in the root directory of this project.
 
-import java.util.List;
+// package frc.robot.commands.limelight;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Limelight;
+// import java.util.List;
 
-public class MoveToTargetDistanceMotionProfiling extends CommandBase {
-  private Limelight limelight; 
-  private Drivetrain drivetrain; 
-  private RamseteGenerator ramseteGenerator; 
+// import edu.wpi.first.math.geometry.Pose2d;
+// import edu.wpi.first.math.geometry.Rotation2d;
+// import edu.wpi.first.math.geometry.Translation2d;
+// import edu.wpi.first.math.trajectory.Trajectory;
+// import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+// import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.RamseteCommand;
+// import frc.robot.Constants;
+// import frc.robot.Paths;
+// import frc.robot.RamseteGenerator;
+// import frc.robot.subsystems.Drivetrain;
+// import frc.robot.subsystems.Limelight;
 
-  /** Creates a new MoveToTargetDistanceMotionProfiling. */
-  public MoveToTargetDistanceMotionProfiling() {
-    limelight = Limelight.getInstance(); 
-    drivetrain = Drivetrain.getInstance(); 
-    ramseteGenerator = new RamseteGenerator(); 
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+// public class MoveToTargetDistanceMotionProfiling extends CommandBase {
+//   private Limelight limelight; 
+//   private Drivetrain drivetrain; 
+//   private RamseteGenerator ramseteGenerator; 
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    drivetrain.resetEncoders();
-    limelight.refreshValues();
-    Trajectory moveToTargetDistanceTrajectory = generatePaths(limelight.getDistanceToTarget()); 
-    RamseteCommand moveToTargetDistanceCommand = ramseteGenerator.generateCommandForPath(moveToTargetDistanceTrajectory); 
+//   /** Creates a new MoveToTargetDistanceMotionProfiling. */
+//   public MoveToTargetDistanceMotionProfiling() {
+//     limelight = Limelight.getInstance(); 
+//     drivetrain = Drivetrain.getInstance(); 
+//     ramseteGenerator = new RamseteGenerator(); 
+//     // Use addRequirements() here to declare subsystem dependencies.
+//   }
+
+//   // Called when the command is initially scheduled.
+//   @Override
+//   public void initialize() {
+//     drivetrain.resetEncoders();
+//     limelight.refreshValues();
+//     RamseteCommand moveToTargetDistanceCommand = RamseteGenerator.generateCommandForPath(Paths.moveToTargetDistance); 
+//   }
+
+//   // Called every time the scheduler runs while the command is scheduled.
+//   @Override
+//   public void execute() {
     
-  }
+//   }
 
-  public static Trajectory generatePaths(double distanceNeeded) {
-    Trajectory moveDistance = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(0, 0, new Rotation2d(0)), 
-      List.of(new Translation2d(0.5, 0)), 
-      new Pose2d(distanceNeeded, 0, new Rotation2d(0)), 
-      Constants.Drivetrain.MotionProfilingConfig); 
-  }
+//   // Called once the command ends or is interrupted.
+//   @Override
+//   public void end(boolean interrupted) {}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
-}
+//   // Returns true when the command should end.
+//   @Override
+//   public boolean isFinished() {
+//     return false;
+//   }
+// }

@@ -1,55 +1,57 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// NOT USING ANYMORE
 
-package frc.robot.commands.limelight;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Limelight;
+// // Copyright (c) FIRST and other WPILib contributors.
+// // Open Source Software; you can modify and/or share it under the terms of
+// // the WPILib BSD license file in the root directory of this project.
 
-public class MoveToTargetDistancePID extends CommandBase {
-  private Limelight limelight; 
-  private Drivetrain drivetrain; 
-  private PIDController pid; 
-  private double tempTargetMeters; 
+// package frc.robot.commands.limelight;
+// import edu.wpi.first.math.controller.PIDController;
+// import edu.wpi.first.wpilibj2.command.CommandBase;
+// import frc.robot.Constants;
+// import frc.robot.subsystems.Drivetrain;
+// import frc.robot.subsystems.Limelight;
 
-  /** Creates a new MoveToTargetDistance. */
-  public MoveToTargetDistancePID() {
-    limelight = Limelight.getInstance(); 
-    drivetrain = Drivetrain.getInstance();
-    pid = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD); 
-    tempTargetMeters = 2; 
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+// public class MoveToTargetDistancePID extends CommandBase {
+//   private Limelight limelight; 
+//   private Drivetrain drivetrain; 
+//   private PIDController pid; 
+//   private double tempTargetMeters; 
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    limelight.refreshValues();
-    drivetrain.resetEncoders();
-    // pid.setSetpoint(limelight.getDistanceToTarget());
-    pid.setSetpoint(tempTargetMeters);
-    pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);
-  }
+//   /** Creates a new MoveToTargetDistance. */
+//   public MoveToTargetDistancePID() {
+//     limelight = Limelight.getInstance(); 
+//     drivetrain = Drivetrain.getInstance();
+//     pid = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD); 
+//     tempTargetMeters = 2; 
+//     // Use addRequirements() here to declare subsystem dependencies.
+//   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    double pidOutput = pid.calculate(drivetrain.getAvgEncoderCountMeters()); 
-    drivetrain.PIDarcadeDrive(pidOutput, 0);
-  }
+//   // Called when the command is initially scheduled.
+//   @Override
+//   public void initialize() {
+//     limelight.refreshValues();
+//     drivetrain.resetEncoders();
+//     // pid.setSetpoint(limelight.getDistanceToTarget());
+//     pid.setSetpoint(tempTargetMeters);
+//     pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);
+//   }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    drivetrain.stop();
-  }
+//   // Called every time the scheduler runs while the command is scheduled.
+//   @Override
+//   public void execute() {
+//     double pidOutput = pid.calculate(drivetrain.getAvgEncoderCountMeters()); 
+//     drivetrain.PIDarcadeDrive(pidOutput, 0);
+//   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return pid.atSetpoint();
-  }
-}
+//   // Called once the command ends or is interrupted.
+//   @Override
+//   public void end(boolean interrupted) {
+//     drivetrain.stop();
+//   }
+
+//   // Returns true when the command should end.
+//   @Override
+//   public boolean isFinished() {
+//     return pid.atSetpoint();
+//   }
+// }

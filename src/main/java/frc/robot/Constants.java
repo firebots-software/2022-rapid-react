@@ -104,10 +104,11 @@ public final class Constants {
         public static final double alignI = 0.0; 
         public static final double alignD = 0.0071;
 
-        public static final double limelightAngleOffset = 74; 
-        public static final double heightOfTargetFromLimelight = 2.64; // in meters 
+        public static final double limelightAngleOffset = 74; // Change once we know 
+        public static final double heightOfTargetFromLimelight = 104; // Change once we know
         public static final double idealDistanceFromTarget = 10; // TODO: change when determined experimentally
         // public static final double turretSpeedConstant = 0.1; 
+        public static final double maxAngle = 0; // Change once we know 
     }   
 
     public static final class Shooter{
@@ -132,7 +133,6 @@ public final class Constants {
         public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Drivetrain.ksVolts,
                 Constants.Drivetrain.kvVoltSecondsPerMeter,
                 Constants.Drivetrain.kaVoltSecondsSquaredPerMeter);
-
         public static RamseteController ramseteController = new RamseteController(Constants.Drivetrain.kRamseteB, Constants.Drivetrain.kRamseteZeta);
 
     }

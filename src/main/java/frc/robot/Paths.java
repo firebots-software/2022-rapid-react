@@ -38,12 +38,6 @@ public class Paths {
             List.of(new Pose2d(0, 0, new Rotation2d(0)),
                     new Pose2d(5, -3, new Rotation2d(0))),
             Constants.Drivetrain.MotionProfilingConfig
-        );
-
-        moveToTargetDistance = TrajectoryGenerator.generateTrajectory(
-            List.of(new Pose2d(0, 0, new Rotation2d(0)),
-                    new Pose2d(-1 * (Constants.Limelight.idealDistanceFromTarget - limelight.getDistanceToTarget()), 0, new Rotation2d(0))),
-            Constants.Drivetrain.MotionProfilingConfig
         ); 
     }
 }

@@ -40,6 +40,10 @@ public class AlignToTarget extends CommandBase {
     turret.zeroEncoder();
     limelight.refreshValues();
     pid.setSetpoint(limelight.getTx());
+    if (Math.abs(pid.getSetpoint()) > Constants.Limelight.maxAngle) {
+      System.out.println("Limelight angle too much to move");
+      end(true); 
+    }
     feedbackDelayCounter = 0; 
   }
 
@@ -63,6 +67,10 @@ public class AlignToTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     turret.stopMotor();
+  }
+
+  public boolean isFinished() {
+    return pid.atSetpoint(); 
   }
 
   // Returns true when the command should end.

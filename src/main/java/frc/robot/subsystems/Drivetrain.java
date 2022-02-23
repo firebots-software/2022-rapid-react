@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -9,12 +11,16 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RamseteGenerator;
 import edu.wpi.first.wpilibj.SPI;
 
 public class Drivetrain extends SubsystemBase {
@@ -238,31 +244,40 @@ public class Drivetrain extends SubsystemBase {
 
   public Pose2d getPose() {
     return odometry.getPoseMeters();
-}
+  } 
 
-public void setMaxOutput(double max) {
+  public void setMaxOutput(double max) {
     robotDrive.setMaxOutput(max);
-}
+  }
 
 /**
  * Returns the current wheel speeds of the robot.
  *
  * @return The current wheel speeds.
  */
-public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(this.getLeftEncoderVelocityMetersPerSec(), this.getRightEncoderVelocityMetersPerSec());
-}
+  }
 
 /**
  * Resets the odometry to the specified pose.
  *
  * @param pose The pose to which to set the odometry.
  */
-public void resetOdometry(Pose2d pose) {
+  public void resetOdometry(Pose2d pose) {
     resetEncoders();
     resetGyro();
     odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
-}
+    }
+
+  public RamseteCommand driveForDistance(double distance) {
+    Trajectory moveToTargetDistance = TrajectoryGenerator.generateTrajectory(
+      List.of(new Pose2d(0, 0, new Rotation2d(0)),
+              new Pose2d((distance), 0, new Rotation2d(0))),
+              Constants.Drivetrain.MotionProfilingConfig
+      );
+    return RamseteGenerator.generateCommandForPath(moveToTargetDistance); 
+  }
 
 /**
  * Controls the left and right sides of the drive directly with voltages.
@@ -270,7 +285,7 @@ public void resetOdometry(Pose2d pose) {
  * @param leftVolts  the commanded left output
  * @param rightVolts the commanded right output
  */
-public void tankDriveVolts(double leftVolts, double rightVolts) {
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
     SmartDashboard.putNumber("leftvolts", leftVolts);
     SmartDashboard.putNumber("rightvolts", rightVolts);
     leftFrontMaster.setVoltage(leftVolts);
@@ -280,5 +295,13 @@ public void tankDriveVolts(double leftVolts, double rightVolts) {
 
 
     instance.robotDrive.feed();
-}
+  } 
+
+  public void toggleDriveOrientation() {
+    this.orientation = orientation.toggle();
+  }
+
+  public void setSlowMode(boolean isSlowMode) {
+    this.isSlowMode = isSlowMode;
+  }
 }
