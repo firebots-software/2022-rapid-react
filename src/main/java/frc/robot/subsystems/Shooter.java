@@ -29,6 +29,7 @@ public class Shooter extends SubsystemBase {
     this.bottomMotor = new TalonFX(Constants.Shooter.shooterBottomMotorPort);
     bottomMotor.configFactoryDefault();
     bottomMotor.configOpenloopRamp(RAMPING_CONSTANT);
+    bottomMotor.setInverted(true);
 
 
     this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
