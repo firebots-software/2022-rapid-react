@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class ClimbToHeight extends CommandBase {
 
-  private final Climber climber;
+  protected Climber climber;
 
   /***
    * Motor voltage has values between -1 and 1 inclusive and determines direction of motor
@@ -26,7 +26,7 @@ public class ClimbToHeight extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = Climber.getInstance();
     this.motorVoltage = motorVoltage;
-    this.targetHeight = targetHeight;
+    setTargetHeight(targetHeight);
   }
 
   // Called when the command is initially scheduled.
@@ -74,6 +74,10 @@ public class ClimbToHeight extends CommandBase {
   @Override
   public Set<Subsystem> getRequirements() {
       return Set.of(climber);
+  }
+
+  protected void setTargetHeight(double height) {
+    targetHeight = height;
   }
 
 }

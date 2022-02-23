@@ -34,6 +34,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     drivetrain = Drivetrain.getInstance();
+    climber = Climber.getInstance();
   }
 
   /**

@@ -52,6 +52,7 @@ public final class Constants {
         public final static double lowBarHeight = 50; //todo: find height in centimeters
         public final static double middleBarHeight = 100; //todo: find height in centimeters
         public final static double maxClimberHeight = 400; //todo find this height
+        public final static double retractedHeight = 20;
         public final static double encoderErrorRange = 5; //ensure this is a good range
         public final static double encoderConversionRateToCm = 1; //todo: find encoder conversion rate
           //Both of these are random numbers replace when we actually now the correct port

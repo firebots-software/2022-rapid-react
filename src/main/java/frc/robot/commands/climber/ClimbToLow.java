@@ -20,28 +20,4 @@ public class ClimbToLow extends ClimbToHeight {
     super(Constants.Climber.globalClimbSpeed, Constants.Climber.lowBarHeight);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
-
-  public void execute() {
-    
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
-
-  @Override
-  public Set<Subsystem> getRequirements() {
-    return Collections.emptySet();
-    // do not require drivetrain here
-  }
 }

@@ -19,30 +19,4 @@ public class ClimbToMiddle extends ClimbToHeight {
   public ClimbToMiddle() {
     super(Constants.Climber.globalClimbSpeed, Constants.Climber.middleBarHeight);
   }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    
-  }
-
-  public void execute() {
-    new ClimbToHeight(Constants.Climber.globalClimbSpeed, Constants.Climber.middleBarHeight);
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
-
-  @Override
-  public Set<Subsystem> getRequirements() {
-    return Collections.emptySet();
-    // do not require drivetrain here
-  }
 }

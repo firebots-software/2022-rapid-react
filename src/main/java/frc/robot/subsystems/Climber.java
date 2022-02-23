@@ -6,9 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
@@ -16,7 +14,6 @@ public class Climber extends SubsystemBase {
 
   private final WPI_TalonSRX leftClimber, rightClimber;
   private static DigitalInput rightHallEffect, leftHallEffect;
-  private static boolean leftHallEffectVal, rightHallEffectVal;
   //private Encoder leftEncoder = new Encoder();
 
   private Climber() {
@@ -102,4 +99,16 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-}
+
+  public boolean climberAtMax() {
+    return Math.abs(Constants.Climber.maxClimberHeight - getAverageHeight()) < Constants.Climber.encoderErrorRange;
+  }
+
+  public boolean climberAtBottom() {
+    return Math.abs(0 - getAverageHeight()) < Constants.Climber.encoderErrorRange;
+  }
+
+  public boolean climberAtMiddleRung() {
+    return Math.abs(Constants.Climber.middleBarHeight - getAverageHeight()) < Constants.Climber.encoderErrorRange;
+  }
+ }
