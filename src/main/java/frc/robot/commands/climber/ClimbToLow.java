@@ -23,13 +23,6 @@ public class ClimbToLow extends ClimbToHeight {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    /*
-   if (ClimberSpeed < 1) {
-     ClimberSpeed = 1;
-   } else {
-     ClimberSpeed = -1;
-   }
-   */
   }
 
   public void execute() {

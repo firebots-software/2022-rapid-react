@@ -40,23 +40,33 @@ public class Climber extends SubsystemBase {
   }
   
   public double getLeftHeight() {
-    return Constants.Climber.encoderConversionRateToCm * leftClimber.getSelectedSensorPosition();
+    double height = Constants.Climber.encoderConversionRateToCm * leftClimber.getSelectedSensorPosition();
+
+    if (getLeftHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
+      height = 0;
+    }
+    if (getLeftHallEffectValue() == true && Math.abs(Constants.Climber.maxClimberHeight - height) < Constants.Climber.encoderErrorRange) {
+      height = (Constants.Climber.maxClimberHeight);
+    }
+
+    return height;
   }
 
   public double getRightHeight() {
-    return Constants.Climber.encoderConversionRateToCm * rightClimber.getSelectedSensorPosition();
-  }
+    double height = Constants.Climber.encoderConversionRateToCm * rightClimber.getSelectedSensorPosition();
 
-  public void setLeftHeight(double height) {
-    rightClimber.setSelectedSensorPosition(height);
-  }
+    if (getRightHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
+      height = 0;
+    }
+    if (getRightHallEffectValue() == true && Math.abs(Constants.Climber.maxClimberHeight - height) < Constants.Climber.encoderErrorRange) {
+      height = (Constants.Climber.maxClimberHeight);
+    }
 
-  public void setRightHeight(double height) {
-    rightClimber.setSelectedSensorPosition(height);
+    return height;
   }
 
   public double getAverageHeight()  {
-    return (getLeftHeight() + getRightHeight())/2;
+    return (getLeftHeight() + getRightHeight()) / 2.0;
   }
 
   public boolean getLeftHallEffectValue() {
@@ -80,8 +90,12 @@ public class Climber extends SubsystemBase {
    * @param climbSpeed Motor voltage values between -1 and 1 inclusive
    */
   public void setClimberSpeed(double climbSpeed) {
-    leftClimber.set(climbSpeed);
-    rightClimber.set(climbSpeed);
+    setLeftClimberSpeed(climbSpeed);
+    setRightClimberSpeed(climbSpeed);
+  }
+
+  public void stopClimber() {
+    setClimberSpeed(0);
   }
   
   @Override

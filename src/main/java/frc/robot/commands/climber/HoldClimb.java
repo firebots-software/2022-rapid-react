@@ -16,9 +16,11 @@ import java.util.Set;
 
 public class HoldClimb extends CommandBase {
   public Climber climber;
+  public double climbSpeed;
 
-  public HoldClimb() {
+  public HoldClimb(double speed) {
     climber = Climber.getInstance();
+    climbSpeed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -28,14 +30,14 @@ public class HoldClimb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(Constants.Climber.globalClimbSpeed);
-    climber.setClimberSpeed(Constants.Climber.globalClimbSpeed);
+    System.out.println("climber speed: " + climbSpeed);
+    climber.setClimberSpeed(climbSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.setClimberSpeed(0);
+    climber.stopClimber();;
   }
 
   // Returns true when the command should end.
@@ -46,7 +48,7 @@ public class HoldClimb extends CommandBase {
 
   @Override
   public Set<Subsystem> getRequirements() {
-    return Collections.emptySet();
+    return Set.of(climber);
     // do not require drivetrain here
   }
 }

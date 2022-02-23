@@ -39,41 +39,20 @@ public class ClimbToHeight extends CommandBase {
     double leftHeight = climber.getLeftHeight();
     double rightHeight = climber.getRightHeight();
 
-    boolean leftHallEffectVal = climber.getLeftHallEffectValue();
-    boolean rightHallEffectVal = climber.getRightHallEffectValue();
-
-    if (leftHeight < this.targetHeight && motorVoltage > 0) {
-      climber.setLeftClimberSpeed(motorVoltage);
-    } else if (leftHeight > 0 && motorVoltage < 0) {
+    if (leftHeight != targetHeight) {
+      if (targetHeight > leftHeight) motorVoltage = Math.abs(motorVoltage);
+      if (targetHeight < leftHeight) motorVoltage = -Math.abs(motorVoltage);
       climber.setLeftClimberSpeed(motorVoltage);
     } else {
       climber.setLeftClimberSpeed(0);
     }
 
-    if (rightHeight < targetHeight && motorVoltage > 0) {
-      climber.setRightClimberSpeed(motorVoltage);
-    } else if (rightHeight > 0 && motorVoltage < 0) {
+    if (rightHeight != targetHeight) {
+      if (targetHeight > rightHeight) motorVoltage = Math.abs(motorVoltage);
+      if (targetHeight < rightHeight) motorVoltage = -Math.abs(motorVoltage);
       climber.setRightClimberSpeed(motorVoltage);
     } else {
       climber.setRightClimberSpeed(0);
-    }
-
-    if(leftHallEffectVal && leftHeight < Constants.Climber.encoderErrorRange && motorVoltage < 0) {
-      climber.setLeftClimberSpeed(0);
-      climber.setLeftHeight(0);
-    }
-    if(leftHallEffectVal && leftHeight > Constants.Climber.maxClimberHeight - Constants.Climber.encoderErrorRange && motorVoltage > 0) {
-      climber.setLeftClimberSpeed(0);
-      climber.setLeftHeight(Constants.Climber.maxClimberHeight);
-    }
-
-    if(rightHallEffectVal && rightHeight < Constants.Climber.encoderErrorRange && motorVoltage < 0) {
-      climber.setRightClimberSpeed(0);
-      climber.setRightHeight(0);
-    }
-    if(rightHallEffectVal && rightHeight > Constants.Climber.maxClimberHeight - Constants.Climber.encoderErrorRange && motorVoltage > 0) {
-      climber.setRightClimberSpeed(0);
-      climber.setRightHeight(Constants.Climber.maxClimberHeight);
     }
 
 
@@ -81,11 +60,20 @@ public class ClimbToHeight extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    climber.stopClimber();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climber.getLeftHeight() == targetHeight && climber.getRightHeight() == targetHeight;
+    return Math.abs(climber.getLeftHeight() - targetHeight) < Constants.Climber.encoderErrorRange && 
+          Math.abs(climber.getRightHeight() - targetHeight) < Constants.Climber.encoderErrorRange;
   }
+
+  @Override
+  public Set<Subsystem> getRequirements() {
+      return Set.of(climber);
+  }
+
 }
