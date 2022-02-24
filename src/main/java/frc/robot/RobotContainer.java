@@ -91,7 +91,7 @@ public class RobotContainer {
     final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); //TODO: change button accordingly
     loadBall.whenHeld(new LaunchBall());
 
-    final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
     spinUpShooter.toggleWhenPressed(new SpinUpShooter(3000, 3000));
 
     final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
@@ -106,18 +106,18 @@ public class RobotContainer {
   
 
 
-    double rpmInterval = 100;
-    final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
-    increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, rpmInterval));
+    // double rpmInterval = 100;
+    // final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
+    // increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, rpmInterval));
 
-    final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -rpmInterval));
+    // final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    // decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -rpmInterval));
 
-    final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
-    increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, rpmInterval));
+    // final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
+    // increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, rpmInterval));
 
-    final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
-    decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
+    // final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
+    // decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
 
 
   }
