@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -17,18 +18,20 @@ public class Turret extends SubsystemBase {
   //TODO: Java doc
     private TalonFX motor;
     private static Turret instance;
+    private final double RAMPING_CONSTANT = 0.25;
 
   /** Creates a new Turret. */
   private Turret() {
     this.motor = new TalonFX(Constants.Turret.motorPortNumber);
+    motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     motor.configFactoryDefault();
+    motor.configOpenloopRamp(RAMPING_CONSTANT); 
   }
 
   public static Turret getInstance(){
     if (instance == null) {
       instance = new Turret();
     }
-
     return instance;
   }
 
@@ -56,4 +59,5 @@ public class Turret extends SubsystemBase {
   public double getEncoderValDegrees() {
     return motor.getSelectedSensorPosition() / Constants.Turret.encoderTicksPerDegree;
   }
+
 }

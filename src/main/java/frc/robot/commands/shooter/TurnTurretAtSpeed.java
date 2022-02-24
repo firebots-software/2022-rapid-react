@@ -5,36 +5,34 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 
-public class LaunchBall extends CommandBase {
+public class TurnTurretAtSpeed extends CommandBase {
+  private Turret turret;
+  private double speed;
 
-  private final Shooter shooter;
-  
-  /** Creates a new LoadBall. */
-  public LaunchBall() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.shooter = Shooter.getInstance();
-    
+  /** Creates a new TurnTurretAtSpeed. */
+  public TurnTurretAtSpeed(double speed) {
+    this.turret = Turret.getInstance();
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    turret.zeroEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setRollerMotorSpeed(Constants.Shooter.maxRollerSpeed); //set to 0.5 for now 
-
+    turret.setMotorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopRollerMotor(); // check if we want to keep it running or not
+    turret.stopMotor();
   }
 
   // Returns true when the command should end.

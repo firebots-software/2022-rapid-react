@@ -12,13 +12,20 @@ import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import javax.sound.sampled.SourceDataLine;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.driveOrientation;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -29,9 +36,11 @@ import frc.robot.subsystems.Shooter;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-  private RobotContainer m_robotContainer;
   private Drivetrain drivetrain;
+  private Turret turret;
+
+  private Limelight limelight;
+  private RobotContainer m_robotContainer;
 
   private Shooter shooter;
 
@@ -45,6 +54,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     //init cameraServer + stream 
     m_robotContainer = new RobotContainer();
+    limelight = Limelight.getInstance();
+    turret = Turret.getInstance();
+   // drivetrain = Drivetrain.getInstance();
     drivetrain = Drivetrain.getInstance();
 
     // CameraServer is responsible for publishing about cameras/camera servers to Network Tables
@@ -111,6 +123,7 @@ public class Robot extends TimedRobot {
     }
     shooter = Shooter.getInstance();
     shooter.stopBothMotors();
+    shooter = Shooter.getInstance(); 
   }
 
   /**
@@ -130,18 +143,34 @@ public class Robot extends TimedRobot {
   }
 
   private void updateShuffleboard() {
+    limelight.refreshValues();
+    SmartDashboard.putNumber("tx", limelight.getTx()); 
+    SmartDashboard.putNumber("ty", limelight.getTy()); 
+
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
-   SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
     SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
 
     SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
 
-    SmartDashboard.putNumber("top shooter output", shooter.getTopMotorOutput());
-    SmartDashboard.putNumber("bottom shooter output", shooter.getBottomMotorOutput());
-
     SmartDashboard.putNumber("top shooter target", shooter.getTopTargetRPM());
     SmartDashboard.putNumber("bottom shooter target", shooter.getBottomTargetRPM());
+    
+    SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
+    SmartDashboard.putNumber("turret encoder ticks", turret.getEncoderValTicks());
+    
+    SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
+    SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
+
+    SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
+    SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
+    SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
+
+    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
+    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+
 
   }
 
@@ -150,6 +179,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     updateShuffleboard();
+    drivetrain.setMotorNeutralMode(NeutralMode.Coast);
   }
 
   @Override
@@ -161,6 +191,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    drivetrain.resetOdometry(new Pose2d());
+    drivetrain.setMotorNeutralMode(NeutralMode.Brake);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -184,6 +216,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     shooter.stopBothMotors();
+
+    drivetrain.resetEncoders();
   }
 
   /** This function is called periodically during operator control. */

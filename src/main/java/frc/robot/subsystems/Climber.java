@@ -5,12 +5,32 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
+import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
   private static Climber instance;
+  
+  private final int CLIMBERSPEED = 1;
+  private static double leftEncoderVal, rightEncoderVal;
 
-  /** Creates a new Climber. */
-  private Climber() {}
+
+  private final WPI_TalonFX leftClimber, rightClimber;
+
+  private static MotorControllerGroup climber;
+
+
+
+  private Climber() {
+    this.leftClimber = new WPI_TalonFX(Constants.Climber.leftClimberPort);
+    this.rightClimber = new WPI_TalonFX(Constants.Climber.rightClimberPort);
+    leftEncoderVal = leftClimber.getSelectedSensorPosition();
+    rightEncoderVal = rightClimber.getSelectedSensorPosition();
+
+    climber = new MotorControllerGroup(leftClimber, rightClimber);
+  }
 
   /**
    * Returns the Singleton instance of this Climber. This static method
@@ -22,6 +42,10 @@ public class Climber extends SubsystemBase {
       instance = new Climber();
     }
     return instance;
+  }
+  
+  public void climbToMiddle() {
+    climber.set(CLIMBERSPEED);
   }
 
   @Override
