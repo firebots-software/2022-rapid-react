@@ -15,7 +15,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
+import frc.robot.commands.shooter.ChangeShooterTargetRPM;
+import frc.robot.commands.shooter.LaunchBall;
+import frc.robot.commands.shooter.RunConstSpeed;
+import frc.robot.commands.shooter.SpinUpShooter;
+import frc.robot.commands.shooter.TurnXDegrees;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +33,8 @@ public class RobotContainer {
   private Joystick ps4_controller;
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
+  private double shooterSpeedChooser = 0.0;
+  private Shooter shooter;
 
 
 
@@ -45,7 +53,8 @@ public class RobotContainer {
                   () -> ps4_controller.getRawAxis(2)));
 
     SmartDashboard.putData("Auton chooser", autonChooser);
-
+    SmartDashboard.putNumber("shooter speed", shooterSpeedChooser);
+    shooter = Shooter.getInstance();
   }
 
   /**
@@ -65,6 +74,53 @@ public class RobotContainer {
 
     final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
     slowMode.whenHeld(new ToggleSlowMode());
+
+    final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT); //TODO: change button accordingly
+    loadBall.whenHeld(new LaunchBall());
+
+    final JoystickButton moveTurret = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    moveTurret.whenPressed( new TurnXDegrees(90));
+
+    final Button spinShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
+    spinShooter.whenHeld(new RunConstSpeed(0.0));
+
+    final Button spinRPM = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    spinRPM.toggleWhenPressed(new SpinUpShooter(3000, 3000));
+
+
+    double rpmInterval = 100;
+    final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
+    increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, rpmInterval));
+
+    final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -rpmInterval));
+
+    final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
+    increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, rpmInterval));
+
+    final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
+    decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
+
+
+  
+
+    /*
+    for shooting: Aim and Shoot : whenPressed once - shoot one ball; whenHeld - shoot until empty 
+    */
+
+
+    //final Button turnClockwise = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+   // turnClockwise.whenHeld(new TurnTurretAtSpeed(0.5));
+
+
+   // final Button rotateOneRev = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
+    //rotateOneRev.whenPressed(new RotateTurretOneRevolution());
+
+    
+    
+    
+
+
 
   }
 

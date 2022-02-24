@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.driveOrientation;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,6 +32,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   private Drivetrain drivetrain;
+
+  private Shooter shooter;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -106,6 +109,8 @@ public class Robot extends TimedRobot {
     } catch(Exception e){
       System.err.println("Error initializing camera");
     }
+    shooter = Shooter.getInstance();
+    shooter.stopBothMotors();
   }
 
   /**
@@ -128,6 +133,16 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
     SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+
+    SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
+    SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
+
+    SmartDashboard.putNumber("top shooter output", shooter.getTopMotorOutput());
+    SmartDashboard.putNumber("bottom shooter output", shooter.getBottomMotorOutput());
+
+    SmartDashboard.putNumber("top shooter target", shooter.getTopTargetRPM());
+    SmartDashboard.putNumber("bottom shooter target", shooter.getBottomTargetRPM());
+
   }
 
 
@@ -168,6 +183,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    shooter.stopBothMotors();
   }
 
   /** This function is called periodically during operator control. */

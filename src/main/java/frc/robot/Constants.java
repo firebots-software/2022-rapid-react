@@ -40,6 +40,31 @@ public final class Constants {
         public final static int rightFollowerPort = 3;
         public final static double turnToleranceDeg = 1;
         public static final double turnRateToleranceDegPerS = 45;
-        public static double smallTurnP = 0.01, smallTurnI = 0.0, smallTurnD = 0.0036569; //todo: verify if correct values
+        public static double smallTurnP = 0.01, smallTurnI = 0.0, smallTurnD = 0.0036569; //todo: verify if correct values 
+    }
+
+    public static final class Shooter{
+        public final static int shooterPistonPort = 2; //TODO: change to actual port 
+        public final static int rollerMotorPort = 3; //TODO: change to actual port
+        public final static int shooterTopMotorPort = 7; //TODO: change port number
+        public final static int shooterBottomMotorPort = 6; //TODO: change port number
+        public static final double shooterEncoderTicksPerRev = 2048;
+        public static final double motorSpeedToleranceRPM = 5.0; //todo: change to real tolerance
+
+        public static final double DEFAULT_SHOOTER_SPEED = 0.5;
+        public static final double SHOOTER_TARGET_SPEED = 0.7; 
+        public static final double maxRollerSpeed = 0.5; //TODO: change to actual max
+    
+    }
+    public static final class Turret{
+        public final static int motorPortNumber = 2; //TODO: change to actual ID 
+      
+        public static final double turretGearRatio = 10.0; //TODO: change real number
+        public static final double encoderTicksPerRev = 2048 * turretGearRatio;
+        public static final double encoderTicksPerDegree = encoderTicksPerRev / 360.0;
+        public static final double pidPositionToleranceDegrees = 3.0;
+        public static final double pidVelToleranceDegPerSecond = 10;
+
+    
     }
 }
