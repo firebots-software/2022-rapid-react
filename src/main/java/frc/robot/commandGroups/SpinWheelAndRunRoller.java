@@ -9,7 +9,7 @@ public class SpinWheelAndRunRoller extends ParallelCommandGroup {
     
     public SpinWheelAndRunRoller() {
         addCommands(
-                new SpinUpShooter(Constants.Shooter.SHOOTER_TARGET_SPEED, Constants.Shooter.SHOOTER_TARGET_SPEED),
+                new SpinUpShooter(),
                 new LaunchBall()
         );
     }

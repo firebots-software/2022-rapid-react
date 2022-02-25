@@ -152,7 +152,7 @@ public class Drivetrain extends SubsystemBase {
       SmartDashboard.putNumber("frontbackspeed",frontBackSpeed);
       SmartDashboard.putNumber("rotationspeed",rotation);
 
-      robotDrive.arcadeDrive(frontBackSpeed, rotation);
+      robotDrive.arcadeDrive(frontBackSpeed, -rotation);
 
     }
   }
@@ -250,8 +250,8 @@ public class Drivetrain extends SubsystemBase {
     rightFollower.follow(rightRearMaster);
 
     rightRearMaster.setInverted(true); //might need to change
-    leftFrontMaster.setInverted(false); //might need to change
-    leftFollower.setInverted(false);
+    leftFrontMaster.setInverted(true); //might need to change
+    leftFollower.setInverted(true);
     rightFollower.setInverted(true);
 
     setMotorNeutralMode(NeutralMode.Coast);

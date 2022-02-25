@@ -10,21 +10,30 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 public class SpinUpShooter extends CommandBase {
   // keep spinning after aimed and during load ball --> toggleFlywheel
   private final Shooter shooter;
+  private Limelight limelight;
   private final PIDController pidTop, pidBottom; 
   private final double kp, ki, kd; 
   private double currentVoltageTop, currentVoltageBottom;
 
   /** Creates a new SpinUpShooter. */
-  public SpinUpShooter(double topRPM, double bottomRPM) {
+  public SpinUpShooter() {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
-    // shooter.setTopTargetRPM(topRPM);
-    // shooter.setBottomTargetRPM(bottomRPM);
+    this.limelight = Limelight.getInstance();
+
+    if (!shooter.isRPMAdjusting()) {
+      shooter.setTopTargetRPM(Constants.Shooter.FIXED_RPM);
+      shooter.setBottomTargetRPM(Constants.Shooter.FIXED_RPM);
+    } else {
+      shooter.setTopTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
+      shooter.setBottomTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
+    }
     kp = 0.000005; 
     ki = 0; 
     kd = 0.00; 

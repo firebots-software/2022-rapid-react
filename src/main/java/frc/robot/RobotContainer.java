@@ -92,7 +92,7 @@ public class RobotContainer {
     loadBall.whenHeld(new LaunchBall());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    spinUpShooter.toggleWhenPressed(new SpinUpShooter(3000, 3000));
+    spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
     final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
     turretClockwise.whenHeld(new TurnTurretAtSpeed(0.3));
@@ -101,7 +101,7 @@ public class RobotContainer {
     turretCounterclockwise.whenHeld(new TurnTurretAtSpeed(-0.3));
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenHeld(new AlignToTarget());
+    limelightAim.whenPressed(new AlignToTarget());
 
   
 

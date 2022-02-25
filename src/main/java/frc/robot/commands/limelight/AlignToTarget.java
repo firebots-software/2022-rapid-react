@@ -37,9 +37,12 @@ public class AlignToTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    turret.zeroEncoder();
+    System.out.println("starting command"); 
     limelight.refreshValues();
-    pid.setSetpoint(limelight.getTx());
+    // if (limelight.getTx() + turret. > Constants.Limelight.maxAngle) {
+    //   end(true); 
+    // }
+    pid.setSetpoint(limelight.getTx() + turret.getEncoderValDegrees()); 
     feedbackDelayCounter = 0; 
   }
 
@@ -50,19 +53,25 @@ public class AlignToTarget extends CommandBase {
     if (feedbackDelayCounter % LIMELIGHT_REFRESH_INTERVAL == 0) {
       limelight.refreshValues();
       turret.zeroEncoder();
-      pid.setSetpoint(limelight.getTx());
+      pid.setSetpoint(limelight.getTx() + turret.getEncoderValDegrees());
     }
     // SmartDashboard.setDefaultNumber("ATT: Output Ticks", getOutputTicks());
     double pidOutput = pid.calculate(turret.getEncoderValDegrees());
     SmartDashboard.putNumber("turret pid output", pidOutput);
     turret.setMotorSpeed(pidOutput); 
     feedbackDelayCounter++; 
+    System.out.println("doing command");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     turret.stopMotor();
+    System.out.println("done with command");
+  }
+
+  public boolean isFinished() {
+    return pid.atSetpoint(); 
   }
 
   // Returns true when the command should end.

@@ -18,6 +18,7 @@ public class Shooter extends SubsystemBase {
   private double topTargetRPM, bottomTargetRPM;
   private final double MAX_SPEED = 1;
   private final double RAMPING_CONSTANT = 0.25;
+  private boolean isAdjustingRPM; 
 
   /** Creates a new Shooter. */
   private Shooter() {
@@ -33,8 +34,10 @@ public class Shooter extends SubsystemBase {
 
 
     this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
-    this.topTargetRPM = 3000;
-    this.bottomTargetRPM = 3000;
+    this.topTargetRPM = Constants.Shooter.FIXED_RPM;
+    this.bottomTargetRPM = Constants.Shooter.FIXED_RPM;
+
+    isAdjustingRPM = true; 
 
   }
 
@@ -169,5 +172,22 @@ public class Shooter extends SubsystemBase {
 
   public double getBottomVoltage() {
     return bottomMotor.getBusVoltage();
+  }
+
+  public boolean isRPMAdjusting() {
+    return isAdjustingRPM; 
+  }
+
+  public void setAdjustingRPM(boolean value) {
+    isAdjustingRPM = value; 
+    if (!isRPMAdjusting()) {
+      setTopTargetRPM(Constants.Shooter.FIXED_RPM);
+      setBottomTargetRPM(Constants.Shooter.FIXED_RPM);
+    }
+  }
+
+  public double getRPMForDistanceInches(double distance) {
+    double rpm = (0.0501976 * (distance + 25.8149)*(distance + 25.8149)) + 2642.69; 
+    return rpm; 
   }
 }
