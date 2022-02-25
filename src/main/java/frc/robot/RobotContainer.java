@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commandgroups.MoveToBallAndShootingDistance;
-import frc.robot.commandgroups.TaxiAndIntake;
+import frc.robot.commandGroups.MoveToBallAndShootingDistance;
+import frc.robot.commandGroups.TaxiAndIntake;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
@@ -94,11 +94,11 @@ public class RobotContainer {
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
     spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
-    final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
-    turretClockwise.whenHeld(new TurnTurretAtSpeed(0.3));
+    // final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
+    // turretClockwise.whenHeld(new TurnTurretAtSpeed(0.3));
 
-    final Button turretCounterclockwise = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
-    turretCounterclockwise.whenHeld(new TurnTurretAtSpeed(-0.3));
+    // final Button turretCounterclockwise = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
+    // turretCounterclockwise.whenHeld(new TurnTurretAtSpeed(-0.3));
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     limelightAim.whenPressed(new AlignToTarget());
@@ -106,18 +106,18 @@ public class RobotContainer {
   
 
 
-    // double rpmInterval = 100;
-    // final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
-    // increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, rpmInterval));
+    double rpmInterval = 100;
+    final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
+    increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, rpmInterval));
 
-    // final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    // decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -rpmInterval));
+    final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -rpmInterval));
 
-    // final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
-    // increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, rpmInterval));
+    final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
+    increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, rpmInterval));
 
-    // final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
-    // decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
+    final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
+    decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
 
 
   }
