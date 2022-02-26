@@ -41,7 +41,9 @@ public class Turret extends SubsystemBase {
   }
 
   public void setMotorSpeed(double speed) {
-    if (this.getEncoderValDegrees() <= -maxRange || this.getEncoderValDegrees() >= maxRange) {
+    if (this.getEncoderValDegrees() <= -maxRange && speed < 0) {
+      motor.set(ControlMode.PercentOutput, 0);
+    } else if (this.getEncoderValDegrees() >= maxRange && speed > 0) {
       motor.set(ControlMode.PercentOutput, 0);
     } else {
     motor.set(ControlMode.PercentOutput, speed);

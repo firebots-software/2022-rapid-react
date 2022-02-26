@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commandgroups.MoveToBallAndShootingDistance;
 import frc.robot.commandgroups.TaxiAndIntake;
+import frc.robot.commandgroups.TimeDriveAndShoot;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
@@ -50,7 +52,9 @@ public class RobotContainer {
     autonChooser.setDefaultOption("limelightAim", new AlignToTarget());
 
     SmartDashboard.putData("Auton chooser", autonChooser);
-    autonChooser.setDefaultOption("Drive Back for Time", new DriveForTime(-0.5, 2));
+    autonChooser.setDefaultOption("Drive Back for Time", new DriveForTime(-0.5, 4));
+    autonChooser.addOption("DRIVE TURN SHOOT", new TimeDriveAndShoot());
+    autonChooser.addOption("dummy auton with turn 180", new DriveForTime(-0.5, 4).andThen(new TurnForAngle(180)));
     autonChooser.addOption("only taxi", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
     autonChooser.addOption("taxi and move to shooting distance", new MoveToBallAndShootingDistance());
     autonChooser.addOption("taxi and intake ball", new TaxiAndIntake());
@@ -103,6 +107,7 @@ public class RobotContainer {
 
     final Button toggleCamOrientation = new JoystickButton(ps4_controller, Constants.OI.PS_SHARE_BUTTON_PORT);
     toggleCamOrientation.whenPressed(new ToggleCameraOrientation());
+
     
 
 

@@ -16,6 +16,7 @@ public class Limelight extends SubsystemBase {
    * when your program starts
    */
   private NetworkTableInstance instance = NetworkTableInstance.getDefault();
+  private Shooter shooter;
 
   /*
    * Get the table within that instance that contains the data. There can
@@ -44,8 +45,8 @@ public class Limelight extends SubsystemBase {
   private final double DEFAULT_VALUE_TV = 0;
 
   /** Creates a new Limelight. */
-  public Limelight() {
-
+  private Limelight() {
+      this.shooter = Shooter.getInstance();
   }
 
   /**
@@ -118,7 +119,11 @@ public class Limelight extends SubsystemBase {
   }
 
   public boolean isWithinShootingRange(){
-    return getDistanceToTarget() <= Constants.Limelight.maxDistance && getDistanceToTarget() >= Constants.Limelight.minDistance; 
+    if (shooter.isRPMAdjusting()){
+      return 100 < getDistanceToTarget() && getDistanceToTarget() < 135;
+    } else {
+      return 85 < getDistanceToTarget() && getDistanceToTarget() < 95;
+    }
   }
 
   @Override

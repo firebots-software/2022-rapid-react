@@ -171,6 +171,9 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putBoolean("within shooting range?", limelight.isWithinShootingRange());
 
+    SmartDashboard.putNumber("left drivetrain voltage", drivetrain.getLeftVoltage());
+    SmartDashboard.putNumber("right drivetrain voltage", drivetrain.getRightVoltage());
+
 
   }
 

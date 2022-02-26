@@ -27,7 +27,8 @@ import frc.robot.commands.drivetrain.JoystickDrive;
 public class Drivetrain extends SubsystemBase {
   // constants
   private static final double DEADZONE_RANGE = 0.25;
-  private final double SLOW_MODE_CONSTANT = 0.4;
+  private final double SLOW_MODE_CONSTANT = 0.3;
+  private final double DEFAULT_DRIVE_CONSTANT = 0.7;
   private final double RAMPING_CONSTANT = 1;
   private boolean usingFrontCam = true;
 
@@ -136,8 +137,8 @@ public class Drivetrain extends SubsystemBase {
         rotation *= SLOW_MODE_CONSTANT;
 
       } else {
-        frontBackSpeed *= 0.5;
-        rotation *= 0.5;
+        frontBackSpeed *= DEFAULT_DRIVE_CONSTANT;
+        rotation *= DEFAULT_DRIVE_CONSTANT;
       }
 
 
@@ -174,7 +175,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void PIDarcadeDriveAngle(double angle){
     angle = restrictToRange(angle, -1, 1);
-    robotDrive.arcadeDrive(0, -angle);
+    robotDrive.arcadeDrive(0, angle);
   }
 
 
@@ -194,13 +195,13 @@ public class Drivetrain extends SubsystemBase {
         rotation *= SLOW_MODE_CONSTANT;
 
       } else {
-        frontBackSpeed *= 0.5;
-        rotation *= 0.5;
+        frontBackSpeed *= DEFAULT_DRIVE_CONSTANT;
+        rotation *= DEFAULT_DRIVE_CONSTANT;
       }
 
       if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) {
         quickTurn = true;
-        rotation *= 0.5;
+        if (!isSlowMode) rotation *= 0.5;
       } else {
         quickTurn = false;
       }
@@ -244,7 +245,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.follow(leftFrontMaster);
     rightFollower.follow(rightRearMaster);
 
-    rightRearMaster.setInverted(true); //might need to change
+    rightRearMaster.setInverted(false); //might need to change
     leftFrontMaster.setInverted(true); //might need to change
     leftFollower.setInverted(true);
     rightFollower.setInverted(true);
@@ -422,5 +423,13 @@ public void tankDriveVolts(double leftVolts, double rightVolts) {
 
   public void setUsingFrontCam(boolean usingFrontCam){
     this.usingFrontCam = usingFrontCam;
+  }
+
+  public double getLeftVoltage() {
+    return leftFrontMaster.getBusVoltage();
+  }
+
+  public double getRightVoltage() {
+    return rightRearMaster.getBusVoltage();
   }
 }

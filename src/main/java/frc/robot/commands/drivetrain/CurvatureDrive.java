@@ -26,7 +26,7 @@ public class CurvatureDrive extends CommandBase {
   
   @Override
   public void execute() {
-    drivetrain.curvatureDrive(-frontBackSpeed.getAsDouble(), rotationSpeed.getAsDouble());
+    drivetrain.curvatureDrive(-frontBackSpeed.getAsDouble(), -rotationSpeed.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

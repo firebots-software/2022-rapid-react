@@ -52,9 +52,9 @@ public final class Constants {
         public final static int PIGEON_ID = 8;
 
         public static double driveP = 0.3, driveI = 0, driveD = 0;
-        public static double angleP = 0.006, angleI = 0, angleD = 0.0001;
+        public static double angleP = 0.007, angleI = 0, angleD = 0.001;
         public static double distanceToleranceMeters = 0.02;
-        public static double angleToleranceDegrees = 5;
+        public static double angleToleranceDegrees = 15;
         public static double velocityToleranceMetersPerSec = 0.35;
         public static double velocityToleranceDegreesPerSec = 1;
         public static double pidMotorDeadzone = 0.3;
@@ -127,7 +127,7 @@ public final class Constants {
         public static final double motorSpeedToleranceRPM = 5.0; //todo: change to real tolerance
 
         public static final double DEFAULT_SHOOTER_SPEED = 0.5;
-        public static final double FIXED_RPM = 3000;
+        public static final double FIXED_RPM = 3200;
         public static final double MAX_RPM = 3700;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 
         public static final double maxRollerSpeed = 0.5; //TODO: change to actual max
