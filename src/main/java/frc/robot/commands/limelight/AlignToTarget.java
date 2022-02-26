@@ -39,9 +39,7 @@ public class AlignToTarget extends CommandBase {
   public void initialize() {
     System.out.println("starting command"); 
     limelight.refreshValues();
-    // if (limelight.getTx() + turret. > Constants.Limelight.maxAngle) {
-    //   end(true); 
-    // }
+
     pid.setSetpoint(limelight.getTx() + turret.getEncoderValDegrees()); 
     feedbackDelayCounter = 0; 
   }
@@ -52,7 +50,6 @@ public class AlignToTarget extends CommandBase {
   public void execute() {
     if (feedbackDelayCounter % LIMELIGHT_REFRESH_INTERVAL == 0) {
       limelight.refreshValues();
-      turret.zeroEncoder();
       pid.setSetpoint(limelight.getTx() + turret.getEncoderValDegrees());
     }
     // SmartDashboard.setDefaultNumber("ATT: Output Ticks", getOutputTicks());

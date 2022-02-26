@@ -31,8 +31,6 @@ public class RobotContainer {
   private Joystick ps4_controller;
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
-  private double shooterSpeedChooser = 0.0;
-  private Shooter shooter;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -53,8 +51,6 @@ public class RobotContainer {
     autonChooser.setDefaultOption("limelightAim", new AlignToTarget());
 
     SmartDashboard.putData("Auton chooser", autonChooser);
-    SmartDashboard.putNumber("shooter speed", shooterSpeedChooser);
-    shooter = Shooter.getInstance();
     autonChooser.setDefaultOption("Drive Back for Time", new DriveForTime(-0.5, 2));
     autonChooser.addOption("only taxi", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
     autonChooser.addOption("taxi and move to shooting distance", new MoveToBallAndShootingDistance());
@@ -105,6 +101,11 @@ public class RobotContainer {
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
+
+    final Button toggleCamOrientation = new JoystickButton(ps4_controller, Constants.OI.PS_SHARE_BUTTON_PORT);
+    toggleCamOrientation.whenPressed(new ToggleCameraOrientation());
+    
+
 
   
 

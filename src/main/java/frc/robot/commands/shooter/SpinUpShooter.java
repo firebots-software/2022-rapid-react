@@ -74,9 +74,8 @@ public class SpinUpShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    // return shooter.isAtTargetSpeed(Constants.Shooter.motorSpeedToleranceRPM);
-        // possible return false and change it in the command group
-        //  TODO: command group - if interrupted then return true --> loadBall
+    boolean done = pidTop.atSetpoint() & pidBottom.atSetpoint();
+    SmartDashboard.putBoolean("SHOOTER AT RPM", done);
+    return false; // RETURN FALSE -- KEEP THE WHEELS SPINNING ONCE THEY'RE UP TO SPEED
   }
 }

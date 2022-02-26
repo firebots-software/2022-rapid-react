@@ -160,10 +160,8 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putBoolean("adjustable rpm?", shooter.isRPMAdjusting());
     SmartDashboard.putNumber("limelight distance", limelight.getDistanceToTarget()); 
-    SmartDashboard.putNumber("limelight ratio", limelight.getRatio()); 
 
     SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
-    SmartDashboard.putNumber("turret encoder ticks", turret.getEncoderValTicks());
     
     SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
     SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
@@ -172,9 +170,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
     SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
 
-    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
     SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
-    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+
+    SmartDashboard.putBoolean("within shooting range?", limelight.isWithinShootingRange());
 
 
   }

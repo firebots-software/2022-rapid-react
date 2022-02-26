@@ -10,7 +10,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Turret;
 
 // manual alignment of robot with hub 
-public class TurnXDegrees extends CommandBase {
+public class TurnTurretForAngle extends CommandBase {
   private Turret turret;
   private double targetAngle;
   private PIDController pid;
@@ -20,12 +20,11 @@ public class TurnXDegrees extends CommandBase {
   private double kI = 0;
   private double kD = 0;
   
-  public TurnXDegrees(double targetAngle) {
+  public TurnTurretForAngle(double targetAngle) {
     turret = Turret.getInstance();
     this.targetAngle = targetAngle;
 
     this.pid = new PIDController(kP, kI, kD);
-    pid.setSetpoint(targetAngle);
     pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -33,7 +32,9 @@ public class TurnXDegrees extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    turret.zeroEncoder();
+    targetAngle += turret.getEncoderValDegrees();
+    pid.setSetpoint(targetAngle);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
