@@ -19,7 +19,6 @@ import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

@@ -113,7 +113,6 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getDistanceToTarget() {
-    double limelightYOffset = this.getTy();
     double ratio = this.getRatio();
     return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
   }

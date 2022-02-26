@@ -6,8 +6,6 @@ package frc.robot.commands.auton;
 
 import java.util.Set;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,7 +16,6 @@ import frc.robot.subsystems.Drivetrain;
 public class DriveForDistanceSingleController extends CommandBase {
   private Drivetrain drivetrain;
   private PIDController pid;
-  private double targetMeters;
 
   /** Creates a new DriveForDistanceSingleController. */
   public DriveForDistanceSingleController(double targetMeters) {
@@ -27,7 +24,6 @@ public class DriveForDistanceSingleController extends CommandBase {
     pid.setSetpoint(targetMeters);
     pid.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
     
-    this.targetMeters = targetMeters;
 
     System.out.println("drive for dist constructor");
   }

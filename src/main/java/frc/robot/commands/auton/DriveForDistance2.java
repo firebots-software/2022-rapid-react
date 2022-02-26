@@ -6,8 +6,6 @@ package frc.robot.commands.auton;
 
 import java.util.Set;
 
-import javax.sound.midi.Soundbank;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,7 +16,6 @@ import frc.robot.subsystems.Drivetrain;
 public class DriveForDistance2 extends CommandBase {
   private Drivetrain drivetrain;
   private PIDController pidLeft, pidRight;
-  private double targetMeters;
 
   /** Creates a new DriveForDistance2. */
   public DriveForDistance2(double targetMeters) {
@@ -31,7 +28,6 @@ public class DriveForDistance2 extends CommandBase {
     pidRight = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD);
     pidRight.setSetpoint(targetMeters);
     pidRight.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
-    this.targetMeters = targetMeters;
 
     System.out.println("drive for dist constructor");
   }

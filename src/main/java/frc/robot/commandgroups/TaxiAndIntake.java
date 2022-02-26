@@ -16,14 +16,11 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TaxiAndIntake extends SequentialCommandGroup {
-  private Drivetrain drivetrain; 
-  private Intake intake; 
+public class TaxiAndIntake extends SequentialCommandGroup {  private Intake intake; 
   /** Creates a new MoveAndCollectBall. */
-  public TaxiAndIntake() {
-    drivetrain = Drivetrain.getInstance(); 
-    intake = Intake.getInstance(); 
-    
-    // addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), new TurnForAngle(180), intake.intakeBall());
+  public TaxiAndIntake() {    
+    // addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), 
+    //             new TurnForAngle(180), 
+    //             intake.intakeBall());
   }
 }

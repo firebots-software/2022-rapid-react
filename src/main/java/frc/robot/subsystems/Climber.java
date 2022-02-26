@@ -14,7 +14,6 @@ public class Climber extends SubsystemBase {
   private static Climber instance;
   
   private final int CLIMBERSPEED = 1;
-  private static double leftEncoderVal, rightEncoderVal;
 
 
   private final WPI_TalonFX leftClimber, rightClimber;
@@ -26,8 +25,6 @@ public class Climber extends SubsystemBase {
   private Climber() {
     this.leftClimber = new WPI_TalonFX(Constants.Climber.leftClimberPort);
     this.rightClimber = new WPI_TalonFX(Constants.Climber.rightClimberPort);
-    leftEncoderVal = leftClimber.getSelectedSensorPosition();
-    rightEncoderVal = rightClimber.getSelectedSensorPosition();
 
     climber = new MotorControllerGroup(leftClimber, rightClimber);
   }

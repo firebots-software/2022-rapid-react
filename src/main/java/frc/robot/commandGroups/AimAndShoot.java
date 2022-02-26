@@ -1,7 +1,6 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
 import frc.robot.commands.limelight.AlignToTarget;
 import frc.robot.commands.shooter.SpinUpShooter;
 

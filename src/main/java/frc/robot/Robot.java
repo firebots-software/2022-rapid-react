@@ -10,9 +10,7 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
-import javax.sound.sampled.SourceDataLine;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -24,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Drivetrain.driveOrientation;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Shooter;
 

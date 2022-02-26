@@ -7,21 +7,17 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Paths;
 import frc.robot.RamseteGenerator;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TaxiIntakeShootOne extends SequentialCommandGroup {
-  private Drivetrain drivetrain; 
-  private Intake intake; 
-  private Turret turret; 
+
   /** Creates a new TaxiIntakeShootOne. */
   public TaxiIntakeShootOne() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    // addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), intake.intakeBall, RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall), turret.shootBall());
+    // addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), 
+    //             intake.intakeBall, 
+    //             RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall), 
+    //             new AimAndShoot());
   }
 }
