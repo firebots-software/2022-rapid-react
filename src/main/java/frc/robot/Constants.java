@@ -114,6 +114,9 @@ public final class Constants {
         public static final double heightOfTarget = 104; // in meters 
         // public static final double turretSpeedConstant = 0.1; 
         public static double maxAngle = 90;
+
+        public static double maxDistance = 121;
+        public static double minDistance = 90;
     }   
 
     public static final class Shooter{

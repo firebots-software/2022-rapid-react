@@ -98,12 +98,11 @@ public class Robot extends TimedRobot {
         
         
         while(!Thread.interrupted()) {
-          if(drivetrain.getOrientation() == Drivetrain.driveOrientation.FRONT){
+          if(drivetrain.isUsingFrontCam()){
             if (cvSink1.grabFrame(source) == 0) {
               continue;
             }
-          }
-          if(drivetrain.getOrientation() == Drivetrain.driveOrientation.BACK){
+          }else{
             if (cvSink2.grabFrame(source) == 0) {
               continue;
             }    
