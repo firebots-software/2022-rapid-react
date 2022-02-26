@@ -83,6 +83,14 @@ public class RobotContainer {
     final POVButton upPov = new POVButton(ps4_controller, 0);
     upPov.whenPressed(new ReturnTrueWhenPressed());
 
+    final POVButton leftPov = new POVButton(ps4_controller, 90);
+    leftPov.whenPressed(new ReturnTrueWhenPressed());
+
+    final POVButton downPov = new POVButton(ps4_controller, 180);
+    downPov.whenPressed(new ReturnTrueWhenPressed());
+
+    final POVButton rightPov = new POVButton(ps4_controller, 270);
+    rightPov.whenPressed(new ReturnTrueWhenPressed());
 
   }
 
