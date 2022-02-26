@@ -36,6 +36,7 @@ public class Drivetrain extends SubsystemBase {
   private static final double DEADZONE_RANGE = 0.25;
   private final double SLOW_MODE_CONSTANT = 0.4;
   private final double RAMPING_CONSTANT = 1;
+  private boolean usingFrontCam = true;
 
 
 /*
@@ -56,7 +57,8 @@ public class Drivetrain extends SubsystemBase {
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
-  
+
+
   public enum driveOrientation {
     FRONT, BACK;
 
@@ -418,8 +420,14 @@ public void tankDriveVolts(double leftVolts, double rightVolts) {
     return orientation;
   }
 
+  public boolean isUsingFrontCam(){ return usingFrontCam; }
+
   // Setters
   public void setDriveOrientation(driveOrientation orientation) {
     this.orientation = orientation;
+  }
+
+  public void setUsingFrontCam(boolean usingFrontCam){
+    this.usingFrontCam = usingFrontCam;
   }
 }
