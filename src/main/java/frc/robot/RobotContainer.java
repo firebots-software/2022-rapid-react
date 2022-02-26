@@ -55,7 +55,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auton chooser", autonChooser);
     SmartDashboard.putNumber("shooter speed", shooterSpeedChooser);
     shooter = Shooter.getInstance();
-    autonChooser.setDefaultOption("Drive Back for Time", new DriveBackForTime(-0.5, 2));
+    autonChooser.setDefaultOption("Drive Back for Time", new DriveForTime(-0.5, 2));
     autonChooser.addOption("only taxi", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
     autonChooser.addOption("taxi and move to shooting distance", new MoveToBallAndShootingDistance());
     autonChooser.addOption("taxi and intake ball", new TaxiAndIntake());
@@ -95,10 +95,10 @@ public class RobotContainer {
     spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
     final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
-    turretClockwise.whenHeld(new TurnTurretAtSpeed(0.3));
+    turretClockwise.whenHeld(new ManualTurretTurn(0.3));
 
     final Button turretCounterclockwise = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
-    turretCounterclockwise.whenHeld(new TurnTurretAtSpeed(-0.3));
+    turretCounterclockwise.whenHeld(new ManualTurretTurn(-0.3));
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     limelightAim.whenPressed(new AlignToTarget());

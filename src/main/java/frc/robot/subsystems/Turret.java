@@ -27,6 +27,8 @@ public class Turret extends SubsystemBase {
     motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     motor.configFactoryDefault();
     motor.configOpenloopRamp(RAMPING_CONSTANT); 
+
+    zeroEncoder();
   }
 
   public static Turret getInstance(){
@@ -43,7 +45,7 @@ public class Turret extends SubsystemBase {
 
   public void setMotorSpeed(double speed) {
     if (this.getEncoderValDegrees() <= -maxRange || this.getEncoderValDegrees() >= maxRange) {
-      this.stopMotor();
+      motor.set(ControlMode.PercentOutput, 0);
     } else {
     motor.set(ControlMode.PercentOutput, speed);
     }

@@ -2,44 +2,42 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.limelight;
-
-import java.util.Set;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Turret;
 
-public class GetCoordinates extends CommandBase {
-  private final Limelight limelight; 
+public class ManualTurretTurn extends CommandBase {
+  private Turret turret;
+  private double speed;
 
-  /** Creates a new GetCoordinates. */
-  public GetCoordinates() {
-    this.limelight = Limelight.getInstance(); 
+  /** Creates a new TurnTurretAtSpeed. */
+  public ManualTurretTurn(double speed) {
+    this.turret = Turret.getInstance();
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    turret.zeroEncoder();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    limelight.refreshValues();
+    turret.setMotorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    turret.stopMotor();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
   }
-
-  @Override
-    public Set<Subsystem> getRequirements() {
-        return Set.of(limelight);
-    }
 }

@@ -9,6 +9,7 @@ import java.sql.Driver;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Paths;
 import frc.robot.RamseteGenerator;
+import frc.robot.commands.auton.TurnForAngle;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 
@@ -22,8 +23,7 @@ public class TaxiAndIntake extends SequentialCommandGroup {
   public TaxiAndIntake() {
     drivetrain = Drivetrain.getInstance(); 
     intake = Intake.getInstance(); 
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+    
     // addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), new TurnForAngle(180), intake.intakeBall());
   }
 }

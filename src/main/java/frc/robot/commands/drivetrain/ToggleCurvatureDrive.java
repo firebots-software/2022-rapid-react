@@ -12,13 +12,13 @@ import java.util.Set;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-public class DriveFlip extends CommandBase {
+public class ToggleCurvatureDrive extends CommandBase {
   private final Drivetrain drivetrain;
 
   private Joystick ps4_controller;
 
 
-  public DriveFlip(Joystick ps4) {
+  public ToggleCurvatureDrive(Joystick ps4) {
     this.drivetrain = Drivetrain.getInstance();
     ps4_controller = ps4;
   }

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveBackForTime extends CommandBase {
+public class DriveForTime extends CommandBase {
   private final Drivetrain drivetrain;
   private double speed;
   private int targetTime;
@@ -24,7 +24,7 @@ public class DriveBackForTime extends CommandBase {
    * @param speed       = speed set in RobotContainer.java
    * @param targetTime  = time set in RobotContainer.java
    */
-  public DriveBackForTime(double speed,int targetTime) {
+  public DriveForTime(double speed,int targetTime) {
     System.out.println("init timed drive");
     this.drivetrain = Drivetrain.getInstance();
     timer = new Timer();
