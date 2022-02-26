@@ -55,5 +55,9 @@ public final class Constants {
         public final static double encoderErrorRange = 5; //ensure this is a good range
         public final static double encoderConversionRateToCm = 1; //todo: find encoder conversion rate
           //Both of these are random numbers replace when we actually now the correct port
+        public final static int leftChannelA = 0;
+        public final static int leftChannelB = 0;
+        public final static int rightChannelA = 0;
+        public final static int rightChannelB = 0;
     }
 }
