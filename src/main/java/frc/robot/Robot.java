@@ -157,6 +157,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("top shooter target", shooter.getTopTargetRPM());
     SmartDashboard.putNumber("bottom shooter target", shooter.getBottomTargetRPM());
 
+    SmartDashboard.putNumber("shooter target rpm", shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
+
     SmartDashboard.putBoolean("adjustable rpm?", shooter.isRPMAdjusting());
     SmartDashboard.putNumber("limelight distance", limelight.getDistanceToTarget()); 
     SmartDashboard.putNumber("limelight ratio", limelight.getRatio()); 

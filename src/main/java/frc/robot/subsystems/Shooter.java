@@ -187,7 +187,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getRPMForDistanceInches(double distance) {
-    double rpm = (0.0501976 * (distance + 25.8149)*(distance + 25.8149)) + 2642.69; 
+    double rpm = (0.0501976 * (distance + 25.8149) * (distance + 25.8149)) + 2642.69; 
+    if (rpm > Constants.Shooter.MAX_RPM) rpm = Constants.Shooter.MAX_RPM;
     return rpm; 
   }
 }
