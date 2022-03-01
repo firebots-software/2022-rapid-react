@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.climber.ClimbToMiddle;
-import frc.robot.commands.climber.HoldClimb;
+import frc.robot.commands.climber.ManualClimb;
 import frc.robot.commands.climber.RetractClimber;
 import frc.robot.commands.climber.RetractComplete;
 import frc.robot.commands.climber.ReturnTrueWhenPressed;
@@ -76,16 +76,16 @@ public class RobotContainer {
     climbToMid.whenPressed(new ClimbToMiddle());
 
     final Button climbHold = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    climbHold.whenHeld(new HoldClimb(Constants.Climber.globalClimbSpeed));
+    climbHold.whenHeld(new ManualClimb(Constants.Climber.globalClimbSpeed));
 
     final Button retractComplete = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
     retractComplete.whenPressed(new RetractComplete());
 
     final POVButton upPov = new POVButton(ps4_controller, 0);
-    upPov.whenHeld(new HoldClimb(Constants.Climber.globalClimbSpeed));
-    
+    upPov.whenHeld(new ManualClimb(Constants.Climber.globalClimbSpeed));
+
     final POVButton downPov = new POVButton(ps4_controller, 180);
-    downPov.whenHeld(new HoldClimb(-Constants.Climber.globalClimbSpeed));
+    downPov.whenHeld(new ManualClimb(-Constants.Climber.globalClimbSpeed));
 
 
   }

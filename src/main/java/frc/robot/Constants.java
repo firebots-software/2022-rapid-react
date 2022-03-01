@@ -44,11 +44,11 @@ public final class Constants {
     }
 
     public static final class Climber {
-        public final static int rightHallEffectPort = 15; //todo
-        public final static int leftHallEffectPort = 16; //todo
-        public final static int leftClimberMotorPort = 17; //todo
-        public final static int rightClimberMotorPort = 15; //todo
-        public final static double globalClimbSpeed = 0.65;
+        public final static int rightHallEffectPort = 0; //todo
+        public final static int leftHallEffectPort = 2; //todo
+        public final static int leftClimberMotorPort = 10; //todo
+        public final static int rightClimberMotorPort = 11; //todo
+        public final static double globalClimbSpeed = 0.1;
         public final static double lowBarHeight = 50; //todo: find height in centimeters
         public final static double middleBarHeight = 100; //todo: find height in centimeters
         public final static double maxClimberHeight = 400; //todo find this height
@@ -56,9 +56,9 @@ public final class Constants {
         public final static double encoderErrorRange = 5; //ensure this is a good range
         public final static double encoderConversionRateToCm = 1; //todo: find encoder conversion rate
           //Both of these are random numbers replace when we actually now the correct port
-        public final static int leftChannelA = 0;
-        public final static int leftChannelB = 0;
-        public final static int rightChannelA = 0;
-        public final static int rightChannelB = 0;
+        public final static int leftChannelA = 8;
+        public final static int leftChannelB = 9;
+        public final static int rightChannelA = 6;
+        public final static int rightChannelB = 7;
     }
 }

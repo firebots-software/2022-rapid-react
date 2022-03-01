@@ -14,11 +14,11 @@ import java.util.Collections;
 import java.util.Set;
 
 
-public class HoldClimb extends CommandBase {
+public class ManualClimb extends CommandBase {
   public Climber climber;
   public double climbSpeed;
 
-  public HoldClimb(double speed) {
+  public ManualClimb(double speed) {
     climber = Climber.getInstance();
     climbSpeed = speed;
   }
