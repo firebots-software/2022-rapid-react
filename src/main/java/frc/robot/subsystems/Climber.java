@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
@@ -14,14 +16,18 @@ public class Climber extends SubsystemBase {
 
   private final WPI_TalonSRX leftClimber, rightClimber;
   private static DigitalInput rightHallEffect, leftHallEffect;
+  private Encoder leftEncoder, rightEncoder;
   //private Encoder leftEncoder = new Encoder();
 
   private Climber() {
     rightHallEffect = new DigitalInput(Constants.Climber.rightHallEffectPort);
     leftHallEffect = new DigitalInput(Constants.Climber.leftHallEffectPort);
     
-    this.leftClimber = new WPI_TalonSRX(Constants.Climber.leftClimberMotorPort);
-    this.rightClimber = new WPI_TalonSRX(Constants.Climber.rightClimberMotorPort);
+    leftClimber = new WPI_TalonSRX(Constants.Climber.leftClimberMotorPort);
+    rightClimber = new WPI_TalonSRX(Constants.Climber.rightClimberMotorPort);
+
+    leftEncoder = new Encoder(new DigitalInput(Constants.Climber.leftChannelA), new DigitalInput(Constants.Climber.leftChannelB));
+    rightEncoder = new Encoder(new DigitalInput(Constants.Climber.rightChannelA), new DigitalInput(Constants.Climber.rightChannelB));
   }
 
   /**
@@ -37,28 +43,19 @@ public class Climber extends SubsystemBase {
   }
   
   public double getLeftHeight() {
-    double height = Constants.Climber.encoderConversionRateToCm * leftClimber.getSelectedSensorPosition();
+    double height = Constants.Climber.encoderConversionRateToCm * leftEncoder.getRaw();
 
     if (getLeftHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
       height = 0;
     }
-    if (getLeftHallEffectValue() == true && Math.abs(Constants.Climber.maxClimberHeight - height) < Constants.Climber.encoderErrorRange) {
-      height = (Constants.Climber.maxClimberHeight);
-    }
-
     return height;
   }
 
   public double getRightHeight() {
-    double height = Constants.Climber.encoderConversionRateToCm * rightClimber.getSelectedSensorPosition();
-
+    double height = Constants.Climber.encoderConversionRateToCm * rightEncoder.getRaw();
     if (getRightHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
       height = 0;
     }
-    if (getRightHallEffectValue() == true && Math.abs(Constants.Climber.maxClimberHeight - height) < Constants.Climber.encoderErrorRange) {
-      height = (Constants.Climber.maxClimberHeight);
-    }
-
     return height;
   }
 
@@ -112,3 +109,4 @@ public class Climber extends SubsystemBase {
     return Math.abs(Constants.Climber.middleBarHeight - getAverageHeight()) < Constants.Climber.encoderErrorRange;
   }
  }
+
