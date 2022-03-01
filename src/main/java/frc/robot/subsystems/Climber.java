@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
@@ -24,10 +26,15 @@ public class Climber extends SubsystemBase {
     leftHallEffect = new DigitalInput(Constants.Climber.leftHallEffectPort);
     
     leftClimber = new WPI_TalonSRX(Constants.Climber.leftClimberMotorPort);
-    rightClimber = new WPI_TalonSRX(Constants.Climber.rightClimberMotorPort);
+    leftClimber.setInverted(true);
+    leftClimber.setNeutralMode(NeutralMode.Brake);
 
-    leftEncoder = new Encoder(new DigitalInput(Constants.Climber.leftChannelA), new DigitalInput(Constants.Climber.leftChannelB));
-    rightEncoder = new Encoder(new DigitalInput(Constants.Climber.rightChannelA), new DigitalInput(Constants.Climber.rightChannelB));
+    rightClimber = new WPI_TalonSRX(Constants.Climber.rightClimberMotorPort);
+    rightClimber.setInverted(false);
+    rightClimber.setNeutralMode(NeutralMode.Brake);
+
+    leftEncoder = new Encoder(new DigitalInput(Constants.Climber.leftChannelA), new DigitalOutput(Constants.Climber.leftChannelB));
+    rightEncoder = new Encoder(new DigitalInput(Constants.Climber.rightChannelA), new DigitalOutput(Constants.Climber.rightChannelB));
   }
 
   /**

@@ -59,6 +59,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
     SmartDashboard.putNumber("leftEncoderVal:", climber.getLeftHeight());
     SmartDashboard.putNumber("rightEncoderVal:", climber.getRightHeight());
+
   }
 
 

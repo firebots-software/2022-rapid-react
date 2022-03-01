@@ -31,8 +31,8 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class RobotContainer {
   private Joystick ps4_controller;
-  private Drivetrain drivetrain = Drivetrain.getInstance();
-  private SendableChooser<Command> autonChooser = new SendableChooser<>();
+  // private Drivetrain drivetrain = Drivetrain.getInstance();
+  // private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
 
 
@@ -40,17 +40,17 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     this.ps4_controller = new Joystick(Constants.OI.PS4_CONTROLLER_PORT);
-    this.drivetrain = Drivetrain.getInstance();
+    // this.drivetrain = Drivetrain.getInstance();
     configureButtonBindings();
 
         // Configure default commands
         // Set the default drive command to split-stick arcade drive
-        drivetrain.setDefaultCommand(
-          new JoystickDrive(
-                  () -> ps4_controller.getRawAxis(1),
-                  () -> ps4_controller.getRawAxis(2)));
+    //     drivetrain.setDefaultCommand(
+    //       new JoystickDrive(
+    //               () -> ps4_controller.getRawAxis(1),
+    //               () -> ps4_controller.getRawAxis(2)));
 
-    SmartDashboard.putData("Auton chooser", autonChooser);
+    // SmartDashboard.putData("Auton chooser", autonChooser);
 
   }
 
@@ -66,11 +66,11 @@ public class RobotContainer {
     buttonName.whenPressed(new commandName());
     */
 
-    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
-    flipOrientation.whenPressed(new FlipOrientation());
+    // final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
+    // flipOrientation.whenPressed(new FlipOrientation());
 
-    final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    slowMode.whenHeld(new ToggleSlowMode());
+    // final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    // slowMode.whenHeld(new ToggleSlowMode());
 
     final Button climbToMid = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     climbToMid.whenPressed(new ClimbToMiddle());
@@ -96,6 +96,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autonChooser.getSelected();
+    return null;
+    // return autonChooser.getSelected();
   }
 }

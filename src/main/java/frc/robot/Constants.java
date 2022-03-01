@@ -48,7 +48,7 @@ public final class Constants {
         public final static int leftHallEffectPort = 2; //todo
         public final static int leftClimberMotorPort = 10; //todo
         public final static int rightClimberMotorPort = 11; //todo
-        public final static double globalClimbSpeed = 0.1;
+        public final static double globalClimbSpeed = 0.3;
         public final static double lowBarHeight = 50; //todo: find height in centimeters
         public final static double middleBarHeight = 100; //todo: find height in centimeters
         public final static double maxClimberHeight = 400; //todo find this height
