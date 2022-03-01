@@ -4,6 +4,7 @@
 
 package frc.robot.commands.shooter;
 
+
 public class SpinUpShooterNoStop extends SpinUpShooter {
 
   /** Creates a new SpinUpShooter. */

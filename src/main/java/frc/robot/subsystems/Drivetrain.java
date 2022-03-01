@@ -47,7 +47,7 @@ public class Drivetrain extends SubsystemBase {
   
   // fields
   private final WPI_TalonSRX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
-  private static Pigeon2 pigeon; 
+  // private static Pigeon2 pigeon; 
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
     this.rightFollower = new WPI_TalonSRX(Constants.Drivetrain.rightFollowerPort);
     resetEncoders();
 
-    pigeon = new Pigeon2(Constants.Drivetrain.PIGEON_ID);
+    // pigeon = new Pigeon2(Constants.Drivetrain.PIGEON_ID);
     resetGyro();
     
     MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
@@ -296,15 +296,16 @@ public void setSlowMode(boolean isSlowMode) {
 }
 
   public void resetGyro() {
-    pigeon.setYaw(0);
+    // pigeon.setYaw(0);
   }
 
   public double getHeading() {
-    if (pigeon != null) {
-        return pigeon.getYaw(); //todo: why gyro angle = -heading?
-    } else {
-        return 0;
-    }
+    // if (pigeon != null) {
+    //     return pigeon.getYaw(); //todo: why gyro angle = -heading?
+    // } else {
+    //     return 0;
+    // }
+    return 0;
   }
 
   public boolean getDriveStatus() {

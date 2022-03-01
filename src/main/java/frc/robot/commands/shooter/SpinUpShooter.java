@@ -5,6 +5,7 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -18,6 +19,8 @@ public class SpinUpShooter extends CommandBase {
   private final PIDController pidTop, pidBottom; 
   private final double kp, ki, kd; 
   private double currentVoltageTop, currentVoltageBottom;
+  private Timer timer;
+  private final double RPM_TOLERANCE = 50;
 
   /** Creates a new SpinUpShooter. */
   public SpinUpShooter() {
@@ -30,6 +33,13 @@ public class SpinUpShooter extends CommandBase {
     kd = 0.00; 
     pidTop = new PIDController(kp, ki, kd); 
     pidBottom = new PIDController(kp, ki, kd); 
+
+    pidTop.setTolerance(RPM_TOLERANCE);
+    pidBottom.setTolerance(RPM_TOLERANCE);
+
+    timer = new Timer();
+
+
     
   }
 
@@ -47,8 +57,17 @@ public class SpinUpShooter extends CommandBase {
     pidTop.setSetpoint(shooter.getTopTargetRPM());
     pidBottom.setSetpoint(shooter.getBottomTargetRPM());
 
+    if (shooter.getTopTargetRPM() > 3500) {
+      shooter.setRampingConstant(0.12);
+    } else {
+      shooter.setRampingConstant(0.25);
+    }
+
     currentVoltageTop = 0;
     currentVoltageBottom = 0;
+
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -73,6 +92,9 @@ public class SpinUpShooter extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean done = pidTop.atSetpoint() & pidBottom.atSetpoint();
+    if (done) {
+      timer.stop();
+    }
     SmartDashboard.putBoolean("SHOOTER AT RPM", done);
     return false; // RETURN FALSE -- KEEP THE WHEELS SPINNING ONCE THEY'RE UP TO SPEED
   }

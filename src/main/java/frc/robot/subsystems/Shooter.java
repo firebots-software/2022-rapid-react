@@ -191,4 +191,10 @@ public class Shooter extends SubsystemBase {
     if (rpm > Constants.Shooter.MAX_RPM) rpm = Constants.Shooter.MAX_RPM;
     return rpm; 
   }
+
+  public void setRampingConstant(double ramp) {
+    System.out.println("setting ramp const to " + ramp);
+    topMotor.configOpenloopRamp(ramp);
+    bottomMotor.configOpenloopRamp(ramp);
+  }
 }
