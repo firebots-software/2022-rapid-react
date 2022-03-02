@@ -158,4 +158,14 @@ public final class Constants {
         public final static int leftClimberPort = 9999;
         public final static int rightClimberPort = 9998;  //Both of these are random numbers replace when we actually now the correct port
     }
+
+    public static final class Intake {
+        public final static int LEFT_PISTON_PORT = 0;
+        public final static int RIGHT_PISTON_PORT = 1;
+        public final static int INTAKE_MOTOR_PORT = 2;
+        public final static int SPAGHETTI_MOTOR_PORT = 2;
+
+        public static final double INTAKE_SPEED_FORWARDS = -0.9;
+        public static final double INTAKE_SPEED_BACKWARDS = 0.9;
+    }
 }
