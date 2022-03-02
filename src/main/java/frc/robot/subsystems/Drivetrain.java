@@ -201,6 +201,7 @@ public class Drivetrain extends SubsystemBase {
 
       if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) {
         quickTurn = true;
+        rotation *= 0.7;
         if (!isSlowMode) rotation *= 0.5;
       } else {
         quickTurn = false;
