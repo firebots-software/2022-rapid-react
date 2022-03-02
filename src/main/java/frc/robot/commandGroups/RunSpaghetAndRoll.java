@@ -5,18 +5,33 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants;
+import frc.robot.commands.intake.RunSpaghettiWheels;
 import frc.robot.commands.shooter.StartRoller;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SpaghettiRollerShooter extends ParallelCommandGroup {
+public class RunSpaghetAndRoll extends ParallelCommandGroup {
+
+  Shooter shooter = Shooter.getInstance();
+
+
   /** Creates a new SpaghettiRollerShooter. */
-  public SpaghettiRollerShooter() {
+  public RunSpaghetAndRoll() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new StartRoller()
+      new StartRoller(),
+      new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED)
     );
+  }
+
+
+  @Override
+  public void end(boolean interrupted) {
+    shooter.stopBothMotors();
+    super.end(interrupted);
   }
 }
