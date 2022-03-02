@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commandGroups.MoveToBallAndShootingDistance;
+import frc.robot.commandGroups.RunSpaghetAndRoll;
 import frc.robot.commandGroups.TaxiAndIntake;
 import frc.robot.commandGroups.TimeDriveAndShoot;
 import frc.robot.commands.auton.*;
@@ -148,6 +149,8 @@ public class RobotContainer {
     final POVButton downPov = new POVButton(ps4_controller, 180);
     downPov.whenHeld(new ManualClimb(-Constants.Climber.globalClimbSpeed));
 
+    final Button spaghetRoller = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
+    spaghetRoller.whenHeld(new RunSpaghetAndRoll()); 
 
   }
 
