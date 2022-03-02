@@ -20,6 +20,14 @@ import frc.robot.commands.auton.*;
 import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.shooter.*;
+import frc.robot.commands.climber.ClimbToMiddle;
+import frc.robot.commands.climber.ManualClimb;
+import frc.robot.commands.climber.RetractClimber;
+import frc.robot.commands.climber.RetractComplete;
+import frc.robot.commands.climber.ReturnTrueWhenPressed;
+import frc.robot.commands.drivetrain.FlipOrientation;
+import frc.robot.commands.drivetrain.JoystickDrive;
+import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -81,11 +89,11 @@ public class RobotContainer {
     buttonName.whenPressed(new commandName());
     */
 
-    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
-    flipOrientation.whenPressed(new FlipOrientation());
+    // final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
+    // flipOrientation.whenPressed(new FlipOrientation());
 
-    final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    slowMode.whenHeld(new ToggleSlowMode());
+    // final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    // slowMode.whenHeld(new ToggleSlowMode());
 
     final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); //TODO: change button accordingly
     loadBall.whenHeld(new StartRoller());
@@ -128,6 +136,19 @@ public class RobotContainer {
     // decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
 
 
+    final Button climbHold = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
+    climbHold.whenHeld(new ManualClimb(Constants.Climber.globalClimbSpeed));
+
+    final Button retractComplete = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    retractComplete.whenPressed(new RetractComplete());
+
+    final POVButton upPov = new POVButton(ps4_controller, 0);
+    upPov.whenHeld(new ManualClimb(Constants.Climber.globalClimbSpeed));
+
+    final POVButton downPov = new POVButton(ps4_controller, 180);
+    downPov.whenHeld(new ManualClimb(-Constants.Climber.globalClimbSpeed));
+
+
   }
 
   /**
@@ -136,6 +157,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autonChooser.getSelected();
+    return null;
+    // return autonChooser.getSelected();
   }
 }
