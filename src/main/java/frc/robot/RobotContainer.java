@@ -88,7 +88,7 @@ public class RobotContainer {
     slowMode.whenHeld(new ToggleSlowMode());
 
     final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); //TODO: change button accordingly
-    loadBall.whenHeld(new LaunchBall());
+    loadBall.whenHeld(new StartRoller());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
     spinUpShooter.toggleWhenPressed(new SpinUpShooter());
