@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
-   // drivetrain = Drivetrain.getInstance();
+   drivetrain = Drivetrain.getInstance();
     drivetrain = Drivetrain.getInstance();
 
     // CameraServer is responsible for publishing about cameras/camera servers to Network Tables
@@ -179,6 +179,11 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("leftEncoderVal:", climber.getLeftHeight());
     SmartDashboard.putNumber("rightEncoderVal:", climber.getRightHeight());
+
+    SmartDashboard.putBoolean("left climber hall effect", climber.getLeftHallEffectValue());
+    SmartDashboard.putBoolean("right climber hall effect", climber.getRightHallEffectValue());
+
+
 
   }
 

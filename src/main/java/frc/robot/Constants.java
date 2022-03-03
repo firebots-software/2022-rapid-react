@@ -155,8 +155,8 @@ public final class Constants {
     }
 
     public static final class Climber {
-        public final static int rightHallEffectPort = 0; //todo
-        public final static int leftHallEffectPort = 2; //todo
+        public final static int rightHallEffectPort = 2; //todo
+        public final static int leftHallEffectPort = 3; //todo
         public final static int leftClimberMotorPort = 10; //todo
         public final static int rightClimberMotorPort = 11; //todo
         public final static double globalClimbSpeed = 0.3;

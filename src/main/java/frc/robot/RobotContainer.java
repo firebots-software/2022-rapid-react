@@ -90,11 +90,11 @@ public class RobotContainer {
     buttonName.whenPressed(new commandName());
     */
 
-    // final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
-    // flipOrientation.whenPressed(new FlipOrientation());
+    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
+    flipOrientation.whenPressed(new FlipOrientation());
 
-    // final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    // slowMode.whenHeld(new ToggleSlowMode());
+    final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
+    slowMode.whenHeld(new ToggleSlowMode());
 
     final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); //TODO: change button accordingly
     loadBall.whenHeld(new StartRoller());
@@ -118,30 +118,6 @@ public class RobotContainer {
     toggleCamOrientation.whenPressed(new ToggleCameraOrientation());
 
     
-
-
-  
-
-
-    // double rpmInterval = 100;
-    // final Button increaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
-    // increaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, rpmInterval));
-
-    // final Button decreaseTopWheel = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    // decreaseTopWheel.whenPressed(new ChangeShooterTargetRPM(true, -rpmInterval));
-
-    // final Button increaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
-    // increaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, rpmInterval));
-
-    // final Button decreaseBottomWheel = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
-    // decreaseBottomWheel.whenPressed(new ChangeShooterTargetRPM(false, -rpmInterval));
-
-
-    final Button climbHold = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    climbHold.whenHeld(new ManualClimb(Constants.Climber.globalClimbSpeed));
-
-    final Button retractComplete = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    retractComplete.whenPressed(new RetractComplete());
 
     final POVButton upPov = new POVButton(ps4_controller, 0);
     upPov.whenHeld(new ManualClimb(Constants.Climber.globalClimbSpeed));

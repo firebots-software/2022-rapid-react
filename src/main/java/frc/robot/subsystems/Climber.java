@@ -33,8 +33,8 @@ public class Climber extends SubsystemBase {
     rightClimber.setInverted(false);
     rightClimber.setNeutralMode(NeutralMode.Brake);
 
-    leftEncoder = new Encoder(new DigitalInput(Constants.Climber.leftChannelA), new DigitalOutput(Constants.Climber.leftChannelB));
-    rightEncoder = new Encoder(new DigitalInput(Constants.Climber.rightChannelA), new DigitalOutput(Constants.Climber.rightChannelB));
+    // leftEncoder = new Encoder(new DigitalInput(Constants.Climber.leftChannelA), new DigitalOutput(Constants.Climber.leftChannelB));
+    // rightEncoder = new Encoder(new DigitalInput(Constants.Climber.rightChannelA), new DigitalOutput(Constants.Climber.rightChannelB));
   }
 
   /**
@@ -50,20 +50,20 @@ public class Climber extends SubsystemBase {
   }
   
   public double getLeftHeight() {
-    double height = Constants.Climber.encoderConversionRateToCm * leftEncoder.getRaw();
+    // double height = Constants.Climber.encoderConversionRateToCm * leftEncoder.getRaw();
 
-    if (getLeftHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
-      height = 0;
-    }
-    return height;
+    // if (getLeftHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
+    //   height = 0;
+    // }
+    return 0;
   }
 
   public double getRightHeight() {
-    double height = Constants.Climber.encoderConversionRateToCm * rightEncoder.getRaw();
-    if (getRightHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
-      height = 0;
-    }
-    return height;
+    // double height = Constants.Climber.encoderConversionRateToCm * rightEncoder.getRaw();
+    // if (getRightHallEffectValue() == true && Math.abs(height) < Constants.Climber.encoderErrorRange) {
+    //   height = 0;
+    // }
+    return 0;
   }
 
   public double getAverageHeight()  {
@@ -71,18 +71,25 @@ public class Climber extends SubsystemBase {
   }
 
   public boolean getLeftHallEffectValue() {
-    return leftHallEffect.get();
+    return !leftHallEffect.get();
   }
 
   public boolean getRightHallEffectValue() {
-    return rightHallEffect.get();
+    return !rightHallEffect.get();
   }
 
   public void setLeftClimberSpeed(double climbSpeed) {
+    if (getLeftHallEffectValue() == true && climbSpeed < 0) {
+      climbSpeed = 0;
+    }
     leftClimber.set(climbSpeed);
   }
 
   public void setRightClimberSpeed(double climbSpeed) {
+    if (getRightHallEffectValue() == true && climbSpeed < 0) {
+      climbSpeed = 0;
+    }
+
     rightClimber.set(climbSpeed);
   }
 
