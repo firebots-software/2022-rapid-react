@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.Pigeon2;
 
@@ -46,7 +47,7 @@ public class Drivetrain extends SubsystemBase {
     double rightVelocity = wheelSpeeds.rightMetersPerSecond;
   
   // fields
-  private final WPI_TalonSRX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
+  private final WPI_TalonFX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
   // private static Pigeon2 pigeon; 
 
   private final DifferentialDrive robotDrive;
@@ -79,10 +80,10 @@ public class Drivetrain extends SubsystemBase {
   private Drivetrain() {
     curvatureDriveOn = true;
 
-    this.leftFollower = new WPI_TalonSRX(Constants.Drivetrain.leftFollowerPort);
-    this.leftFrontMaster = new WPI_TalonSRX(Constants.Drivetrain.leftMasterPort);
-    this.rightRearMaster = new WPI_TalonSRX(Constants.Drivetrain.rightMasterPort);
-    this.rightFollower = new WPI_TalonSRX(Constants.Drivetrain.rightFollowerPort);
+    this.leftFollower = new WPI_TalonFX(Constants.Drivetrain.leftFollowerPort);
+    this.leftFrontMaster = new WPI_TalonFX(Constants.Drivetrain.leftMasterPort);
+    this.rightRearMaster = new WPI_TalonFX(Constants.Drivetrain.rightMasterPort);
+    this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
     resetEncoders();
 
     // pigeon = new Pigeon2(Constants.Drivetrain.PIGEON_ID);

@@ -12,8 +12,8 @@ import frc.robot.subsystems.Turret;
 // manual alignment of robot with hub 
 public class TurnTurretForAngle extends CommandBase {
   private Turret turret;
-  private double targetAngle;
-  private PIDController pid;
+  protected double targetAngle;
+  protected PIDController pid;
 
   // pid constants 
   private double kP = 0.5;

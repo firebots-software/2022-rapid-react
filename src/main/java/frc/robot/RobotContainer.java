@@ -13,21 +13,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commandGroups.MoveToBallAndShootingDistance;
 import frc.robot.commandGroups.RunSpaghetAndRoll;
-import frc.robot.commandGroups.TaxiAndIntake;
-import frc.robot.commandGroups.TimeDriveAndShoot;
+import frc.robot.commandGroups.TaxiIntakeShoot;
+import frc.robot.commandGroups.TaxiTurnShoot;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.shooter.*;
-import frc.robot.commands.climber.ClimbToMiddle;
 import frc.robot.commands.climber.ManualClimb;
-import frc.robot.commands.climber.RetractClimber;
-import frc.robot.commands.climber.RetractComplete;
-import frc.robot.commands.climber.ReturnTrueWhenPressed;
 import frc.robot.commands.drivetrain.FlipOrientation;
-import frc.robot.commands.drivetrain.JoystickDrive;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.subsystems.Drivetrain;
 
@@ -61,19 +55,10 @@ public class RobotContainer {
     autonChooser.setDefaultOption("limelightAim", new AlignToTarget());
 
     SmartDashboard.putData("Auton chooser", autonChooser);
-    autonChooser.setDefaultOption("Drive Back for Time", new DriveForTime(-0.5, 4));
-    autonChooser.addOption("DRIVE TURN SHOOT", new TimeDriveAndShoot());
-    autonChooser.addOption("dummy auton with turn 180", new DriveForTime(-0.5, 4).andThen(new TurnForAngle(180)));
-    autonChooser.addOption("only taxi", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
-    autonChooser.addOption("taxi and move to shooting distance", new MoveToBallAndShootingDistance());
-    autonChooser.addOption("taxi and intake ball", new TaxiAndIntake());
-    autonChooser.addOption("drive back 1m", RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall));
-    autonChooser.addOption("drive forward 1m", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
-    autonChooser.addOption("turn 180", new TurnForAngle(180));
-    // autonChooser.addOption("taxi and shoot ball", taxiAndShoot);
-    // autonChooser.addOption("taxi and intake and shoot one ball", taxiIntakeShootOne);
-    // autonChooser.addOption("taxi and intake and shoot two balls", taxiIntakeShootTwo);
-
+    autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 4).andThen(new TurnTurretToAngle(-45)));
+    autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
+    autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
+    autonChooser.addOption("test only -- turret reset", new TurnTurretToAngle(-45));
 
 
   }
@@ -97,7 +82,7 @@ public class RobotContainer {
     slowMode.whenHeld(new ToggleSlowMode());
 
     final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); //TODO: change button accordingly
-    loadBall.whenHeld(new StartRoller());
+    loadBall.whenHeld(new RunSpaghetAndRoll());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
     spinUpShooter.toggleWhenPressed(new SpinUpShooter());
@@ -124,9 +109,6 @@ public class RobotContainer {
 
     final POVButton downPov = new POVButton(ps4_controller, 180);
     downPov.whenHeld(new ManualClimb(-Constants.Climber.globalClimbSpeed));
-
-    final Button spaghetRoller = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT);
-    spaghetRoller.whenHeld(new RunSpaghetAndRoll()); 
 
   }
 

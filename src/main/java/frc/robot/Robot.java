@@ -206,6 +206,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     drivetrain.resetOdometry(new Pose2d());
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
+    turret.zeroEncoder();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

@@ -5,6 +5,7 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class RunIntakeMotor extends CommandBase {
@@ -15,6 +16,11 @@ public class RunIntakeMotor extends CommandBase {
   public RunIntakeMotor(double speed) {
     this.intake = Intake.getInstance();
     this.speed = speed;
+  }
+
+  public RunIntakeMotor() {
+    this.intake = Intake.getInstance();
+    this.speed = Constants.Intake.INTAKE_SPEED_FORWARDS;
   }
 
   // Called when the command is initially scheduled.

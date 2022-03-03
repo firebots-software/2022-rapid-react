@@ -5,19 +5,19 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Paths;
-import frc.robot.RamseteGenerator;
+import frc.robot.commands.auton.DriveForTime;
+import frc.robot.commands.auton.TurnForAngle;
+import frc.robot.commands.shooter.TurnTurretToAngle;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TaxiIntakeShootOne extends SequentialCommandGroup {
-
-  /** Creates a new TaxiIntakeShootOne. */
-  public TaxiIntakeShootOne() {
-    // addCommands(RamseteGenerator.generateCommandForPath(Paths.moveToBall), 
-    //             intake.intakeBall, 
-    //             RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall), 
-    //             new AimAndShoot());
+public class TaxiTurnShoot extends SequentialCommandGroup {
+  /** Creates a new TaxiTurnShoot. */
+  public TaxiTurnShoot() {
+    addCommands(new DriveForTime(-0.5, 4),
+                new TurnForAngle(180),
+                new AimAndShoot(),
+                new TurnTurretToAngle(-45));
   }
 }

@@ -16,7 +16,8 @@ public class Turret extends SubsystemBase {
     private TalonFX motor;
     private static Turret instance;
     private final double RAMPING_CONSTANT = 0.25;
-    private final double maxRange = 90; 
+    private final double maxRange = 0; 
+    private final double minRange = -90;
 
   /** Creates a new Turret. */
   private Turret() {
@@ -41,13 +42,14 @@ public class Turret extends SubsystemBase {
   }
 
   public void setMotorSpeed(double speed) {
-    if (this.getEncoderValDegrees() <= -maxRange && speed < 0) {
-      motor.set(ControlMode.PercentOutput, 0);
+    if (this.getEncoderValDegrees() <= minRange && speed < 0) {
+      speed = 0; // left hardstop
     } else if (this.getEncoderValDegrees() >= maxRange && speed > 0) {
-      motor.set(ControlMode.PercentOutput, 0);
-    } else {
-    motor.set(ControlMode.PercentOutput, speed);
+      speed = 0; // right hardstop
     }
+    
+    motor.set(ControlMode.PercentOutput, speed);
+    
   }
 
   public void stopMotor() {
