@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commandGroups.RunIntakeAndSpaghetti;
 import frc.robot.commandGroups.RunSpaghetAndRoll;
+import frc.robot.commandGroups.StopEverything;
 import frc.robot.commandGroups.TaxiIntakeShoot;
 import frc.robot.commandGroups.TaxiTurnShoot;
 import frc.robot.commands.auton.*;
@@ -23,6 +25,7 @@ import frc.robot.commands.shooter.*;
 import frc.robot.commands.climber.ManualClimb;
 import frc.robot.commands.drivetrain.FlipOrientation;
 import frc.robot.commands.drivetrain.ToggleSlowMode;
+import frc.robot.commands.intake.ToggleIntakePiston;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -56,9 +59,9 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 4).andThen(new TurnTurretToAngle(-45)));
-    autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
-    autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
-    autonChooser.addOption("test only -- turret reset", new TurnTurretToAngle(-45));
+    // autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
+    // autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
+    // autonChooser.addOption("test only -- turret reset", new TurnTurretToAngle(-45));
 
 
   }
@@ -102,6 +105,14 @@ public class RobotContainer {
     final Button toggleCamOrientation = new JoystickButton(ps4_controller, Constants.OI.PS_SHARE_BUTTON_PORT);
     toggleCamOrientation.whenPressed(new ToggleCameraOrientation());
 
+    final Button toggleIntake = new JoystickButton(ps4_controller, Constants.OI.PS_BUTTON_PORT);
+    toggleIntake.whenPressed(new ToggleIntakePiston());
+
+    // final Button runIntake = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
+    // runIntake.whenHeld(new RunIntakeAndSpaghetti());
+
+    // final Button stopEverything = new JoystickButton(ps4_controller, Constants.OI.BIG_BUTTON_PORT);
+    // stopEverything.whenPressed(new StopEverything());
     
 
     final POVButton upPov = new POVButton(ps4_controller, 0);
@@ -109,6 +120,8 @@ public class RobotContainer {
 
     final POVButton downPov = new POVButton(ps4_controller, 180);
     downPov.whenHeld(new ManualClimb(-Constants.Climber.globalClimbSpeed));
+
+
 
   }
 

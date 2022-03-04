@@ -6,27 +6,39 @@ package frc.robot.commands.intake;
 
 import java.util.Set;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class ToggleIntakePiston extends CommandBase {
-  private Intake intake;
+  // private Intake intake;
+  private Solenoid leftPiston, rightPiston;
   
   /** Creates a new ToggleIntakePiston. */
   public ToggleIntakePiston() {
-    this.intake = Intake.getInstance();
-  }
+    // this.intake = Intake.getInstance();
+
+    leftPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.LEFT_PISTON_PORT);
+    rightPiston  = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.RIGHT_PISTON_PORT);  }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.togglePiston();
+    // intake.togglePiston();
+
+
+    leftPiston.set(!leftPiston.get());
+    rightPiston.set(!rightPiston.get());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -38,8 +50,8 @@ public class ToggleIntakePiston extends CommandBase {
     return true;
   }
 
-  @Override
-  public Set<Subsystem> getRequirements() {
-    return Set.of(intake);
-  }
+  // @Override
+  // public Set<Subsystem> getRequirements() {
+  //   return Set.of(intake);
+  // }
 }

@@ -42,10 +42,10 @@ public final class Constants {
     }
 
     public static final class Drivetrain {
-        public final static int leftFollowerPort = 1; //TODO: change port numbers for new drivetrain
-        public final static int leftMasterPort = 2;
-        public final static int rightMasterPort = 4;
-        public final static int rightFollowerPort = 3;
+        public final static int leftFollowerPort = 4; //TODO: change port numbers for new drivetrain
+        public final static int leftMasterPort = 3;
+        public final static int rightMasterPort = 2;
+        public final static int rightFollowerPort = 1;
 
         public static final double TICKS_PER_METER = 26199.13932126; // * (1.339280 / 2.13);
 
@@ -120,7 +120,7 @@ public final class Constants {
     }   
 
     public static final class Shooter{
-        public final static int rollerMotorPort = 3; //TODO: change to actual port
+        public final static int rollerMotorPort = 12; //TODO: change to actual port
         public final static int shooterTopMotorPort = 7; //TODO: change port number
         public final static int shooterBottomMotorPort = 6; //TODO: change port number
         public static final double shooterEncoderTicksPerRev = 2048;
@@ -174,10 +174,10 @@ public final class Constants {
     }
 
     public static final class Intake {
-        public final static int LEFT_PISTON_PORT = 0;
-        public final static int RIGHT_PISTON_PORT = 1;
-        public final static int INTAKE_MOTOR_PORT = 2;
-        public final static int SPAGHETTI_MOTOR_PORT = 2;
+        public final static int LEFT_PISTON_PORT = 4;
+        public final static int RIGHT_PISTON_PORT = 5;
+        public final static int INTAKE_MOTOR_PORT = 9;
+        public final static int SPAGHETTI_MOTOR_PORT = 8;
 
         public static final double INTAKE_SPEED_FORWARDS = -0.9;
         public static final double INTAKE_SPEED_BACKWARDS = 0.9;

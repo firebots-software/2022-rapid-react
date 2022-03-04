@@ -101,7 +101,7 @@ public class Drivetrain extends SubsystemBase {
     // this.gyro.reset();
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), new Pose2d());
 
-    this.orientation = driveOrientation.BACK; // default value
+    this.orientation = driveOrientation.FRONT; // default value
     this.isSlowMode = false; // default value
 
   }
@@ -247,7 +247,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.follow(leftFrontMaster);
     rightFollower.follow(rightRearMaster);
 
-    rightRearMaster.setInverted(false); //might need to change
+    rightRearMaster.setInverted(true); //might need to change
     leftFrontMaster.setInverted(true); //might need to change
     leftFollower.setInverted(true);
     rightFollower.setInverted(true);

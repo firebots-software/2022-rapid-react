@@ -23,9 +23,7 @@ public class RunSpaghetAndRoll extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new StartRoller(),
-      new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED)
-    );
+      new StartRoller(), new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
   }
 
 

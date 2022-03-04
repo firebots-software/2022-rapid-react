@@ -2,26 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.intake;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climber;
 
-public class StartIntakeNoStop extends CommandBase {
-  private Intake intake;
+public class StopClimber extends CommandBase {
+  private Climber climber;
   
-  /** Creates a new StartIntakeNoStop. */
-  public StartIntakeNoStop() {
-    intake = Intake.getInstance();
+  /** Creates a new StopClimber. */
+  public StopClimber() {
+    climber = Climber.getInstance();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // intake.extendIntake();
-    intake.runRollerMotor(Constants.Intake.INTAKE_SPEED_FORWARDS);
-    intake.runSpaghettiMotor(Constants.Intake.SPAGHETTI_SPEED);
+    climber.stopClimber();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
