@@ -10,7 +10,7 @@ import frc.robot.Constants;
 public class RetractClimber extends ClimbToHeight {
   /** Creates a new RetractClimber. */
   public RetractClimber() {
-    super(-Constants.Climber.globalClimbSpeed, -1);
+    super(-Constants.Climber.climbSpeedUp, -1);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

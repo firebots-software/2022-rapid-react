@@ -47,6 +47,7 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
   private Limelight() {
       this.shooter = Shooter.getInstance();
+      setLedStatus(false);
   }
 
   /**
@@ -123,6 +124,14 @@ public class Limelight extends SubsystemBase {
       return 100 < getDistanceToTarget() && getDistanceToTarget() < 135;
     } else {
       return 85 < getDistanceToTarget() && getDistanceToTarget() < 95;
+    }
+  }
+
+  public void setLedStatus(boolean on) {
+    if (on) {
+      table.getEntry("ledMode").setNumber(3);
+    } else {
+      table.getEntry("ledMode").setNumber(1);
     }
   }
 

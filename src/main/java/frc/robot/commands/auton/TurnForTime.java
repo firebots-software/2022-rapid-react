@@ -34,6 +34,7 @@ public class TurnForTime extends CommandBase {
   
   @Override
   public void initialize() {
+    timer.reset();
     timer.start();
   }
 

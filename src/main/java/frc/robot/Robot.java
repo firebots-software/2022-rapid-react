@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Limelight;
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private Drivetrain drivetrain;
   private Turret turret;
+  private Intake intake;
 
   private Limelight limelight;
   private RobotContainer m_robotContainer;
@@ -56,7 +58,7 @@ public class Robot extends TimedRobot {
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
    drivetrain = Drivetrain.getInstance();
-    drivetrain = Drivetrain.getInstance();
+   intake = Intake.getInstance();
 
     // CameraServer is responsible for publishing about cameras/camera servers to Network Tables
 
@@ -183,6 +185,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("left climber hall effect", climber.getLeftHallEffectValue());
     SmartDashboard.putBoolean("right climber hall effect", climber.getRightHallEffectValue());
 
+    SmartDashboard.putBoolean("intake piston status", intake.pistonExtended());
 
 
   }
@@ -193,6 +196,8 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     updateShuffleboard();
     drivetrain.setMotorNeutralMode(NeutralMode.Coast);
+    limelight.setLedStatus(false);
+    // intake.retractIntake();
   }
 
   @Override

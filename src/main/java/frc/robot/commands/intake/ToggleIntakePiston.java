@@ -14,24 +14,19 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class ToggleIntakePiston extends CommandBase {
-  // private Intake intake;
-  private Solenoid leftPiston, rightPiston;
+  private Intake intake;
   
   /** Creates a new ToggleIntakePiston. */
   public ToggleIntakePiston() {
-    // this.intake = Intake.getInstance();
+    this.intake = Intake.getInstance();
 
-    leftPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.LEFT_PISTON_PORT);
-    rightPiston  = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.RIGHT_PISTON_PORT);  }
+  }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // intake.togglePiston();
+    intake.togglePiston();
 
-
-    leftPiston.set(!leftPiston.get());
-    rightPiston.set(!rightPiston.get());
   }
 
   // Called every time the scheduler runs while the command is scheduled.

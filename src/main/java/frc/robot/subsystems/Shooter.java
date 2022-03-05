@@ -34,10 +34,11 @@ public class Shooter extends SubsystemBase {
 
 
     this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
+    rollerMotor.setInverted(true);
     this.topTargetRPM = Constants.Shooter.FIXED_RPM;
     this.bottomTargetRPM = Constants.Shooter.FIXED_RPM;
 
-    isAdjustingRPM = true; 
+    isAdjustingRPM = false; 
 
   }
 
@@ -193,7 +194,6 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setRampingConstant(double ramp) {
-    System.out.println("setting ramp const to " + ramp);
     topMotor.configOpenloopRamp(ramp);
     bottomMotor.configOpenloopRamp(ramp);
   }

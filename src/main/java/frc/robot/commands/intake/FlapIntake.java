@@ -2,27 +2,32 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.climber;
+package frc.robot.commands.intake;
 
-//import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Intake;
 
-import java.util.Collections;
-import java.util.Set;
+public class FlapIntake extends CommandBase {
+  private Intake intake;
+  private Timer timer;
 
-public class RetractComplete extends ClimbToHeight {
+  /** Creates a new FlapIntake. */
+  public FlapIntake() {
+    intake = Intake.getInstance();
 
-  public RetractComplete() {
+    timer = new Timer();
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    super(-Constants.Climber.climbSpeedUp, 0);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+    intake.retractIntake();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -30,16 +35,14 @@ public class RetractComplete extends ClimbToHeight {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    if (!interrupted) intake.extendIntake();
+    timer.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
-  }
-
-  public Set<Subsystem> getRequirements() {
-    return Collections.emptySet();
-    // do not require drivetrain here
+    return timer.hasElapsed(0.5);
   }
 }

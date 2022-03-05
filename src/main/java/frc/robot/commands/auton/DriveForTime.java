@@ -34,6 +34,7 @@ public class DriveForTime extends CommandBase {
   
   @Override
   public void initialize() {
+    timer.reset();
     timer.start();
   }
 
@@ -43,7 +44,7 @@ public class DriveForTime extends CommandBase {
    */
   @Override
   public void execute() {
-    drivetrain.PIDarcadeDrive(speed);
+    drivetrain.curvatureDrive(speed, 0);
   }
 
   /**

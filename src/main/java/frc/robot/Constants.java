@@ -159,7 +159,8 @@ public final class Constants {
         public final static int leftHallEffectPort = 3; //todo
         public final static int leftClimberMotorPort = 10; //todo
         public final static int rightClimberMotorPort = 11; //todo
-        public final static double globalClimbSpeed = 0.3;
+        public final static double climbSpeedUp = 0.7;
+        public final static double climbSpeedDown = -1;
         public final static double lowBarHeight = 50; //todo: find height in centimeters
         public final static double middleBarHeight = 100; //todo: find height in centimeters
         public final static double maxClimberHeight = 400; //todo find this height
@@ -174,13 +175,13 @@ public final class Constants {
     }
 
     public static final class Intake {
-        public final static int LEFT_PISTON_PORT = 4;
-        public final static int RIGHT_PISTON_PORT = 5;
+        public final static int PISTON_PORT = 2;
+        public final static int RIGHT_PISTON_PORT = 3 ;
         public final static int INTAKE_MOTOR_PORT = 9;
         public final static int SPAGHETTI_MOTOR_PORT = 8;
 
-        public static final double INTAKE_SPEED_FORWARDS = -0.9;
-        public static final double INTAKE_SPEED_BACKWARDS = 0.9;
+        public static final double INTAKE_SPEED_FORWARDS = -1;
+        public static final double INTAKE_SPEED_BACKWARDS = 1;
 
         public static final double SPAGHETTI_SPEED = 0.5;
     }

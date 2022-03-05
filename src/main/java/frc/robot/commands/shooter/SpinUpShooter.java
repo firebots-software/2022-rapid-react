@@ -38,30 +38,15 @@ public class SpinUpShooter extends CommandBase {
     pidBottom.setTolerance(RPM_TOLERANCE);
 
     timer = new Timer();
-
-
     
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (!shooter.isRPMAdjusting()) {
-      shooter.setTopTargetRPM(Constants.Shooter.FIXED_RPM);
-      shooter.setBottomTargetRPM(Constants.Shooter.FIXED_RPM);
-    } else {
-      shooter.setTopTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
-      shooter.setBottomTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
-    }
-
-    pidTop.setSetpoint(shooter.getTopTargetRPM());
-    pidBottom.setSetpoint(shooter.getBottomTargetRPM());
-
-    if (shooter.getTopTargetRPM() > 3500) {
-      shooter.setRampingConstant(0.12);
-    } else {
-      shooter.setRampingConstant(0.25);
-    }
+    limelight.setLedStatus(true);
+    setTargetRPM();
+   
 
     currentVoltageTop = 0;
     currentVoltageBottom = 0;
@@ -73,6 +58,7 @@ public class SpinUpShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    setTargetRPM();
     currentVoltageTop += pidTop.calculate(shooter.getTopShooterRPM()); 
     SmartDashboard.putNumber("shooter top motor output", currentVoltageTop); 
     shooter.setTopMotorSpeed(currentVoltageTop); 
@@ -97,5 +83,24 @@ public class SpinUpShooter extends CommandBase {
     }
     SmartDashboard.putBoolean("SHOOTER AT RPM", done);
     return false; // RETURN FALSE -- KEEP THE WHEELS SPINNING ONCE THEY'RE UP TO SPEED
+  }
+
+  private void setTargetRPM() {
+    if (!shooter.isRPMAdjusting()) {
+      shooter.setTopTargetRPM(Constants.Shooter.FIXED_RPM);
+      shooter.setBottomTargetRPM(Constants.Shooter.FIXED_RPM);
+    } else {
+      shooter.setTopTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
+      shooter.setBottomTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
+    }
+
+    pidTop.setSetpoint(shooter.getTopTargetRPM());
+    pidBottom.setSetpoint(shooter.getBottomTargetRPM());
+
+    if (shooter.getTopTargetRPM() > 3500) {
+      shooter.setRampingConstant(0.12);
+    } else {
+      shooter.setRampingConstant(0.25);
+    }
   }
 }

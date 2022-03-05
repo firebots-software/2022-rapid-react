@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.intake.RunSpaghettiWheels;
 import frc.robot.commands.shooter.StartRoller;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,6 +17,7 @@ import frc.robot.subsystems.Shooter;
 public class RunSpaghetAndRoll extends ParallelCommandGroup {
 
   Shooter shooter = Shooter.getInstance();
+  Limelight limelight = Limelight.getInstance();
 
 
   /** Creates a new SpaghettiRollerShooter. */
@@ -30,6 +32,7 @@ public class RunSpaghetAndRoll extends ParallelCommandGroup {
   @Override
   public void end(boolean interrupted) {
     shooter.stopBothMotors();
+    limelight.setLedStatus(false);
     super.end(interrupted);
   }
 }

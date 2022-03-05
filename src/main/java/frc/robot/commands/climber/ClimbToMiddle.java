@@ -17,6 +17,6 @@ import java.util.Set;
 public class ClimbToMiddle extends ClimbToHeight {
 
   public ClimbToMiddle() {
-    super(Constants.Climber.globalClimbSpeed, Constants.Climber.middleBarHeight);
+    super(Constants.Climber.climbSpeedUp, Constants.Climber.middleBarHeight);
   }
 }

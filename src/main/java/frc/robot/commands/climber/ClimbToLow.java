@@ -17,7 +17,7 @@ import java.util.Set;
 public class ClimbToLow extends ClimbToHeight {
 
   public ClimbToLow() {
-    super(Constants.Climber.globalClimbSpeed, Constants.Climber.lowBarHeight);
+    super(Constants.Climber.climbSpeedUp, Constants.Climber.lowBarHeight);
   }
 
 }

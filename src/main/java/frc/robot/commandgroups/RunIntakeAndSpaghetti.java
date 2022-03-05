@@ -12,8 +12,13 @@ import frc.robot.commands.intake.RunSpaghettiWheels;
 public class RunIntakeAndSpaghetti extends ParallelCommandGroup {
   /** Creates a new RunIntakeAndSpaghetti. */
 
-  public RunIntakeAndSpaghetti() {
+  public RunIntakeAndSpaghetti(boolean reversed) {
+    if (!reversed) {
     addCommands(new RunIntakeMotor(Constants.Intake.INTAKE_SPEED_FORWARDS),
                 new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
+    } else {
+    addCommands(new RunIntakeMotor(-Constants.Intake.INTAKE_SPEED_FORWARDS),
+                new RunSpaghettiWheels(-Constants.Intake.SPAGHETTI_SPEED));
+    }
   }
 }

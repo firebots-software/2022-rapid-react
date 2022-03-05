@@ -38,6 +38,7 @@ public class AlignToTarget extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("starting command"); 
+    limelight.setLedStatus(true);
     limelight.refreshValues();
 
     pid.setSetpoint(limelight.getTx() + turret.getEncoderValDegrees()); 

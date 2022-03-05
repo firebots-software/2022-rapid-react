@@ -93,7 +93,6 @@ public class Drivetrain extends SubsystemBase {
     MotorControllerGroup rightSide = new MotorControllerGroup(rightFollower, rightRearMaster);
     robotDrive = new DifferentialDrive(leftSide, rightSide);
     configTalons();
-    setMotorNeutralMode(NeutralMode.Coast);
 
 
     // this.gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
@@ -101,7 +100,7 @@ public class Drivetrain extends SubsystemBase {
     // this.gyro.reset();
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), new Pose2d());
 
-    this.orientation = driveOrientation.FRONT; // default value
+    this.orientation = driveOrientation.BACK; // default value
     this.isSlowMode = false; // default value
 
   }
@@ -248,14 +247,11 @@ public class Drivetrain extends SubsystemBase {
     rightFollower.follow(rightRearMaster);
 
     rightRearMaster.setInverted(true); //might need to change
-    leftFrontMaster.setInverted(true); //might need to change
-    leftFollower.setInverted(true);
+    leftFrontMaster.setInverted(false); //might need to change
+    leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 
-    setMotorNeutralMode(NeutralMode.Coast);
-    // robotDrive.setRightSideInverted(true); 
-    // THIS IS BROCKEN IN 2022!!!!!! either invert rightSide motorcontrollergroup or invert individual motors
-    //robotDrive.setRightSideInverted(false); //dont change for some reason idk why (maybe robot will go backwards idk)
+    setMotorNeutralMode(NeutralMode.Brake);
 }
 
 public boolean getBrakeModeStatus() {
