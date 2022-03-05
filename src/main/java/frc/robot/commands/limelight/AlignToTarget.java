@@ -37,7 +37,7 @@ public class AlignToTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("starting command"); 
+    // System.out.println("starting command"); 
     limelight.setLedStatus(true);
     limelight.refreshValues();
 
@@ -65,7 +65,7 @@ public class AlignToTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     turret.stopMotor();
-    System.out.println("done with command");
+    // System.out.println("done with command");
   }
 
   public boolean isFinished() {

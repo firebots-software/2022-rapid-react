@@ -86,14 +86,6 @@ public class SpinUpShooter extends CommandBase {
   }
 
   private void setTargetRPM() {
-    if (!shooter.isRPMAdjusting()) {
-      shooter.setTopTargetRPM(Constants.Shooter.FIXED_RPM);
-      shooter.setBottomTargetRPM(Constants.Shooter.FIXED_RPM);
-    } else {
-      shooter.setTopTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
-      shooter.setBottomTargetRPM(shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
-    }
-
     pidTop.setSetpoint(shooter.getTopTargetRPM());
     pidBottom.setSetpoint(shooter.getBottomTargetRPM());
 

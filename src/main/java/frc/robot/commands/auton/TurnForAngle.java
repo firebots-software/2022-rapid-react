@@ -31,7 +31,7 @@ public class TurnForAngle extends CommandBase {
   public void initialize() {
     drivetrain.resetEncoders();
     drivetrain.resetGyro();
-    System.out.println("starting turn for " + pid.getSetpoint() + " degrees");
+    // System.out.println("starting turn for " + pid.getSetpoint() + " degrees");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -49,7 +49,7 @@ public class TurnForAngle extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drivetrain.stop();
-    System.out.println("DONE WITH TURN FOR ANGLE");
+    // System.out.println("DONE WITH TURN FOR ANGLE");
   }
 
 

@@ -32,7 +32,7 @@ public class RunSpaghetAndRoll extends ParallelCommandGroup {
   @Override
   public void end(boolean interrupted) {
     shooter.stopBothMotors();
-    limelight.setLedStatus(false);
+    // limelight.setLedStatus(false);
     super.end(interrupted);
   }
 }

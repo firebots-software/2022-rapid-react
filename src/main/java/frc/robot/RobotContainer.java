@@ -23,8 +23,6 @@ import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.climber.ManualClimb;
-import frc.robot.commands.drivetrain.FlipOrientation;
-import frc.robot.commands.drivetrain.ToggleSlowMode;
 import frc.robot.commands.intake.FlapIntake;
 import frc.robot.commands.intake.ToggleIntakePiston;
 import frc.robot.subsystems.Drivetrain;
@@ -50,16 +48,16 @@ public class RobotContainer {
     configureButtonBindings();
 
         // Configure default commands
-        // Set the default drive command to split-stick arcade drive
+        // Set the default driv e command to split-stick arcade drive
         drivetrain.setDefaultCommand(
-          new CurvatureDrive(
+          new JoystickDrive(
                   () -> ps4_controller.getRawAxis(1),
                   () -> ps4_controller.getRawAxis(2)));
 
     autonChooser.setDefaultOption("limelightAim", new AlignToTarget());
 
     SmartDashboard.putData("Auton chooser", autonChooser);
-    autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(0.5, 4).andThen(new TurnTurretToAngle(-45)));
+    autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
     autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
     autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
     autonChooser.addOption("test only -- turret reset", new TurnTurretToAngle(-45));
@@ -121,6 +119,13 @@ public class RobotContainer {
     final POVButton downPov = new POVButton(ps4_controller, 180);
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
+    double manualTurretSpeed = 1;
+    final POVButton leftPov = new POVButton(ps4_controller, 270);
+    leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
+
+    final POVButton rightPov = new POVButton(ps4_controller, 90);
+    rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
+
 
     // TESTING BUTTONS
     // final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
@@ -141,7 +146,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
-    // return autonChooser.getSelected();
+    // return null;
+    return autonChooser.getSelected();
   }
 }

@@ -28,7 +28,7 @@ import frc.robot.commands.drivetrain.JoystickDrive;
 public class Drivetrain extends SubsystemBase {
   // constants
   private static final double DEADZONE_RANGE = 0.25;
-  private final double SLOW_MODE_CONSTANT = 0.3;
+  private final double SLOW_MODE_CONSTANT = 0.5;
   private final double DEFAULT_DRIVE_CONSTANT = 0.7;
   private final double RAMPING_CONSTANT = 1;
   private boolean usingFrontCam = true;
@@ -138,7 +138,7 @@ public class Drivetrain extends SubsystemBase {
 
       } else {
         frontBackSpeed *= DEFAULT_DRIVE_CONSTANT;
-        rotation *= DEFAULT_DRIVE_CONSTANT;
+        rotation *= DEFAULT_DRIVE_CONSTANT * 0.7;
       }
 
 
@@ -186,20 +186,19 @@ public class Drivetrain extends SubsystemBase {
       robotDrive.stopMotor();
       
     } else {
-      if (orientation == driveOrientation.BACK) {
+      if (orientation == driveOrientation.BACK) { // flip orientation
         frontBackSpeed *= -1;
-        
       }
-      if (isSlowMode) {
+      if (isSlowMode) { // slow mode coeff
         frontBackSpeed *= SLOW_MODE_CONSTANT;
         rotation *= SLOW_MODE_CONSTANT;
 
-      } else {
+      } else { // default coeff
         frontBackSpeed *= DEFAULT_DRIVE_CONSTANT;
-        rotation *= DEFAULT_DRIVE_CONSTANT;
+        rotation *= DEFAULT_DRIVE_CONSTANT * 0.5;
       }
 
-      if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) {
+      if (frontBackSpeed < DEADZONE_RANGE && frontBackSpeed > -DEADZONE_RANGE) { // quickturn in place
         quickTurn = true;
         rotation *= 0.7;
         if (!isSlowMode) rotation *= 0.5;
@@ -247,7 +246,7 @@ public class Drivetrain extends SubsystemBase {
     rightFollower.follow(rightRearMaster);
 
     rightRearMaster.setInverted(true); //might need to change
-    leftFrontMaster.setInverted(false); //might need to change
+    leftFrontMaster.setInverted(false); 
     leftFollower.setInverted(false);
     rightFollower.setInverted(true);
 

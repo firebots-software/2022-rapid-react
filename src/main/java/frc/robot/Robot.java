@@ -125,6 +125,8 @@ public class Robot extends TimedRobot {
     shooter.stopBothMotors();
     shooter = Shooter.getInstance(); 
     climber = Climber.getInstance();
+
+    drivetrain.setMotorNeutralMode(NeutralMode.Brake);
   }
 
   /**
@@ -212,6 +214,7 @@ public class Robot extends TimedRobot {
     drivetrain.resetOdometry(new Pose2d());
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     turret.zeroEncoder();
+    limelight.setLedStatus(true);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -235,6 +238,9 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     shooter.stopBothMotors();
+
+  turret.zeroEncoder();
+  drivetrain.setMotorNeutralMode(NeutralMode.Brake);
 
     drivetrain.resetEncoders();
   }

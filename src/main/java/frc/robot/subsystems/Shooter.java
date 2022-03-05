@@ -13,6 +13,7 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   private static Shooter instance;
+  private Limelight limelight;
   private TalonSRX rollerMotor;
   private TalonFX topMotor, bottomMotor; 
   private double topTargetRPM, bottomTargetRPM;
@@ -39,6 +40,8 @@ public class Shooter extends SubsystemBase {
     this.bottomTargetRPM = Constants.Shooter.FIXED_RPM;
 
     isAdjustingRPM = false; 
+
+    limelight = Limelight.getInstance();
 
   }
 
@@ -125,14 +128,6 @@ public class Shooter extends SubsystemBase {
   // add threshold for target speed
 
 
-  public void setTopTargetRPM(double rpm) {
-    this.topTargetRPM = rpm;
-  }  
-  
-  public void setBottomTargetRPM(double rpm) {
-    this.bottomTargetRPM = rpm;
-  }
-
  /* 
   * Checks whether motor RPM is within a specified MoE of target speed.
   * @param marginOfError bounded MoE between motor RPM and target speed
@@ -160,11 +155,21 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getTopTargetRPM() {
-    return topTargetRPM;
+    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM;
+    return getRPMForDistanceInches(limelight.getDistanceToTarget());
+  }
+
+  public void setTopTargetRPM(double rpm) {
+    topTargetRPM = rpm;
+  }
+
+  public void setBottomTargetRPM(double rpm) {
+    bottomTargetRPM = rpm;
   }
 
   public double getBottomTargetRPM() {
-    return bottomTargetRPM;
+    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM;
+    return getRPMForDistanceInches(limelight.getDistanceToTarget());
   }
 
   public double getTopVoltage() {
@@ -181,10 +186,6 @@ public class Shooter extends SubsystemBase {
 
   public void setAdjustingRPM(boolean value) {
     isAdjustingRPM = value; 
-    if (!isRPMAdjusting()) {
-      setTopTargetRPM(Constants.Shooter.FIXED_RPM);
-      setBottomTargetRPM(Constants.Shooter.FIXED_RPM);
-    }
   }
 
   public double getRPMForDistanceInches(double distance) {

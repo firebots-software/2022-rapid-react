@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,7 +17,7 @@ public class Turret extends SubsystemBase {
     private TalonFX motor;
     private static Turret instance;
     private final double RAMPING_CONSTANT = 0.25;
-    private final double maxRange = 0; 
+    private final double maxRange = 90; 
     private final double minRange = -90;
 
   /** Creates a new Turret. */
@@ -25,6 +26,7 @@ public class Turret extends SubsystemBase {
     motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     motor.configFactoryDefault();
     motor.configOpenloopRamp(RAMPING_CONSTANT); 
+    motor.setNeutralMode(NeutralMode.Brake);
 
     zeroEncoder();
   }

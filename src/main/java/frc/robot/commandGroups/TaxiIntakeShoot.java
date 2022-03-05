@@ -20,7 +20,7 @@ public class TaxiIntakeShoot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new StartIntakeNoStop(),
-                new DriveForTime(-0.5, 4),
+                new DriveForTime(-0.5, 1),
                 new StopIntake(),
                 new TurnForAngle(180),
                 new AimAndShoot(),

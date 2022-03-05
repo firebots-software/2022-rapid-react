@@ -29,7 +29,7 @@ public class DriveForDistance2 extends CommandBase {
     pidRight.setSetpoint(targetMeters);
     pidRight.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
 
-    System.out.println("drive for dist constructor");
+    // // // System.out.println("drive for dist constructor");
   }
 
   // Called when the command is initially scheduled.
@@ -43,8 +43,8 @@ public class DriveForDistance2 extends CommandBase {
   public void execute() {
     double outputLeft = pidLeft.calculate(drivetrain.getLeftEncoderCountMeters());
     double outputRight = pidRight.calculate(drivetrain.getRightEncoderCountMeters());
-    System.out.print("pid left output: " + outputLeft);
-    System.out.print("pid right output: " + outputRight);
+    // // System.out.print("pid left output: " + outputLeft);
+    // // System.out.print("pid right output: " + outputRight);
     SmartDashboard.putNumber("Left Position Error: ", pidLeft.getPositionError());
     SmartDashboard.putNumber("Right Position Error: ", pidRight.getPositionError());
     drivetrain.PIDtankDrive(outputLeft, outputRight);
@@ -67,7 +67,7 @@ public class DriveForDistance2 extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("done with pid loop electric boogaloo");
+    // // System.out.println("done with pid loop electric boogaloo");
     drivetrain.stop();
   }
 

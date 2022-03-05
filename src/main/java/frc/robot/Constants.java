@@ -183,6 +183,6 @@ public final class Constants {
         public static final double INTAKE_SPEED_FORWARDS = -1;
         public static final double INTAKE_SPEED_BACKWARDS = 1;
 
-        public static final double SPAGHETTI_SPEED = 0.5;
+        public static final double SPAGHETTI_SPEED = 0.7;
     }
 }

@@ -24,9 +24,8 @@ public class TurnForTime extends CommandBase {
    * @param targetTime  = time set in RobotContainer.java
    */
   public TurnForTime(double speed,int targetTime) {
-    System.out.println("init timed turn");
+    // System.out.println("init timed turn");
     this.drivetrain = Drivetrain.getInstance();
-    timer = new Timer();
     this.speed = speed;
     this.targetTime = targetTime;
   }
@@ -34,7 +33,7 @@ public class TurnForTime extends CommandBase {
   
   @Override
   public void initialize() {
-    timer.reset();
+    timer = new Timer();
     timer.start();
   }
 

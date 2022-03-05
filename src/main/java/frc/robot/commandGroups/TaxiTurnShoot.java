@@ -15,7 +15,7 @@ import frc.robot.commands.shooter.TurnTurretToAngle;
 public class TaxiTurnShoot extends SequentialCommandGroup {
   /** Creates a new TaxiTurnShoot. */
   public TaxiTurnShoot() {
-    addCommands(new DriveForTime(-0.5, 4),
+    addCommands(new DriveForTime(-0.5, 1),
                 new TurnForAngle(180),
                 new AimAndShoot(),
                 new TurnTurretToAngle(-45));
