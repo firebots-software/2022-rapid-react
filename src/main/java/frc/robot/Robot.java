@@ -239,7 +239,7 @@ public class Robot extends TimedRobot {
     }
     shooter.stopBothMotors();
 
-  turret.zeroEncoder();
+  // turret.zeroEncoder();
   drivetrain.setMotorNeutralMode(NeutralMode.Brake);
 
     drivetrain.resetEncoders();

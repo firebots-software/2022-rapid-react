@@ -7,6 +7,7 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auton.DriveForTime;
 import frc.robot.commands.auton.TurnForAngle;
+import frc.robot.commands.auton.TurnForTime;
 import frc.robot.commands.shooter.TurnTurretToAngle;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,8 +17,7 @@ public class TaxiTurnShoot extends SequentialCommandGroup {
   /** Creates a new TaxiTurnShoot. */
   public TaxiTurnShoot() {
     addCommands(new DriveForTime(-0.5, 1),
-                new TurnForAngle(180),
-                new AimAndShoot(),
-                new TurnTurretToAngle(-45));
+                new TurnForTime(0.35, 3),
+                new AimAndShoot());
   }
 }

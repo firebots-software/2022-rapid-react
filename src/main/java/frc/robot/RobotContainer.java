@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commandGroups.DummyAutonAndShoot;
 import frc.robot.commandGroups.RunIntakeAndSpaghetti;
 import frc.robot.commandGroups.RunSpaghetAndRoll;
 import frc.robot.commandGroups.StopEverything;
@@ -58,9 +59,10 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
+    autonChooser.setDefaultOption("dummy auton backwards & shoot", new DummyAutonAndShoot());
     autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
     autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
-    autonChooser.addOption("test only -- turret reset", new TurnTurretToAngle(-45));
+    autonChooser.addOption("test only -- turn for time", new TurnForTime(0.35, 3));
 
 
   }

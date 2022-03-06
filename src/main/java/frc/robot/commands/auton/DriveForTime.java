@@ -14,7 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 public class DriveForTime extends CommandBase {
   private final Drivetrain drivetrain;
   private double speed;
-  private int targetTime;
+  private double targetTime;
   private Timer timer;
 
   /**
@@ -23,7 +23,7 @@ public class DriveForTime extends CommandBase {
    * @param speed       = speed set in RobotContainer.java
    * @param targetTime  = time set in RobotContainer.java
    */
-  public DriveForTime(double speed,int targetTime) {
+  public DriveForTime(double speed,double targetTime) {
     // System.out.println("INIT TIME DRIVE");
     this.drivetrain = Drivetrain.getInstance();
     timer = new Timer();

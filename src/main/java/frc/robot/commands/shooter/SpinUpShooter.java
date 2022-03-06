@@ -16,10 +16,11 @@ public class SpinUpShooter extends CommandBase {
   // keep spinning after aimed and during load ball --> toggleFlywheel
   private final Shooter shooter;
   private Limelight limelight;
-  private final PIDController pidTop, pidBottom; 
+  protected final PIDController pidTop;
+  protected final PIDController pidBottom; 
   private final double kp, ki, kd; 
   private double currentVoltageTop, currentVoltageBottom;
-  private Timer timer;
+  protected Timer timer;
   private final double RPM_TOLERANCE = 50;
 
   /** Creates a new SpinUpShooter. */

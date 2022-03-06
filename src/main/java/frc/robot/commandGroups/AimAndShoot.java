@@ -11,7 +11,7 @@ public class AimAndShoot extends SequentialCommandGroup  {
         addCommands(
             new SpinUpShooterNoStop(),
             new AlignToTarget(),
-            new RunSpaghetAndRoll().withTimeout(5),
+            new RunSpaghetAndRoll().withTimeout(7),
             new StopShooter()
         );
     }
