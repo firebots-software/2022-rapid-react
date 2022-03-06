@@ -237,11 +237,10 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    shooter.stopBothMotors();
 
   // turret.zeroEncoder();
-  drivetrain.setMotorNeutralMode(NeutralMode.Brake);
-
+    limelight.setLedStatus(true);
+    drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     drivetrain.resetEncoders();
   }
 

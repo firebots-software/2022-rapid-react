@@ -12,9 +12,10 @@ import frc.robot.commands.shooter.StopShooter;
 
 public class DummyAutonAndShoot extends SequentialCommandGroup {
   public DummyAutonAndShoot() {
-    addCommands(new DriveForTime(0.2, 1.9), 
+    addCommands(new DriveForTime(0.2, 1.8), 
                 new SpinUpShooterNoStop().withTimeout(2.5),
                 new RunSpaghetAndRoll().withTimeout(7),
                 new StopShooter());
   }
 }
+                

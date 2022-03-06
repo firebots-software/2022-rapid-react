@@ -127,7 +127,7 @@ public final class Constants {
         public static final double motorSpeedToleranceRPM = 5.0; //todo: change to real tolerance
 
         public static final double DEFAULT_SHOOTER_SPEED = 0.5;
-        public static final double FIXED_RPM = 3200;
+        public static final double FIXED_RPM = 3400;
         public static final double MAX_RPM = 3700;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 
         public static final double maxRollerSpeed = 0.5; //TODO: change to actual max

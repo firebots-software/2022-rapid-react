@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SpinUpShooterNoStop extends SpinUpShooter {
 
   /** Creates a new SpinUpShooter. */
-  public SpinUpShooterNoStop() {
+  public  SpinUpShooterNoStop() {
     super();  
   }
 
