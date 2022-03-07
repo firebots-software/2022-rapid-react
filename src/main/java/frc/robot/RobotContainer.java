@@ -93,7 +93,7 @@ public class RobotContainer {
 
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenPressed(new AlignToTarget().withTimeout(3));
+    limelightAim.whenHeld(new AlignToTarget());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
