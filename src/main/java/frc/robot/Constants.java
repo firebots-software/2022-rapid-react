@@ -112,6 +112,9 @@ public final class Constants {
 
         public static final double limelightAngleOffset = 28; // TODO: change limelight angle offset to match actual thing\
         public static final double heightOfTarget = 104; // in meters 
+        public static final double FEED_FORWARD_KS = 0;
+        public static final double FEED_FORWARD_KV = 0;
+        public static final double FEED_FORWARD_KA = 0;
         // public static final double turretSpeedConstant = 0.1; 
         public static double maxAngle = 90;
 

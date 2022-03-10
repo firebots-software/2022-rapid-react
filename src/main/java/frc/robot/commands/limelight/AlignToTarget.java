@@ -6,18 +6,24 @@ package frc.robot.commands.limelight;
 
 import java.util.Set;
 
+import javax.xml.namespace.QName;
+
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
 public class AlignToTarget extends CommandBase {
   private Limelight limelight; 
   private Turret turret; 
+  private Drivetrain drivetrain; 
   private PIDController pid; 
+  private SimpleMotorFeedforward feedforward; 
   private final int LIMELIGHT_REFRESH_INTERVAL = 5; // number of loops before refreshing Limelight
 
   private int feedbackDelayCounter; 
@@ -26,9 +32,11 @@ public class AlignToTarget extends CommandBase {
   public AlignToTarget() {
     limelight = Limelight.getInstance();
     turret = Turret.getInstance(); 
-
+    drivetrain = Drivetrain.getInstance(); 
     pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD); 
     pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);   
+
+    feedforward = new SimpleMotorFeedforward(Constants.Limelight.FEED_FORWARD_KS, Constants.Limelight.FEED_FORWARD_KV, Constants.Limelight.FEED_FORWARD_KA); 
 
     feedbackDelayCounter = 0; 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -41,7 +49,7 @@ public class AlignToTarget extends CommandBase {
     limelight.setLedStatus(true);
     limelight.refreshValues();
 
-    pid.setSetpoint(limelight.getTx() + turret.getEncoderValDegrees()); 
+    pid.setSetpoint(drivetrain.getLastAlignedGyro()); 
     feedbackDelayCounter = 0; 
   }
 
@@ -49,14 +57,12 @@ public class AlignToTarget extends CommandBase {
   // Counter refreshes every 200 ms
   @Override
   public void execute() {
-    if (feedbackDelayCounter % LIMELIGHT_REFRESH_INTERVAL == 0) {
-      limelight.refreshValues();
-      pid.setSetpoint(limelight.getTx() + turret.getEncoderValDegrees());
-    }
     // SmartDashboard.setDefaultNumber("ATT: Output Ticks", getOutputTicks());
+    double tangentialVel = drivetrain.getCurrentSpeed() * Math.sin(drivetrain.getHeading()) / limelight.getDistanceToTarget(); 
+    double angularVel = drivetrain.getAngularVelocity(); 
     double pidOutput = pid.calculate(turret.getEncoderValDegrees());
     SmartDashboard.putNumber("turret pid output", pidOutput);
-    turret.setMotorSpeed(pidOutput); 
+    turret.setMotorSpeed(pidOutput + feedforward.calculate(tangentialVel + angularVel)); 
     feedbackDelayCounter++; 
     System.out.println("doing command");
   }
