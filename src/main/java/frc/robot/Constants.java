@@ -134,14 +134,14 @@ public final class Constants {
 
         // CONTROLLERS
         public static final double kpFlywheel = 0.001;
-        public static final double kiFlywheel = 0.001;
-        public static final double kdFlywheel = 0.001;
+        public static final double kiFlywheel = 0;
+        public static final double kdFlywheel = 0;
 
-        public static final double ksTopFlywheel = 0.001;
-        public static final double kvTopFlywheel = 0.001;
+        public static final double ksTopFlywheel = 0;
+        public static final double kvTopFlywheel = 0;
 
-        public static final double ksBottomFlywheel = 0.001;
-        public static final double kvBottomFlywheel = 0.001;
+        public static final double ksBottomFlywheel = 0;
+        public static final double kvBottomFlywheel = 0;
 
     
     }
