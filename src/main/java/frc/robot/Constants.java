@@ -131,6 +131,18 @@ public final class Constants {
         public static final double MAX_RPM = 3700;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 
         public static final double maxRollerSpeed = 0.5; //TODO: change to actual max
+
+        // CONTROLLERS
+        public static final double kpFlywheel = 0.001;
+        public static final double kiFlywheel = 0.001;
+        public static final double kdFlywheel = 0.001;
+
+        public static final double ksTopFlywheel = 0.001;
+        public static final double kvTopFlywheel = 0.001;
+
+        public static final double ksBottomFlywheel = 0.001;
+        public static final double kvBottomFlywheel = 0.001;
+
     
     }
     public static final class Turret{
