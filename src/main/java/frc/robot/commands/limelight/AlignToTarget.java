@@ -62,7 +62,7 @@ public class AlignToTarget extends CommandBase {
     double angularVel = drivetrain.getAngularVelocity(); 
     double pidOutput = pid.calculate(turret.getEncoderValDegrees());
     SmartDashboard.putNumber("turret pid output", pidOutput);
-    turret.setMotorSpeed(pidOutput -feedforward.calculate(tangentialVel + angularVel)); 
+    turret.setMotorSpeed(pidOutput + feedforward.calculate(tangentialVel + angularVel)); 
     feedbackDelayCounter++; 
     System.out.println("doing command");
   }
