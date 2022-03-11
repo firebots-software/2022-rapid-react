@@ -15,14 +15,18 @@ public class SpinFlywheelBangBang extends CommandBase {
   
   /** Creates a new SpinFlywheelBangBang. */
   public SpinFlywheelBangBang() {
+    System.out.println("constructing bang bang");
     this.shooter = Shooter.getInstance();
-    this.topBang = new BangBangController();
-    this.bottomBang = new BangBangController();
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("starting bang bang");
+
+    this.topBang = new BangBangController();
+    this.bottomBang = new BangBangController();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -39,13 +43,20 @@ public class SpinFlywheelBangBang extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     shooter.stopBothMotors(); // DO WE WANT THIS?
+
+    System.out.println("bangbang setpoint: " + topBang.getSetpoint());
+    System.out.println("bangbang measurement: " + topBang.getMeasurement());
+
+    System.out.println("ENDING bang bang");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     boolean done = topBang.atSetpoint() && bottomBang.atSetpoint();
+
+
     SmartDashboard.putBoolean("flywheel bang bang done", done);
-    return done;
+    return false;
   }
 }

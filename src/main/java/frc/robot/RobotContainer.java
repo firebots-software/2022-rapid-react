@@ -89,7 +89,7 @@ public class RobotContainer {
     loadBall.whenHeld(new RunSpaghetAndRoll());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    spinUpShooter.toggleWhenPressed(new SpinFlywheelBangBang());
+    spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
@@ -111,8 +111,12 @@ public class RobotContainer {
     stopEverything.whenPressed(new StopEverything());
 
 
-    final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    flap.whenPressed(new FlapIntake());
+    // final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    // flap.whenPressed(new FlapIntake());
+
+
+    final Button bang = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    bang.toggleWhenPressed(new SpinFlywheelFeedForward());
     
 
     final POVButton upPov = new POVButton(ps4_controller, 0);

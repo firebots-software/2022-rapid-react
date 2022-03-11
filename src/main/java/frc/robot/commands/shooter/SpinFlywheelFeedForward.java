@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
@@ -21,14 +22,14 @@ public class SpinFlywheelFeedForward extends CommandBase {
     shooter = Shooter.getInstance();
 
     // top
-    pidTop = new PIDController(Constants.Shooter.kpFlywheel, Constants.Shooter.kiFlywheel, Constants.Shooter.kdFlywheel);
+    pidTop = new PIDController(Constants.Shooter.kpFlywheel, 0, 0);
     pidTop.setTolerance(RPM_TOLERANCE);
-    feedforwardTop = new SimpleMotorFeedforward(Constants.Shooter.ksTopFlywheel, Constants.Shooter.kvTopFlywheel);
+    feedforwardTop = new SimpleMotorFeedforward(Constants.Shooter.ksTopFlywheel, Constants.Shooter.kvTopFlywheel, Constants.Shooter.kaTopFlywheel);
 
     // bottom
-    pidBottom = new PIDController(Constants.Shooter.kpFlywheel, Constants.Shooter.kiFlywheel, Constants.Shooter.kdFlywheel);
-    pidBottom.setTolerance(RPM_TOLERANCE);
-    feedforwardBottom = new SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel, Constants.Shooter.kvBottomFlywheel);
+    // pidBottom = new PIDController(Constants.Shooter.kpFlywheel, Constants.Shooter.kiFlywheel, Constants.Shooter.kdFlywheel);
+    // pidBottom.setTolerance(RPM_TOLERANCE);
+    // feedforwardBottom = new SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel, Constants.Shooter.kvBottomFlywheel, Constants.Shooter.kaBottomFlywheel);
 
   }
 
@@ -36,28 +37,34 @@ public class SpinFlywheelFeedForward extends CommandBase {
   @Override
   public void initialize() {
     pidTop.setSetpoint(shooter.getTopTargetRPM());
-    pidBottom.setSetpoint(shooter.getBottomTargetRPM());
+    // pidBottom.setSetpoint(shooter.getBottomTargetRPM());
     
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double topOutput = feedforwardTop.calculate(shooter.getTopTargetRPM()) + pidTop.calculate(shooter.getTopShooterRPM());
-    shooter.setTopMotorSpeed(topOutput);
+    double ffOut = feedforwardTop.calculate(shooter.getTopTargetRPM() / 60.0, Constants.Shooter.MAX_RPM / 60.0) / 
+      (Constants.Shooter.MAX_VOLTAGE * Constants.Shooter.MAX_RPM);
+    SmartDashboard.putNumber("feed forward output", ffOut);
+    double topOutput = ffOut + pidTop.calculate(shooter.getTopShooterRPM());
+    shooter.setTopMotorVoltage(topOutput);
 
-    double bottomOutput = feedforwardBottom.calculate(shooter.getBottomTargetRPM()) + pidTop.calculate(shooter.getBottomShooterRPM());
-    shooter.setBottomMotorSpeed(bottomOutput);
+    // double bottomOutput = feedforwardBottom.calculate(shooter.getBottomTargetRPM()) + pidTop.calculate(shooter.getBottomShooterRPM());
+    // shooter.setBottomMotorSpeed(bottomOutput);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooter.stopBothMotors();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean done = pidTop.atSetpoint() && pidBottom.atSetpoint();
-    return done;
+    boolean done = pidTop.atSetpoint();// && pidBottom.atSetpoint();
+    SmartDashboard.putBoolean("flywheel feed forward done", done);
+    return false;
   }
 }

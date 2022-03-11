@@ -89,6 +89,10 @@ public class Shooter extends SubsystemBase {
     // value to move to aimed point
   }
 
+  public void setTopMotorVoltage(double volts) {
+    topMotor.set(ControlMode.Current, volts);
+  }
+
   public void setBottomMotorSpeed(double speed) {
     if (speed > MAX_SPEED) speed = MAX_SPEED;
     if (speed < -MAX_SPEED) speed = -MAX_SPEED;
