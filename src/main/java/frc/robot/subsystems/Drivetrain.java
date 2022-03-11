@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.ErrorCode;
+import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -33,6 +34,7 @@ public class Drivetrain extends SubsystemBase {
   private final double DEFAULT_DRIVE_CONSTANT = 0.7;
   private final double RAMPING_CONSTANT = 1;
   private boolean usingFrontCam = true;
+  private double lastAlignedGyro; 
 
   /*
    * MOTION PROFILING
@@ -101,6 +103,7 @@ public class Drivetrain extends SubsystemBase {
     this.orientation = driveOrientation.BACK; // default value
     this.isSlowMode = false; // default value
 
+    lastAlignedGyro = 0; 
   }
 
   /**
@@ -433,16 +436,20 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLastAlignedGyro() {
-    return 0;
+    return lastAlignedGyro;
   }
 
   public double getCurrentSpeed() {
-    return 0;
+    double averageSpeedRPM = ((rightRearMaster.getSelectedSensorVelocity() + rightFollower.getSelectedSensorVelocity() + leftFrontMaster.getSelectedSensorVelocity() + leftFollower.getSelectedSensorVelocity()) / 4) * (600 / Constants.Drivetrain.drivetrainTicksPerRev); 
+    double velocityMetersPerSec = (averageSpeedRPM * Math.PI * 2 * Constants.Drivetrain.drivetrainWheelRadiusMeters) / 60; 
+    return velocityMetersPerSec; 
   }
 
   public double getAngularVelocity() {
     double[] xyz_dps = new double[3]; 
     pigeon.getRawGyro(xyz_dps); 
-    return xyz_dps[0]; 
+    double angularVelDegPerSec = xyz_dps[0]; 
+    double angularVelRadPerSec = angularVelDegPerSec * Math.PI * 2 / 360; 
+    return angularVelRadPerSec; 
   }
 }

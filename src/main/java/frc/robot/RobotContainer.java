@@ -55,7 +55,7 @@ public class RobotContainer {
                   () -> ps4_controller.getRawAxis(1),
                   () -> ps4_controller.getRawAxis(2)));
 
-    autonChooser.setDefaultOption("limelightAim", new AlignToTarget());
+    autonChooser.setDefaultOption("limelightAim", new AlignToTargetFeedForward());
 
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
@@ -93,7 +93,7 @@ public class RobotContainer {
 
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenHeld(new AlignToTarget());
+    limelightAim.whenHeld(new AlignToTargetFeedForward());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());

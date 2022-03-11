@@ -48,6 +48,8 @@ public final class Constants {
         public final static int rightFollowerPort = 1;
 
         public static final double TICKS_PER_METER = 26199.13932126; // * (1.339280 / 2.13);
+        public static final double drivetrainTicksPerRev = 2048;
+        public static final double drivetrainWheelRadiusMeters = 0.0762; // convert to meters 
 
         public final static int PIGEON_ID = 8;
 
