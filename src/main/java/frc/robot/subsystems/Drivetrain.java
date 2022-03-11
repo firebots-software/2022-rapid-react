@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {
   // constants
   private static final double DEADZONE_RANGE = 0.25;
   private final double SLOW_MODE_CONSTANT = 0.5;
-  private final double DEFAULT_DRIVE_CONSTANT = 0.7;
+  private final double DEFAULT_DRIVE_CONSTANT = 1;
   private final double RAMPING_CONSTANT = 1;
   private boolean usingFrontCam = true;
 
