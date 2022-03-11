@@ -89,7 +89,7 @@ public class RobotContainer {
     loadBall.whenHeld(new RunSpaghetAndRoll());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    spinUpShooter.toggleWhenPressed(new SpinUpShooter());
+    spinUpShooter.toggleWhenPressed(new SpinFlywheelBangBang());
 
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
