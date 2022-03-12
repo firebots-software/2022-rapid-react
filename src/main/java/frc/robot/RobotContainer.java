@@ -116,7 +116,7 @@ public class RobotContainer {
 
 
     final Button bang = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    bang.toggleWhenPressed(new SpinFlywheelFeedForward());
+    bang.toggleWhenPressed(new FlywheelFalconFF(Constants.Shooter.FIXED_RPM));
     
 
     final POVButton upPov = new POVButton(ps4_controller, 0);

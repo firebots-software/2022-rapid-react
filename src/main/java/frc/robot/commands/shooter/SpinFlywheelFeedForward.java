@@ -37,6 +37,7 @@ public class SpinFlywheelFeedForward extends CommandBase {
   @Override
   public void initialize() {
     pidTop.setSetpoint(shooter.getTopTargetRPM());
+    System.out.println("starting feed forward");
     // pidBottom.setSetpoint(shooter.getBottomTargetRPM());
     
   }
@@ -44,10 +45,10 @@ public class SpinFlywheelFeedForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ffOut = feedforwardTop.calculate(shooter.getTopTargetRPM() / 60.0, Constants.Shooter.MAX_RPM / 60.0) / 
+    double ffOut = feedforwardTop.calculate(shooter.getTopTargetRPM() / 60.0) / 
       (Constants.Shooter.MAX_VOLTAGE * Constants.Shooter.MAX_RPM);
-    SmartDashboard.putNumber("feed forward output", ffOut);
     double topOutput = ffOut + pidTop.calculate(shooter.getTopShooterRPM());
+    SmartDashboard.putNumber("feed forward output", topOutput);
     shooter.setTopMotorVoltage(topOutput);
 
     // double bottomOutput = feedforwardBottom.calculate(shooter.getBottomTargetRPM()) + pidTop.calculate(shooter.getBottomShooterRPM());
@@ -58,6 +59,8 @@ public class SpinFlywheelFeedForward extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     shooter.stopBothMotors();
+    System.out.println("ending feed forward");
+
   }
 
   // Returns true when the command should end.

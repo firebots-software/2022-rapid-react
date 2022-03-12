@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,6 +22,7 @@ public class Shooter extends SubsystemBase {
   private final double MAX_SPEED = 1;
   private final double RAMPING_CONSTANT = 0.25;
   private boolean isAdjustingRPM; 
+  private SimpleMotorFeedforward topMotorFF, bottomMotorFF;
 
   /** Creates a new Shooter. */
   private Shooter() {
@@ -27,17 +30,24 @@ public class Shooter extends SubsystemBase {
     topMotor.configFactoryDefault();
     topMotor.configOpenloopRamp(RAMPING_CONSTANT);
     topMotor.setInverted(true);
+    topMotor.configVoltageCompSaturation(12);
+    topMotor.enableVoltageCompensation(true);
 
     this.bottomMotor = new TalonFX(Constants.Shooter.shooterBottomMotorPort);
     bottomMotor.configFactoryDefault();
     bottomMotor.configOpenloopRamp(RAMPING_CONSTANT);
     bottomMotor.setInverted(true);
+    bottomMotor.configVoltageCompSaturation(12);
+    bottomMotor.enableVoltageCompensation(true);
 
 
     this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
     rollerMotor.setInverted(true);
     this.topTargetRPM = Constants.Shooter.FIXED_RPM;
     this.bottomTargetRPM = Constants.Shooter.FIXED_RPM;
+
+    topMotorFF = new SimpleMotorFeedforward(Constants.Shooter.ksTopFlywheel, Constants.Shooter.kvTopFlywheel, Constants.Shooter.kaTopFlywheel);
+    bottomMotorFF = new SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel, Constants.Shooter.kvBottomFlywheel, Constants.Shooter.kaBottomFlywheel);
 
     isAdjustingRPM = false; 
 
@@ -117,6 +127,25 @@ public class Shooter extends SubsystemBase {
     stopBottomMotor();
   }
 
+  public void setTopClosedLoopVelocity(double rpm) {
+    rpm -= 250;
+    topMotor.set(
+        ControlMode.Velocity,
+        (rpm / 60.0) * 2048 * 0.1,
+        DemandType.ArbitraryFeedForward,
+        topMotorFF.calculate(rpm / 60.0) / 12.0
+    );
+  }
+
+  public void setBottomClosedLoopVelocity(double rpm) {
+    rpm -= 250;
+    bottomMotor.set(
+        ControlMode.Velocity,
+        (rpm / 60.0) * 2048 * 0.1,
+        DemandType.ArbitraryFeedForward,
+        bottomMotorFF.calculate(rpm / 60.0) / 12.0
+    );
+  }
 
   public void stopRollerMotor(){
     setRollerMotorSpeed(0.0);
