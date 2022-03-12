@@ -127,10 +127,23 @@ public final class Constants {
         public static final double motorSpeedToleranceRPM = 5.0; //todo: change to real tolerance
 
         public static final double DEFAULT_SHOOTER_SPEED = 0.5;
-        public static final double FIXED_RPM = 3300;
-        public static final double MAX_RPM = 3700;
+        public static final double FIXED_RPM = 1000;
+        public static final double MAX_RPM = 6000;
+        public static final double MAX_VOLTAGE = 12.0;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 
         public static final double maxRollerSpeed = 0.5; //TODO: change to actual max
+
+        // CONTROLLERS
+        public static final double kpFlywheel = 0.14172 / (MAX_VOLTAGE * 60); // divide by max voltage * 60 s/min
+
+        public static final double ksTopFlywheel = 0.4754;
+        public static final double kvTopFlywheel = 0.1062;
+        public static final double kaTopFlywheel = 0.0145;
+
+        public static final double ksBottomFlywheel = 0.51868;
+        public static final double kvBottomFlywheel = 0.10913;
+        public static final double kaBottomFlywheel = 0.01227;
+
     
     }
     public static final class Turret{
