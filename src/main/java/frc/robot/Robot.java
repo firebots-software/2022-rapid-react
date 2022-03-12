@@ -189,6 +189,10 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putBoolean("intake piston status", intake.pistonExtended());
 
+    SmartDashboard.putNumber("TESTING: TARGET RPM TOP", shooter.getTopTestTargetRPM());
+    SmartDashboard.putNumber("TESTING: TARGET RPM BOTTOM", shooter.getBottomTestTargetRPM());
+    
+
 
   }
 

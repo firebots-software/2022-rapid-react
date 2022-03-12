@@ -87,8 +87,8 @@ public class SpinUpShooter extends CommandBase {
   }
 
   private void setTargetRPM() {
-    pidTop.setSetpoint(shooter.getTopTargetRPM());
-    pidBottom.setSetpoint(shooter.getBottomTargetRPM());
+    pidTop.setSetpoint(shooter.getTopTestTargetRPM());
+    pidBottom.setSetpoint(shooter.getBottomTestTargetRPM());
 
     if (shooter.getTopTargetRPM() > 3500) {
       shooter.setRampingConstant(0.12);

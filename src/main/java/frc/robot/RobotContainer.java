@@ -92,8 +92,8 @@ public class RobotContainer {
     spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
 
-    final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenHeld(new AlignToTarget());
+    // final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    // limelightAim.whenHeld(new AlignToTarget());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
@@ -111,8 +111,8 @@ public class RobotContainer {
     stopEverything.whenPressed(new StopEverything());
 
 
-    final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    flap.whenPressed(new FlapIntake());
+    // final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    // flap.whenPressed(new FlapIntake());
     
 
     final POVButton upPov = new POVButton(ps4_controller, 0);
@@ -128,6 +128,13 @@ public class RobotContainer {
     final POVButton rightPov = new POVButton(ps4_controller, 90);
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
+
+    double increment = 50;
+    final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
+
+    final Button decreaseRPM = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    decreaseRPM.whenPressed(new ChangeShooterTargetRPM(-increment));
 
     // TESTING BUTTONS
     // final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);

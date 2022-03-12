@@ -16,9 +16,10 @@ public class Shooter extends SubsystemBase {
   private Limelight limelight;
   private TalonSRX rollerMotor;
   private TalonFX topMotor, bottomMotor; 
-  private double topTargetRPM, bottomTargetRPM;
+  private double topTestTargetRPM, bottomTestTargetRPM;
   private final double MAX_SPEED = 1;
   private final double RAMPING_CONSTANT = 0.25;
+  private final double TOP_FLYWHEEL_CONST = 1.2;
   private boolean isAdjustingRPM; 
 
   /** Creates a new Shooter. */
@@ -36,8 +37,9 @@ public class Shooter extends SubsystemBase {
 
     this.rollerMotor = new TalonSRX(Constants.Shooter.rollerMotorPort);
     rollerMotor.setInverted(true);
-    this.topTargetRPM = Constants.Shooter.FIXED_RPM;
-    this.bottomTargetRPM = Constants.Shooter.FIXED_RPM;
+
+    this.topTestTargetRPM = Constants.Shooter.FIXED_RPM;
+    this.bottomTestTargetRPM = Constants.Shooter.FIXED_RPM;
 
     isAdjustingRPM = false; 
 
@@ -159,12 +161,16 @@ public class Shooter extends SubsystemBase {
     return getRPMForDistanceInches(limelight.getDistanceToTarget());
   }
 
-  public void setTopTargetRPM(double rpm) {
-    topTargetRPM = rpm;
+  public void setBottomTestTargetRPM(double rpm) {
+    bottomTestTargetRPM = rpm;
   }
 
-  public void setBottomTargetRPM(double rpm) {
-    bottomTargetRPM = rpm;
+  public double getTopTestTargetRPM() {
+    return getBottomTestTargetRPM() * TOP_FLYWHEEL_CONST;
+  }
+
+  public double getBottomTestTargetRPM() {
+    return bottomTestTargetRPM;
   }
 
   public double getBottomTargetRPM() {

@@ -13,22 +13,16 @@ public class ChangeShooterTargetRPM extends CommandBase {
   private boolean changeTopMotor;
   
   /** Creates a new ChangeShooterTargetRPM. */
-  public ChangeShooterTargetRPM(boolean topMotor, double changeInRPM) {
+  public ChangeShooterTargetRPM(double changeInRPM) {
     shooter = Shooter.getInstance();
     this.change = changeInRPM;
-    this.changeTopMotor = topMotor;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (changeTopMotor) {
-      shooter.setTopTargetRPM(shooter.getTopTargetRPM() + change);
-    } else {
-      shooter.setBottomTargetRPM(shooter.getBottomTargetRPM() + change);
-
-    }
+    shooter.setBottomTestTargetRPM(shooter.getBottomTestTargetRPM() + change);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
