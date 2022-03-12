@@ -19,7 +19,7 @@ public class Shooter extends SubsystemBase {
   private double topTestTargetRPM, bottomTestTargetRPM;
   private final double MAX_SPEED = 1;
   private final double RAMPING_CONSTANT = 0.25;
-  private final double TOP_FLYWHEEL_CONST = 1.2;
+  private final double TOP_FLYWHEEL_CONST = 0.8;
   private boolean isAdjustingRPM; 
 
   /** Creates a new Shooter. */

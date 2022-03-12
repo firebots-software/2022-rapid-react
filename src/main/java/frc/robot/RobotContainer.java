@@ -129,7 +129,7 @@ public class RobotContainer {
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
 
-    double increment = 50;
+    double increment = 25;
     final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
 

@@ -246,6 +246,7 @@ public class Robot extends TimedRobot {
     limelight.setLedStatus(true);
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     drivetrain.resetEncoders();
+    intake.extendIntake();
   }
 
   /** This function is called periodically during operator control. */

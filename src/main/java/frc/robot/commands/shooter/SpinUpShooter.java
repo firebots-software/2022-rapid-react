@@ -21,7 +21,7 @@ public class SpinUpShooter extends CommandBase {
   private final double kp, ki, kd; 
   private double currentVoltageTop, currentVoltageBottom;
   protected Timer timer;
-  private final double RPM_TOLERANCE = 50;
+  private final double RPM_TOLERANCE = 10;
 
   /** Creates a new SpinUpShooter. */
   public SpinUpShooter() {

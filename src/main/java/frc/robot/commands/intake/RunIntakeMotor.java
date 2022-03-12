@@ -26,7 +26,7 @@ public class RunIntakeMotor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.extendIntake();
+    // intake.extendIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,7 +39,7 @@ public class RunIntakeMotor extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     intake.stopMotors();
-    intake.retractIntake();
+    // intake.retractIntake();
   }
 
   // Returns true when the command should end.
