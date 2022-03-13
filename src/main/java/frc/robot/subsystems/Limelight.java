@@ -118,11 +118,7 @@ public class Limelight extends SubsystemBase {
   }
 
   public boolean isWithinShootingRange(){
-    // if (shooter.isRPMAdjusting()){
-      return 100 < getDistanceToTarget() && getDistanceToTarget() < 135;
-    // } else {
-    //   return 85 < getDistanceToTarget() && getDistanceToTarget() < 95;
-    // }
+    return 100 < getDistanceToTarget() && getDistanceToTarget() < 135;
   }
 
   public void setLedStatus(boolean on) {

@@ -22,6 +22,7 @@ public class Shooter extends SubsystemBase {
   private final double MAX_SPEED = 1;
   private final double RAMPING_CONSTANT = 0.25;
   private final double TOP_FLYWHEEL_CONST = 0.8;
+  private final double RPM_MOE = 25;
   private boolean isAdjustingRPM; 
   private SimpleMotorFeedforward topMotorFF, bottomMotorFF;
 
@@ -101,10 +102,7 @@ public class Shooter extends SubsystemBase {
     // value to move to aimed point
   }
 
-  public void setTopMotorVoltage(double volts) {
-    topMotor.set(ControlMode.Current, volts);
-  }
-
+ 
   public void setBottomMotorSpeed(double speed) {
     if (speed > MAX_SPEED) speed = MAX_SPEED;
     if (speed < -MAX_SPEED) speed = -MAX_SPEED;
@@ -190,8 +188,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getTopTargetRPM() {
-    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM;
-    return getRPMForDistanceInches(limelight.getDistanceToTarget());
+    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
+    return getRPMForDistanceInches(limelight.getDistanceToTarget()) * TOP_FLYWHEEL_CONST;
   }
 
   public void setBottomTestTargetRPM(double rpm) {
@@ -228,7 +226,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getRPMForDistanceInches(double distance) {
-    double rpm = (0.0501976 * (distance + 25.8149) * (distance + 25.8149)) + 2142.69; 
+    // double rpm = 12.5079 * distance + 1874.28;
+    double rpm = (0.076082 * distance * distance) + (-6.13344 * distance) + 2990.84;
+    if (rpm < 0) rpm = 0;
     if (rpm > Constants.Shooter.MAX_RPM) rpm = Constants.Shooter.MAX_RPM;
     return rpm; 
   }
@@ -236,5 +236,17 @@ public class Shooter extends SubsystemBase {
   public void setRampingConstant(double ramp) {
     topMotor.configOpenloopRamp(ramp);
     bottomMotor.configOpenloopRamp(ramp);
+  }
+
+  public boolean atTargetRPM(double marginOfError) {
+    boolean topAtTarget = Math.abs(getTopShooterRPM() - getTopTargetRPM()) < marginOfError;
+    boolean bottomAtTarget = Math.abs(getBottomShooterRPM() - getBottomTargetRPM()) < marginOfError;
+
+    return topAtTarget && bottomAtTarget;
+    
+  }
+
+  public boolean atTargetRPM() {
+    return atTargetRPM(RPM_MOE);
   }
 }

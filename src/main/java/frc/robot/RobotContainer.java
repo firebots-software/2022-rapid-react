@@ -89,11 +89,11 @@ public class RobotContainer {
     loadBall.whenHeld(new RunSpaghetAndRoll());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    spinUpShooter.toggleWhenPressed(new SpinUpShooter());
+    spinUpShooter.toggleWhenPressed(new FlywheelFalconFF());
 
 
-    // final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    // limelightAim.whenHeld(new AlignToTarget());
+    final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    limelightAim.whenHeld(new AlignToTarget());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
@@ -110,9 +110,8 @@ public class RobotContainer {
     final Button stopEverything = new JoystickButton(ps4_controller, Constants.OI.BIG_BUTTON_PORT);
     stopEverything.whenPressed(new StopEverything());
 
-
-    // final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    // flap.whenPressed(new FlapIntake());
+    final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    flap.whenPressed(new FlapIntake());
     
 
     final POVButton upPov = new POVButton(ps4_controller, 0);
@@ -129,12 +128,12 @@ public class RobotContainer {
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
 
-    double increment = 25;
-    final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
+    // double increment = 25;
+    // final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    // increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
 
-    final Button decreaseRPM = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    decreaseRPM.whenPressed(new ChangeShooterTargetRPM(-increment));
+    // final Button decreaseRPM = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    // decreaseRPM.whenPressed(new ChangeShooterTargetRPM(-increment));
 
     // TESTING BUTTONS
     // final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);

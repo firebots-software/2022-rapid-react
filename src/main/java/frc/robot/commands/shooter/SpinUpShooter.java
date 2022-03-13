@@ -82,7 +82,7 @@ public class SpinUpShooter extends CommandBase {
     if (done) {
       timer.stop();
     }
-    SmartDashboard.putBoolean("SHOOTER AT RPM", done);
+    // SmartDashboard.putBoolean("SHOOTER AT RPM", done);
     return false; // RETURN FALSE -- KEEP THE WHEELS SPINNING ONCE THEY'RE UP TO SPEED
   }
 

@@ -49,7 +49,7 @@ public class SpinFlywheelFeedForward extends CommandBase {
       (Constants.Shooter.MAX_VOLTAGE * Constants.Shooter.MAX_RPM);
     double topOutput = ffOut + pidTop.calculate(shooter.getTopShooterRPM());
     SmartDashboard.putNumber("feed forward output", topOutput);
-    shooter.setTopMotorVoltage(topOutput);
+    // shooter.setTopMotorSpeed
 
     // double bottomOutput = feedforwardBottom.calculate(shooter.getBottomTargetRPM()) + pidTop.calculate(shooter.getBottomShooterRPM());
     // shooter.setBottomMotorSpeed(bottomOutput);

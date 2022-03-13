@@ -157,11 +157,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
 
-    SmartDashboard.putNumber("top shooter target", shooter.getTopTargetRPM());
-    SmartDashboard.putNumber("bottom shooter target", shooter.getBottomTargetRPM());
-
-    SmartDashboard.putNumber("shooter target rpm", shooter.getRPMForDistanceInches(limelight.getDistanceToTarget()));
-
     SmartDashboard.putBoolean("adjustable rpm?", shooter.isRPMAdjusting());
     SmartDashboard.putNumber("limelight distance", limelight.getDistanceToTarget()); 
 
@@ -181,19 +176,16 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("left drivetrain voltage", drivetrain.getLeftVoltage());
     SmartDashboard.putNumber("right drivetrain voltage", drivetrain.getRightVoltage());
 
-    SmartDashboard.putNumber("leftEncoderVal:", climber.getLeftHeight());
-    SmartDashboard.putNumber("rightEncoderVal:", climber.getRightHeight());
-
     SmartDashboard.putBoolean("left climber hall effect", climber.getLeftHallEffectValue());
     SmartDashboard.putBoolean("right climber hall effect", climber.getRightHallEffectValue());
 
     SmartDashboard.putBoolean("intake piston status", intake.pistonExtended());
 
-    SmartDashboard.putNumber("TESTING: TARGET RPM TOP", shooter.getTopTestTargetRPM());
-    SmartDashboard.putNumber("TESTING: TARGET RPM BOTTOM", shooter.getBottomTestTargetRPM());
+    SmartDashboard.putNumber("TESTING: TARGET RPM TOP", shooter.getTopTargetRPM());
+    SmartDashboard.putNumber("TESTING: TARGET RPM BOTTOM", shooter.getBottomTargetRPM());
+
+    SmartDashboard.putBoolean("SHOOTER AT RPM", shooter.atTargetRPM());
     
-
-
   }
 
 

@@ -9,13 +9,10 @@ import frc.robot.subsystems.Shooter;
 
 public class FlywheelFalconFF extends CommandBase {
   private Shooter shooter;
-  private double targetRPM;
-  private static final double TOP_FLYWHEEL_CONST = 1;
 
   /** Creates a new FlywheelFalconFF. */
-  public FlywheelFalconFF(double rpm) {
+  public FlywheelFalconFF() {
     shooter = Shooter.getInstance();
-    targetRPM = rpm;
   }
 
   // Called when the command is initially scheduled.
@@ -27,8 +24,8 @@ public class FlywheelFalconFF extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setTopClosedLoopVelocity(targetRPM * TOP_FLYWHEEL_CONST);
-    shooter.setBottomClosedLoopVelocity(targetRPM);
+    shooter.setTopClosedLoopVelocity(shooter.getTopTargetRPM());
+    shooter.setBottomClosedLoopVelocity(shooter.getBottomTargetRPM());
   }
 
   // Called once the command ends or is interrupted.
