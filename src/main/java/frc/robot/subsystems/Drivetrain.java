@@ -439,6 +439,10 @@ public class Drivetrain extends SubsystemBase {
     return lastAlignedGyro;
   }
 
+  public void setLastAlignedGyro(double newLastAlignedGyro) {
+    lastAlignedGyro = newLastAlignedGyro; 
+  }
+
   public double getCurrentSpeed() {
     double averageSpeedRPM = ((rightRearMaster.getSelectedSensorVelocity() + rightFollower.getSelectedSensorVelocity() + leftFrontMaster.getSelectedSensorVelocity() + leftFollower.getSelectedSensorVelocity()) / 4) * (600 / Constants.Drivetrain.drivetrainTicksPerRev); 
     double velocityMetersPerSec = (averageSpeedRPM * Math.PI * 2 * Constants.Drivetrain.drivetrainWheelRadiusMeters) / 60; 

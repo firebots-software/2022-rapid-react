@@ -111,8 +111,8 @@ public class RobotContainer {
     stopEverything.whenPressed(new StopEverything());
 
 
-    final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    flap.whenPressed(new FlapIntake());
+    // final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    // flap.whenPressed(new FlapIntake());
     
 
     final POVButton upPov = new POVButton(ps4_controller, 0);
@@ -127,6 +127,9 @@ public class RobotContainer {
 
     final POVButton rightPov = new POVButton(ps4_controller, 90);
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
+
+    final Button alignToTargetFeedForward = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    alignToTargetFeedForward.whenPressed(new AlignToTargetFeedForward());
 
 
     // TESTING BUTTONS

@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
   private final double RAMPING_CONSTANT = 0.25;
   private boolean isAdjustingRPM; 
 
-  /** Creates a new Shooter. */
+  /** Creates a new Shooter */
   private Shooter() {
     this.topMotor = new TalonFX(Constants.Shooter.shooterTopMotorPort);
     topMotor.configFactoryDefault();

@@ -145,6 +145,7 @@ public final class Constants {
         public static final double encoderTicksPerDegree = encoderTicksPerRev / 360.0;
         public static final double pidPositionToleranceDegrees = 1;
         public static final double pidVelToleranceDegPerSecond = 0.5;
+        public static final double constantTurretTurnSpeed = 0.5; 
     }
     
     public static class Ramsete {
