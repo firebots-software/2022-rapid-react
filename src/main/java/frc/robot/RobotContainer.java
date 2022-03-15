@@ -55,7 +55,7 @@ public class RobotContainer {
                   () -> ps4_controller.getRawAxis(1),
                   () -> ps4_controller.getRawAxis(2)));
 
-    autonChooser.setDefaultOption("limelightAim", new AlignToTarget());
+    autonChooser.setDefaultOption("limelightAim", new AlignToTargetFeedForward());
 
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
@@ -93,7 +93,7 @@ public class RobotContainer {
 
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenHeld(new AlignToTarget());
+    limelightAim.whenHeld(new AlignToTargetFeedForward());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
@@ -133,8 +133,9 @@ public class RobotContainer {
     // final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     // increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
 
-    // final Button decreaseRPM = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    // decreaseRPM.whenPressed(new ChangeShooterTargetRPM(-increment));
+    final Button alignToTargetFeedForward = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    alignToTargetFeedForward.whenPressed(new AlignToTargetFeedForward());
+
 
     // TESTING BUTTONS
     // final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);

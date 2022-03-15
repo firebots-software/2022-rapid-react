@@ -26,7 +26,7 @@ public class Shooter extends SubsystemBase {
   private boolean isAdjustingRPM; 
   private SimpleMotorFeedforward topMotorFF, bottomMotorFF;
 
-  /** Creates a new Shooter. */
+  /** Creates a new Shooter */
   private Shooter() {
     this.topMotor = new TalonFX(Constants.Shooter.shooterTopMotorPort);
     topMotor.configFactoryDefault();

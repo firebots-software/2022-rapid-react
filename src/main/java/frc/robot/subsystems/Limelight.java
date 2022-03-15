@@ -23,6 +23,7 @@ public class Limelight extends SubsystemBase {
    * your data. In this case, it's a table called datatable.
    */
   private NetworkTable table = instance.getTable("limelight");
+  private double lastKnownTx = 0; 
 
   // Limelight tx value - x degree offset of target center from viewport center
   private double tx;
@@ -127,6 +128,14 @@ public class Limelight extends SubsystemBase {
     } else {
       table.getEntry("ledMode").setNumber(1);
     }
+  }
+
+  public double getLastKnownTx() {
+    return lastKnownTx; 
+  }
+  
+  public void setLastKnownTx(double newLastKnownTx) {
+    this.lastKnownTx = newLastKnownTx; 
   }
 
   @Override

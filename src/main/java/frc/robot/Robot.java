@@ -148,6 +148,9 @@ public class Robot extends TimedRobot {
   private void updateShuffleboard() {
     limelight.refreshValues();
     SmartDashboard.putNumber("tx", limelight.getTx()); 
+    if (limelight.getTv()) {
+      limelight.setLastKnownTx(limelight.getTx());
+    }
     SmartDashboard.putNumber("ty", limelight.getTy()); 
 
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());

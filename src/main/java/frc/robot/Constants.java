@@ -48,6 +48,8 @@ public final class Constants {
         public final static int rightFollowerPort = 1;
 
         public static final double TICKS_PER_METER = 26199.13932126; // * (1.339280 / 2.13);
+        public static final double drivetrainTicksPerRev = 2048;
+        public static final double drivetrainWheelRadiusMeters = 0.0762; // convert to meters 
 
         public final static int PIGEON_ID = 8;
 
@@ -112,6 +114,9 @@ public final class Constants {
 
         public static final double limelightAngleOffset = 28; // TODO: change limelight angle offset to match actual thing\
         public static final double heightOfTarget = 104; // in meters 
+        public static final double FEED_FORWARD_KS = 0;
+        public static final double FEED_FORWARD_KV = 0;
+        public static final double FEED_FORWARD_KA = 0;
         // public static final double turretSpeedConstant = 0.1; 
         public static double maxAngle = 90;
 
@@ -157,6 +162,7 @@ public final class Constants {
         public static final double ksTurret = 0.55865;
         public static final double kvTurret = 0.041588;
         public static final double kaTurret = 0.00096306;
+        public static final double constantTurretTurnSpeed = 0.5; 
     }
     
     public static class Ramsete {
