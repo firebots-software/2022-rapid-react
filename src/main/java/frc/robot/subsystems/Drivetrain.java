@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -48,7 +47,7 @@ public class Drivetrain extends SubsystemBase {
   
   // fields
   private final WPI_TalonFX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
-  // private static Pigeon2 pigeon; 
+  private static Pigeon2 pigeon; 
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -86,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
     this.rightFollower = new WPI_TalonFX(Constants.Drivetrain.rightFollowerPort);
     resetEncoders();
 
-    // pigeon = new Pigeon2(Constants.Drivetrain.PIGEON_ID);
+    pigeon = new Pigeon2(Constants.Drivetrain.PIGEON_ID);
     resetGyro();
     
     MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMaster, leftFollower);
@@ -293,16 +292,16 @@ public void setSlowMode(boolean isSlowMode) {
 }
 
   public void resetGyro() {
-    // pigeon.setYaw(0);
+    pigeon.setYaw(0);
   }
 
   public double getHeading() {
-    // if (pigeon != null) {
-    //     return pigeon.getYaw(); //todo: why gyro angle = -heading?
-    // } else {
-    //     return 0;
-    // }
-    return 0;
+    if (pigeon != null) {
+        return pigeon.getYaw(); //todo: why gyro angle = -heading?
+    } else {
+        return 0;
+    }
+    // return 0;
   }
 
   public boolean getDriveStatus() {

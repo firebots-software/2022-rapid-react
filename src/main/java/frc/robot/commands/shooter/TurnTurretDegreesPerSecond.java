@@ -7,26 +7,24 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
-public class ManualTurretTurn extends CommandBase {
+public class TurnTurretDegreesPerSecond extends CommandBase {
   private Turret turret;
   private double speed;
 
-  /** Creates a new TurnTurretAtSpeed. */
-  public ManualTurretTurn(double speed) {
-    this.turret = Turret.getInstance();
-    this.speed = speed;
-    addRequirements(turret);
+  /** Creates a new TurnTurretDegreesPerSecond. */
+  public TurnTurretDegreesPerSecond(double degPerS) {
+    turret = Turret.getInstance();
+    this.speed = degPerS;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turret.setMotorSpeed(speed);
+    turret.setTurretClosedLoopVelocity(speed);
   }
 
   // Called once the command ends or is interrupted.

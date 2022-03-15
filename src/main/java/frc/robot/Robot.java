@@ -185,6 +185,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("TESTING: TARGET RPM BOTTOM", shooter.getBottomTargetRPM());
 
     SmartDashboard.putBoolean("SHOOTER AT RPM", shooter.atTargetRPM());
+
+    SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
     
   }
 
@@ -238,7 +240,7 @@ public class Robot extends TimedRobot {
     limelight.setLedStatus(true);
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     drivetrain.resetEncoders();
-    intake.extendIntake();
+    // intake.extendIntake();
   }
 
   /** This function is called periodically during operator control. */

@@ -110,8 +110,8 @@ public class RobotContainer {
     final Button stopEverything = new JoystickButton(ps4_controller, Constants.OI.BIG_BUTTON_PORT);
     stopEverything.whenPressed(new StopEverything());
 
-    final Button flap = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    flap.whenPressed(new FlapIntake());
+    // final Button posControl = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    // posControl.whenPressed(new TurretPositionControl(20));
     
 
     final POVButton upPov = new POVButton(ps4_controller, 0);
@@ -121,11 +121,12 @@ public class RobotContainer {
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
     double manualTurretSpeed = 1;
+    double turretDegPerS = 2;
     final POVButton leftPov = new POVButton(ps4_controller, 270);
-    leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
+    leftPov.whenPressed(new TurretPositionControl(-20));
 
     final POVButton rightPov = new POVButton(ps4_controller, 90);
-    rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
+    rightPov.whenPressed(new TurretPositionControl(20));
 
 
     // double increment = 25;

@@ -7,37 +7,41 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
-public class ManualTurretTurn extends CommandBase {
+public class TurretPositionControl extends CommandBase {
   private Turret turret;
-  private double speed;
-
-  /** Creates a new TurnTurretAtSpeed. */
-  public ManualTurretTurn(double speed) {
-    this.turret = Turret.getInstance();
-    this.speed = speed;
+  private double degreesToTurn, targetDegrees;
+  private final double THRESHOLD = 0.25;
+  
+  /** Creates a new TurretPositionControl. */
+  public TurretPositionControl(double degrees) {
+    turret = Turret.getInstance();
+    this.degreesToTurn = degrees;
     addRequirements(turret);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    this.targetDegrees = turret.getEncoderValDegrees() + degreesToTurn;
+    turret.setTurretPosition(degreesToTurn);
+    System.out.println("starting position control");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    turret.setMotorSpeed(speed);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("ending position control");
     turret.stopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(turret.getEncoderValDegrees() - targetDegrees) < THRESHOLD;
   }
 }
