@@ -190,6 +190,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("SHOOTER AT RPM", shooter.atTargetRPM());
 
     SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
+
+    SmartDashboard.putNumber("turret motion magic position", turret.getMotionMagicPosition());
     
   }
 
@@ -239,7 +241,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-  // turret.zeroEncoder();
+    turret.zeroEncoder();
     limelight.setLedStatus(true);
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     drivetrain.resetEncoders();

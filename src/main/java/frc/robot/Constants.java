@@ -136,7 +136,7 @@ public final class Constants {
         public static final double MAX_RPM = 6000;
         public static final double MAX_VOLTAGE = 12.0;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 
-        public static final double maxRollerSpeed = 0.5; //TODO: change to actual max
+        public static final double maxRollerSpeed = 0.3; //TODO: change to actual max
 
         // CONTROLLERS
         public static final double kpFlywheel = 0.14172 / (MAX_VOLTAGE * 60); // divide by max voltage * 60 s/min

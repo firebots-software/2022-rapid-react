@@ -31,8 +31,10 @@ public class Turret extends SubsystemBase {
     motor.configFactoryDefault();
     motor.configOpenloopRamp(RAMPING_CONSTANT); 
     motor.setNeutralMode(NeutralMode.Brake);
+
     motor.configMotionAcceleration(20 * Constants.Turret.encoderTicksPerDegree * 0.1);
-    motor.configMotionCruiseVelocity(120 * Constants.Turret.encoderTicksPerDegree * 0.1);
+    motor.configMotionCruiseVelocity(150 * Constants.Turret.encoderTicksPerDegree * 0.1);
+    motor.configMotionSCurveStrength(8);
     turretFF = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret, Constants.Turret.kaTurret);
 
     zeroEncoder();
@@ -73,12 +75,16 @@ public class Turret extends SubsystemBase {
 
   public void setTurretPosition(double degrees) {
     motor.set(
-      TalonFXControlMode.MotionMagic,
+      ControlMode.Position,
       degrees * Constants.Turret.encoderTicksPerDegree,
       DemandType.ArbitraryFeedForward,
       (turretFF.calculate(degrees) / 12.0)
     );
 
+  }
+
+  public double getMotionMagicPosition() {
+    return motor.getActiveTrajectoryPosition() / Constants.Turret.encoderTicksPerDegree;
   }
 
 
