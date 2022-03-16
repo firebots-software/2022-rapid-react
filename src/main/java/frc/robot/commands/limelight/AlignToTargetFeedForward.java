@@ -33,6 +33,7 @@ public class AlignToTargetFeedForward extends CommandBase {
 
     feedforward = new SimpleMotorFeedforward(Constants.Limelight.FEED_FORWARD_KS, Constants.Limelight.FEED_FORWARD_KV,
         Constants.Limelight.FEED_FORWARD_KA);
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
