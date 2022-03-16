@@ -13,12 +13,14 @@ public class StopClimber extends CommandBase {
   /** Creates a new StopClimber. */
   public StopClimber() {
     climber = Climber.getInstance();
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     climber.stopClimber();
+    System.out.println("stopping climber");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

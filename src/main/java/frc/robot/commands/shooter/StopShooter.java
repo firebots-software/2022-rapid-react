@@ -9,13 +9,17 @@ import frc.robot.subsystems.Shooter;
 
 public class StopShooter extends CommandBase {
   private Shooter shooter;
+
   public StopShooter() {
+    shooter = Shooter.getInstance();
+    addRequirements(shooter);
   }
 
   @Override
   public void initialize() {
     shooter.stopBothMotors();
     shooter.stopRollerMotor();
+    System.out.println("stopping shooter");
   }
 
   @Override

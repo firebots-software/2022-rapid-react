@@ -13,6 +13,7 @@ public class FlywheelFalconFF extends CommandBase {
   /** Creates a new FlywheelFalconFF. */
   public FlywheelFalconFF() {
     shooter = Shooter.getInstance();
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
