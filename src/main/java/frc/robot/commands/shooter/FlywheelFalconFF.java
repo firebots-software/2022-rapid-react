@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
 public class FlywheelFalconFF extends CommandBase {
-  private Shooter shooter;
+  protected Shooter shooter;
 
   /** Creates a new FlywheelFalconFF. */
   public FlywheelFalconFF() {

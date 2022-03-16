@@ -28,9 +28,12 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Limelight;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the
+ * build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -46,68 +49,73 @@ public class Robot extends TimedRobot {
   private Climber climber;
 
   /**
-   * This function is run when the robot is first started up and should be used for any
+   * This function is run when the robot is first started up and should be used
+   * for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
-    //init cameraServer + stream 
+    // init cameraServer + stream
     m_robotContainer = new RobotContainer();
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
-   drivetrain = Drivetrain.getInstance();
-   intake = Intake.getInstance();
+    drivetrain = Drivetrain.getInstance();
+    intake = Intake.getInstance();
 
-    // CameraServer is responsible for publishing about cameras/camera servers to Network Tables
+    // CameraServer is responsible for publishing about cameras/camera servers to
+    // Network Tables
 
-    // startAutomaticCapture: creates server for viewing camera feed from dashboard 
+    // startAutomaticCapture: creates server for viewing camera feed from dashboard
 
     try {
-      // UsbCamera shooterCamera = CameraServer.startAutomaticCapture("Shooter Camera", 0);
-      // UsbCamera intakeCamera = CameraServer.startAutomaticCapture("Intake Camera", 1);
-      
+      // UsbCamera shooterCamera = CameraServer.startAutomaticCapture("Shooter
+      // Camera", 0);
+      // UsbCamera intakeCamera = CameraServer.startAutomaticCapture("Intake Camera",
+      // 1);
+
       // shooterCamera.setResolution(640, 480);
       // intakeCamera.setResolution(640, 480);
 
       new Thread(() -> {
         UsbCamera frontCamera = new UsbCamera("front cam", 0);
-        UsbCamera backCamera = new UsbCamera("back cam", 1);
+        // UsbCamera backCamera = new UsbCamera("back cam", 1);
         frontCamera.setFPS(30);
-        backCamera.setFPS(30);
+        // backCamera.setFPS(30);
         frontCamera.setBrightness(10);
-        backCamera.setBrightness(10);
-        
+        // backCamera.setBrightness(10);
+
         // frontCamera = CameraServer.startAutomaticCapture("Front Camera", 0);
-      
-        //   // BACK Orientation
+
+        // // BACK Orientation
         // backCamera = CameraServer.startAutomaticCapture("Back Camera", 1);
 
-       frontCamera.setResolution(160, 120);
-       backCamera.setResolution(160,120);
-  
+        frontCamera.setResolution(160, 120);
+        // backCamera.setResolution(160,120);
+
         CvSink cvSink1 = new CvSink("front cam sink");
         cvSink1.setSource(frontCamera);
-        CvSink cvSink2 = new CvSink("back cam sink");
-        cvSink2.setSource(backCamera);
+        // CvSink cvSink2 = new CvSink("back cam sink");
+        // cvSink2.setSource(backCamera);
         // Put video Blur -> stream on Shuffleboard
         CvSource outputStream = CameraServer.putVideo("Camera Output", 160, 120);
-  
+
         Mat source = new Mat();
         Mat output = new Mat();
-        
-        
-        while(!Thread.interrupted()) {
-          if(drivetrain.isUsingFrontCam()){
+
+        while (!Thread.interrupted()) {
+          if (drivetrain.isUsingFrontCam()) {
             if (cvSink1.grabFrame(source) == 0) {
               continue;
             }
-          }else{
-            if (cvSink2.grabFrame(source) == 0) {
-              continue;
-            }    
           }
+          // else{
+          // if (cvSink2.grabFrame(source) == 0) {
+          // continue;
+          // }
+          // }
 
           // Image processing goes here
           Imgproc.cvtColor(source, output, Imgproc.COLOR_BGRA2BGR);
@@ -115,43 +123,50 @@ public class Robot extends TimedRobot {
         }
 
         cvSink1.close();
-        cvSink2.close();
+        // cvSink2.close();
       }).start();
       Shuffleboard.update();
-    } catch(Exception e){
+    } catch (Exception e) {
       System.err.println("Error initializing camera");
     }
     shooter = Shooter.getInstance();
     shooter.stopBothMotors();
-    shooter = Shooter.getInstance(); 
+    shooter = Shooter.getInstance();
     climber = Climber.getInstance();
 
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like
+   * diagnostics that you want ran during disabled, autonomous, teleoperated and
+   * test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and
    * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // Runs the Scheduler. This is responsible for polling buttons, adding
+    // newly-scheduled
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
 
   private void updateShuffleboard() {
     limelight.refreshValues();
-    SmartDashboard.putNumber("tx", limelight.getTx()); 
+    SmartDashboard.putNumber("tx", limelight.getTx());
     if (limelight.getTv()) {
       limelight.setLastKnownTx(limelight.getTx());
     }
-    SmartDashboard.putNumber("ty", limelight.getTy()); 
+    SmartDashboard.putNumber("ty", limelight.getTy());
 
     // SmartDashboard.putNumber("name", subsystem.getNumberValue());
     SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
@@ -161,10 +176,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
 
     SmartDashboard.putBoolean("adjustable rpm?", shooter.isRPMAdjusting());
-    SmartDashboard.putNumber("limelight distance", limelight.getDistanceToTarget()); 
+    SmartDashboard.putNumber("limelight distance", limelight.getDistanceToTarget());
 
     SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
-    
+
     SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
     SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
 
@@ -190,9 +205,13 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("SHOOTER AT RPM", shooter.atTargetRPM());
 
     SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
-    
-  }
 
+    SmartDashboard.putNumber("turret motion magic position", turret.getMotionMagicPosition());
+
+    SmartDashboard.putNumber("top shooter error", shooter.getTopTargetRPM() - shooter.getTopShooterRPM());
+    SmartDashboard.putNumber("bottom shooter error", shooter.getBottomTargetRPM() - shooter.getBottomShooterRPM());
+
+  }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
@@ -208,7 +227,10 @@ public class Robot extends TimedRobot {
     updateShuffleboard();
   }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -239,7 +261,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-  // turret.zeroEncoder();
+    turret.zeroEncoder();
     limelight.setLedStatus(true);
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     drivetrain.resetEncoders();
@@ -260,5 +282,6 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 }

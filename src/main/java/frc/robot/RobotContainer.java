@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commandGroups.AimAndShoot2Balls;
+import frc.robot.commandGroups.AimAndShootV2;
 import frc.robot.commandGroups.DummyAutonAndShoot;
 import frc.robot.commandGroups.RunIntakeAndSpaghetti;
 import frc.robot.commandGroups.RunSpaghetAndRoll;
@@ -93,7 +95,7 @@ public class RobotContainer {
 
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenHeld(new AlignToTargetFeedForward());
+    limelightAim.whenHeld(new AlignToTargetPosControl());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
@@ -121,20 +123,20 @@ public class RobotContainer {
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
     double manualTurretSpeed = 1;
-    double turretDegPerS = 2;
+    double turretDegTurn = 20;
     final POVButton leftPov = new POVButton(ps4_controller, 270);
-    leftPov.whenPressed(new TurretPositionControl(-20));
+    leftPov.whenPressed(new TurretPositionControl(-turretDegTurn));
 
     final POVButton rightPov = new POVButton(ps4_controller, 90);
-    rightPov.whenPressed(new TurretPositionControl(20));
+    rightPov.whenPressed(new TurretPositionControl(turretDegTurn));
 
 
     // double increment = 25;
     // final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     // increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
 
-    final Button alignToTargetFeedForward = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    alignToTargetFeedForward.whenPressed(new AlignToTargetFeedForward());
+    final Button aimAndShoot = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    aimAndShoot.whenPressed(new AimAndShoot2Balls());
 
 
     // TESTING BUTTONS

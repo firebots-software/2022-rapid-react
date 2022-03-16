@@ -12,7 +12,7 @@ import frc.robot.subsystems.Turret;
 public class TurretPositionControl extends CommandBase {
   private Turret turret;
   private SimpleMotorFeedforward feedforward; 
-  private double degreesToTurn, targetDegrees;
+  private double degreesToTurn, initialDegrees;
   private final double THRESHOLD = 0.25;
   
   /** Creates a new TurretPositionControl. */
@@ -27,7 +27,7 @@ public class TurretPositionControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.targetDegrees = turret.getEncoderValDegrees() + degreesToTurn;
+    this.initialDegrees = turret.getEncoderValDegrees();
     turret.setTurretPosition(degreesToTurn);
     System.out.println("starting position control");
   }
@@ -47,6 +47,9 @@ public class TurretPositionControl extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(turret.getEncoderValDegrees() - targetDegrees) < THRESHOLD;
+    // return Math.abs(turret.getMotionMagicPosition()) > Math.abs(degreesToTurn / 6.0);
+    return Math.abs(turret.getEncoderValDegrees() - initialDegrees) > Math.abs(degreesToTurn);
+
+    // return Math.abs(turret.getEncoderValDegrees() - targetDegrees) < THRESHOLD;
   }
 }
