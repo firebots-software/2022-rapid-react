@@ -128,7 +128,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setTopClosedLoopVelocity(double rpm) {
-    rpm -= 250;
+    rpm -= 225;
     topMotor.set(
         ControlMode.Velocity,
         (rpm / 60.0) * 2048 * 0.1,
@@ -138,7 +138,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setBottomClosedLoopVelocity(double rpm) {
-    rpm -= 250;
+    rpm -= 225;
     bottomMotor.set(
         ControlMode.Velocity,
         (rpm / 60.0) * 2048 * 0.1,

@@ -12,9 +12,15 @@ public class FlywheelFalconFFNoStop extends FlywheelFalconFF {
     super();
   }
 
+  @Override
+  public boolean isFinished() {
+    return shooter.atTargetRPM();
+  }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("spin up shooter done");
     // don't stop the motor
   }
 

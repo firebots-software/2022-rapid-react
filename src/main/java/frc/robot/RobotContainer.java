@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commandGroups.AimAndShoot2Balls;
 import frc.robot.commandGroups.AimAndShootV2;
 import frc.robot.commandGroups.DummyAutonAndShoot;
 import frc.robot.commandGroups.RunIntakeAndSpaghetti;
@@ -135,7 +136,7 @@ public class RobotContainer {
     // increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
 
     final Button aimAndShoot = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    aimAndShoot.whenPressed(new AimAndShootV2());
+    aimAndShoot.whenPressed(new AimAndShoot2Balls());
 
 
     // TESTING BUTTONS
