@@ -117,6 +117,8 @@ public final class Constants {
         public static final double FEED_FORWARD_KS = 0;
         public static final double FEED_FORWARD_KV = 0;
         public static final double FEED_FORWARD_KA = 0;
+
+        public static final double LIMELIGHT_DEFAULT_VALUE = 150.935; 
         // public static final double turretSpeedConstant = 0.1; 
         public static double maxAngle = 90;
 

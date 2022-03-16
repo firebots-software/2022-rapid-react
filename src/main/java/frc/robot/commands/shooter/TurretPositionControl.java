@@ -4,11 +4,14 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Turret;
 
 public class TurretPositionControl extends CommandBase {
   private Turret turret;
+  private SimpleMotorFeedforward feedforward; 
   private double degreesToTurn, targetDegrees;
   private final double THRESHOLD = 0.25;
   
@@ -16,6 +19,7 @@ public class TurretPositionControl extends CommandBase {
   public TurretPositionControl(double degrees) {
     turret = Turret.getInstance();
     this.degreesToTurn = degrees;
+    feedforward = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret, Constants.Turret.kaTurret); 
     addRequirements(turret);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -30,7 +34,8 @@ public class TurretPositionControl extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override

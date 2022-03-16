@@ -192,6 +192,11 @@ public class Shooter extends SubsystemBase {
     return getRPMForDistanceInches(limelight.getDistanceToTarget()) * TOP_FLYWHEEL_CONST;
   }
 
+  public double getTopTargetRPM(double distance) {
+    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
+    return getRPMForDistanceInches(distance) * TOP_FLYWHEEL_CONST;
+  }
+
   public void setBottomTestTargetRPM(double rpm) {
     bottomTestTargetRPM = rpm;
   }
@@ -207,6 +212,11 @@ public class Shooter extends SubsystemBase {
   public double getBottomTargetRPM() {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM;
     return getRPMForDistanceInches(limelight.getDistanceToTarget());
+  }
+
+  public double getBottomTargetRPM(double distance) {
+    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
+    return getRPMForDistanceInches(distance) * TOP_FLYWHEEL_CONST;
   }
 
   public double getTopVoltage() {

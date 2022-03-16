@@ -9,13 +9,19 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 public class SpinFlywheelFeedForward extends CommandBase {
   private Shooter shooter;
+  private Limelight limelight;
   private PIDController pidTop, pidBottom;
   private SimpleMotorFeedforward feedforwardTop, feedforwardBottom;
   private double RPM_TOLERANCE = 50;
+
+  private double sum;
+  private double counter = 10;
+  private double currentIndex;
 
   /** Creates a new SpinFlywheelFeedForward. */
   public SpinFlywheelFeedForward() {
@@ -24,34 +30,68 @@ public class SpinFlywheelFeedForward extends CommandBase {
     // top
     pidTop = new PIDController(Constants.Shooter.kpFlywheel, 0, 0);
     pidTop.setTolerance(RPM_TOLERANCE);
-    feedforwardTop = new SimpleMotorFeedforward(Constants.Shooter.ksTopFlywheel, Constants.Shooter.kvTopFlywheel, Constants.Shooter.kaTopFlywheel);
+    feedforwardTop = new SimpleMotorFeedforward(Constants.Shooter.ksTopFlywheel, Constants.Shooter.kvTopFlywheel,
+        Constants.Shooter.kaTopFlywheel);
+
+    pidBottom = new PIDController(Constants.Shooter.kpFlywheel, 0, 0);
+    pidTop.setTolerance(RPM_TOLERANCE);
+    feedforwardTop = new SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel, Constants.Shooter.kvBottomFlywheel,
+        Constants.Shooter.kaBottomFlywheel);
+
+    sum = 0; 
+    currentIndex = 0;
 
     // bottom
-    // pidBottom = new PIDController(Constants.Shooter.kpFlywheel, Constants.Shooter.kiFlywheel, Constants.Shooter.kdFlywheel);
+    // pidBottom = new PIDController(Constants.Shooter.kpFlywheel,
+    // Constants.Shooter.kiFlywheel, Constants.Shooter.kdFlywheel);
     // pidBottom.setTolerance(RPM_TOLERANCE);
-    // feedforwardBottom = new SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel, Constants.Shooter.kvBottomFlywheel, Constants.Shooter.kaBottomFlywheel);
+    // feedforwardBottom = new
+    // SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel,
+    // Constants.Shooter.kvBottomFlywheel, Constants.Shooter.kaBottomFlywheel);
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pidTop.setSetpoint(shooter.getTopTargetRPM());
+    pidTop.setSetpoint(shooter.getTopTargetRPM(limelight.getDistanceToTarget()));
+    pidBottom.setSetpoint(shooter.getBottomTargetRPM(limelight.getDistanceToTarget()));
     System.out.println("starting feed forward");
     // pidBottom.setSetpoint(shooter.getBottomTargetRPM());
-    
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ffOut = feedforwardTop.calculate(shooter.getTopTargetRPM() / 60.0) / 
-      (Constants.Shooter.MAX_VOLTAGE * Constants.Shooter.MAX_RPM);
-    double topOutput = ffOut + pidTop.calculate(shooter.getTopShooterRPM());
-    SmartDashboard.putNumber("feed forward output", topOutput);
+    if (currentIndex != counter) {
+      if (limelight.getDistanceToTarget() != Constants.Limelight.LIMELIGHT_DEFAULT_VALUE) {
+        sum += limelight.getDistanceToTarget();
+        currentIndex++;
+      }
+    } else {
+      sum += limelight.getDistanceToTarget(); 
+      currentIndex++;
+      double averageDist = sum/currentIndex; 
+      pidTop.setSetpoint(shooter.getTopTargetRPM(averageDist));
+      pidBottom.setSetpoint(shooter.getBottomTargetRPM(averageDist));
+      double ffOutTop = feedforwardTop.calculate((averageDist) / 60.0) /
+          (Constants.Shooter.MAX_VOLTAGE * Constants.Shooter.MAX_RPM);
+      double topOutput = ffOutTop + pidTop.calculate(shooter.getTopShooterRPM());
+      double ffOutBottom = feedforwardTop.calculate((averageDist) / 60.0) /
+          (Constants.Shooter.MAX_VOLTAGE * Constants.Shooter.MAX_RPM);
+      double bottomOutput = ffOutBottom + pidBottom.calculate(shooter.getBottomShooterRPM()); 
+
+      shooter.setTopMotorSpeed(topOutput);
+      shooter.setBottomMotorSpeed(bottomOutput);
+
+      SmartDashboard.putNumber("feed forward output", topOutput);
+    }
     // shooter.setTopMotorSpeed
 
-    // double bottomOutput = feedforwardBottom.calculate(shooter.getBottomTargetRPM()) + pidTop.calculate(shooter.getBottomShooterRPM());
+    // double bottomOutput =
+    // feedforwardBottom.calculate(shooter.getBottomTargetRPM()) +
+    // pidTop.calculate(shooter.getBottomShooterRPM());
     // shooter.setBottomMotorSpeed(bottomOutput);
   }
 
