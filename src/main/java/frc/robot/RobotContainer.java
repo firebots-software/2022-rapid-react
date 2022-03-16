@@ -135,9 +135,12 @@ public class RobotContainer {
     // final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     // increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
 
-    final Button aimAndShoot = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    aimAndShoot.whenPressed(new AimAndShoot2Balls());
+    // final Button aimAndShoot = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    // aimAndShoot.whenPressed(new AimAndShoot2Balls());
 
+
+    final Button zeroTurret = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    zeroTurret.whenPressed(new ZeroTurret());
 
     // TESTING BUTTONS
     // final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);

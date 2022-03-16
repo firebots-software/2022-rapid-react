@@ -30,7 +30,7 @@ public class Climber extends SubsystemBase {
     leftClimber.setNeutralMode(NeutralMode.Brake);
 
     rightClimber = new WPI_TalonSRX(Constants.Climber.rightClimberMotorPort);
-    rightClimber.setInverted(false);
+    rightClimber.setInverted(true);
     rightClimber.setNeutralMode(NeutralMode.Brake);
 
     // leftEncoder = new Encoder(new DigitalInput(Constants.Climber.leftChannelA), new DigitalOutput(Constants.Climber.leftChannelB));

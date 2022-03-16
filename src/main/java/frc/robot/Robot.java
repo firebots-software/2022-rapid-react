@@ -206,7 +206,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
 
-    SmartDashboard.putNumber("turret motion magic position", turret.getMotionMagicPosition());
+    // SmartDashboard.putNumber("turret motion magic position", turret.getMotionMagicPosition());
 
     SmartDashboard.putNumber("top shooter error", shooter.getTopTargetRPM() - shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter error", shooter.getBottomTargetRPM() - shooter.getBottomShooterRPM());
@@ -236,7 +236,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     drivetrain.resetOdometry(new Pose2d());
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
-    turret.zeroEncoder();
+    // turret.zeroEncoder();
     limelight.setLedStatus(true);
 
     // schedule the autonomous command (example)
@@ -261,7 +261,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    turret.zeroEncoder();
+    // turret.zeroEncoder();
     limelight.setLedStatus(true);
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     drivetrain.resetEncoders();

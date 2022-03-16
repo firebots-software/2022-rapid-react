@@ -161,6 +161,8 @@ public final class Constants {
         public static final double pidPositionToleranceDegrees = 1;
         public static final double pidVelToleranceDegPerSecond = 0.5;
 
+        public static final int hallEffectPort = 4;
+
         public static final double ksTurret = 0.55865;
         public static final double kvTurret = 0.041588;
         public static final double kaTurret = 0.00096306;

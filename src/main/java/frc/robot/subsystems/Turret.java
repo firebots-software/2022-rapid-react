@@ -12,12 +12,15 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
   //TODO: Java doc
     private TalonFX motor;
+    private DigitalInput hallEffect;
+
     private static Turret instance;
     private final double RAMPING_CONSTANT = 0.25;
     private final double maxRange = 90; 
@@ -37,6 +40,7 @@ public class Turret extends SubsystemBase {
     motor.configMotionSCurveStrength(8);
     turretFF = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret, Constants.Turret.kaTurret);
 
+    hallEffect = new DigitalInput(Constants.Turret.hallEffectPort);
     zeroEncoder();
   }
 
@@ -49,7 +53,7 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    if (isHallEffectEnabled()) zeroEncoder();
   }
 
   public void setMotorSpeed(double speed) {
@@ -90,6 +94,10 @@ public class Turret extends SubsystemBase {
 
   public void stopMotor() {
     setMotorSpeed(0);
+  }
+
+  public boolean isHallEffectEnabled() {
+    return !hallEffect.get();
   }
 
   public void zeroEncoder() {
