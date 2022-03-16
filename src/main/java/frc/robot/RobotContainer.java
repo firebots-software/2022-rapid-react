@@ -122,13 +122,13 @@ public class RobotContainer {
     final POVButton downPov = new POVButton(ps4_controller, 180);
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
-    double manualTurretSpeed = 1;
+    double manualTurretSpeed = 0.3;
     double turretDegTurn = 20;
     final POVButton leftPov = new POVButton(ps4_controller, 270);
-    leftPov.whenPressed(new TurretPositionControl(-turretDegTurn));
+    leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
 
     final POVButton rightPov = new POVButton(ps4_controller, 90);
-    rightPov.whenPressed(new TurretPositionControl(turretDegTurn));
+    rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
 
     // double increment = 25;
