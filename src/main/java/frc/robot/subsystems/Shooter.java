@@ -196,7 +196,8 @@ public class Shooter extends SubsystemBase {
 
   public double getTopTargetRPM(double distance) {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-    return getRPMForDistanceInches(distance) * TOP_FLYWHEEL_CONST;
+    double average = (distance + currentDist)/2; 
+    return getRPMForDistanceInches(average) * TOP_FLYWHEEL_CONST;
   }
 
   public void setBottomTestTargetRPM(double rpm) {
