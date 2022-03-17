@@ -23,6 +23,7 @@ public class Shooter extends SubsystemBase {
   private final double RAMPING_CONSTANT = 0.25;
   private final double TOP_FLYWHEEL_CONST = 0.8;
   private final double RPM_MOE = 120;
+  private double currentDist; 
   private boolean isAdjustingRPM; 
   private SimpleMotorFeedforward topMotorFF, bottomMotorFF;
 
@@ -55,6 +56,7 @@ public class Shooter extends SubsystemBase {
     isAdjustingRPM = false; 
 
     limelight = Limelight.getInstance();
+    currentDist = 0; 
 
   }
 
@@ -194,7 +196,8 @@ public class Shooter extends SubsystemBase {
 
   public double getTopTargetRPM(double distance) {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-    return getRPMForDistanceInches(distance) * TOP_FLYWHEEL_CONST;
+    double average = (distance + currentDist)/2; 
+    return getRPMForDistanceInches(average) * TOP_FLYWHEEL_CONST;
   }
 
   public void setBottomTestTargetRPM(double rpm) {
@@ -216,7 +219,12 @@ public class Shooter extends SubsystemBase {
 
   public double getBottomTargetRPM(double distance) {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-    return getRPMForDistanceInches(distance) * TOP_FLYWHEEL_CONST;
+    double average = (distance + currentDist)/2; 
+    return getRPMForDistanceInches(average) * TOP_FLYWHEEL_CONST;
+  }
+
+  public void setDistance(double newDist) {
+    currentDist = newDist; 
   }
 
   public double getTopVoltage() {
