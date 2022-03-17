@@ -211,6 +211,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("top shooter error", shooter.getTopTargetRPM() - shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter error", shooter.getBottomTargetRPM() - shooter.getBottomShooterRPM());
 
+    SmartDashboard.putBoolean("TURRET AIMED?", limelight.isAimed());
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

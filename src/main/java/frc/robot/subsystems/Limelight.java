@@ -138,6 +138,10 @@ public class Limelight extends SubsystemBase {
     this.lastKnownTx = newLastKnownTx; 
   }
 
+  public boolean isAimed() {
+    return Math.abs(getTx()) < Constants.Turret.pidPositionToleranceDegrees;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

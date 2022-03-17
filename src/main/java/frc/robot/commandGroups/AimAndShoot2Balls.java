@@ -13,9 +13,9 @@ public class AimAndShoot2Balls extends SequentialCommandGroup {
   /** Creates a new AimAndShoot2Balls. */
   public AimAndShoot2Balls() {
     addCommands(new AlignToTargetPosControl(),
-                new FlywheelFalconFFNoStop(),
+                new FlywheelFalconFFNoStop().withTimeout(3),
                 new RunSpaghetAndRoll().withTimeout(3),
-                new FlywheelFalconFFNoStop(),
+                new FlywheelFalconFFNoStop().withTimeout(3),
                 new RunSpaghetAndRoll().withTimeout(3),
                 new StopShooter());
   }

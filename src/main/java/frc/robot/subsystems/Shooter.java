@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
   private final double MAX_SPEED = 1;
   private final double RAMPING_CONSTANT = 0.25;
   private final double TOP_FLYWHEEL_CONST = 0.8;
-  private final double RPM_MOE = 50;
+  private final double RPM_MOE = 120;
   private boolean isAdjustingRPM; 
   private SimpleMotorFeedforward topMotorFF, bottomMotorFF;
 
