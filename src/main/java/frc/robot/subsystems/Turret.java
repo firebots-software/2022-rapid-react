@@ -87,6 +87,8 @@ public class Turret extends SubsystemBase {
 
   }
 
+
+
   public double getMotionMagicPosition() {
     return motor.getActiveTrajectoryPosition() / Constants.Turret.encoderTicksPerDegree;
   }

@@ -165,6 +165,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("tx", limelight.getTx());
     if (limelight.getTv()) {
       limelight.setLastKnownTx(limelight.getTx());
+      limelight.setLastKnownTy(limelight.getTy());
     }
     SmartDashboard.putNumber("ty", limelight.getTy());
 
@@ -206,12 +207,16 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
 
-    // SmartDashboard.putNumber("turret motion magic position", turret.getMotionMagicPosition());
+    // SmartDashboard.putNumber("turret motion magic position",
+    // turret.getMotionMagicPosition());
 
     SmartDashboard.putNumber("top shooter error", shooter.getTopTargetRPM() - shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter error", shooter.getBottomTargetRPM() - shooter.getBottomShooterRPM());
 
     SmartDashboard.putBoolean("TURRET AIMED?", limelight.isAimed());
+
+    SmartDashboard.putNumber("last known tx", limelight.getLastKnownTx());
+    SmartDashboard.putBoolean("limelight tv", limelight.getTv());
 
   }
 

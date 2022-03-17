@@ -220,7 +220,7 @@ public class Shooter extends SubsystemBase {
   public double getBottomTargetRPM(double distance) {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
     double average = (distance + currentDist)/2; 
-    return getRPMForDistanceInches(average) * TOP_FLYWHEEL_CONST;
+    return getRPMForDistanceInches(average);
   }
 
   public void setDistance(double newDist) {

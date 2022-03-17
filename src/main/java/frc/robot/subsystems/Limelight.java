@@ -24,6 +24,7 @@ public class Limelight extends SubsystemBase {
    */
   private NetworkTable table = instance.getTable("limelight");
   private double lastKnownTx = 0; 
+  private double lastKnownTy = 0; 
 
   // Limelight tx value - x degree offset of target center from viewport center
   private double tx;
@@ -113,8 +114,23 @@ public class Limelight extends SubsystemBase {
     return ratio;
   }
 
+  public double getLastKnownRatio() {
+    double ratio = Math.tan(((Math.toRadians(this.getLastKnownTy() + Constants.Limelight.limelightAngleOffset))));
+    return ratio;
+  }
+
+
   public double getDistanceToTarget() {
-    double ratio = this.getRatio();
+    if (getTv()) {
+      double ratio = this.getRatio();
+      return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
+    } else {
+      return getLastKnownDistanceToTarget();
+    }
+  }
+
+  public double getLastKnownDistanceToTarget() {
+    double ratio = this.getLastKnownRatio();
     return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
   }
 
@@ -133,13 +149,26 @@ public class Limelight extends SubsystemBase {
   public double getLastKnownTx() {
     return lastKnownTx; 
   }
+
+  public double getLastKnownTy() {
+    return lastKnownTy; 
+  }
   
   public void setLastKnownTx(double newLastKnownTx) {
     this.lastKnownTx = newLastKnownTx; 
   }
 
+  public void setLastKnownTy(double newLastKnownTy) {
+    this.lastKnownTy = newLastKnownTy; 
+  }
+
+
+
   public boolean isAimed() {
-    return Math.abs(getTx()) < Constants.Turret.pidPositionToleranceDegrees;
+    if (getTv()) {
+      return Math.abs(getTx()) < Constants.Turret.pidPositionToleranceDegrees;
+    }
+    return false;
   }
 
   @Override
