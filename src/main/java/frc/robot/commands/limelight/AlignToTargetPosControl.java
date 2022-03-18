@@ -61,6 +61,6 @@ public class AlignToTargetPosControl extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(limelight.getTx()) < TX_THRESHOLD;
+    return limelight.getTv() && (Math.abs(limelight.getTx()) < TX_THRESHOLD);
   }
 }
