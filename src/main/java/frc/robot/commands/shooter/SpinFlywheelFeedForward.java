@@ -54,8 +54,8 @@ public class SpinFlywheelFeedForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pidTop.setSetpoint(shooter.getTopTargetRPM(limelight.getDistanceToTarget()));
-    pidBottom.setSetpoint(shooter.getBottomTargetRPM(limelight.getDistanceToTarget()));
+    pidTop.setSetpoint(shooter.getTopTargetRPM());
+    pidBottom.setSetpoint(shooter.getBottomTargetRPM());
     System.out.println("starting feed forward");
     // pidBottom.setSetpoint(shooter.getBottomTargetRPM());
 
@@ -73,8 +73,8 @@ public class SpinFlywheelFeedForward extends CommandBase {
       sum += limelight.getDistanceToTarget(); 
       currentIndex++;
       double averageDist = sum/currentIndex; 
-      pidTop.setSetpoint(shooter.getTopTargetRPM(averageDist));
-      pidBottom.setSetpoint(shooter.getBottomTargetRPM(averageDist));
+      pidTop.setSetpoint(shooter.getTopTargetRPM());
+      pidBottom.setSetpoint(shooter.getBottomTargetRPM());
       double ffOutTop = feedforwardTop.calculate((averageDist) / 60.0) /
           (Constants.Shooter.MAX_VOLTAGE * Constants.Shooter.MAX_RPM);
       double topOutput = ffOutTop + pidTop.calculate(shooter.getTopShooterRPM());

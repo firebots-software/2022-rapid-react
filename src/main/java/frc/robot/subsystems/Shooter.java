@@ -189,15 +189,14 @@ public class Shooter extends SubsystemBase {
     return bottomMotor.getMotorOutputPercent();
   }
 
+  // public double getTopTargetRPM() {
+  //   if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
+  //   return getRPMForDistanceInches(limelight.getDistanceToTarget()) * TOP_FLYWHEEL_CONST;
+  // }
+
   public double getTopTargetRPM() {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-    return getRPMForDistanceInches(limelight.getDistanceToTarget()) * TOP_FLYWHEEL_CONST;
-  }
-
-  public double getTopTargetRPM(double distance) {
-    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-    double average = (distance + currentDist)/2; 
-    return getRPMForDistanceInches(average) * TOP_FLYWHEEL_CONST;
+    return getRPMForDistanceInches(limelight.getAverageDistance()) * TOP_FLYWHEEL_CONST;
   }
 
   public void setBottomTestTargetRPM(double rpm) {

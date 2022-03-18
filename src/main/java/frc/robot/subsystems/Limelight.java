@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.fasterxml.jackson.databind.introspect.NopAnnotationIntrospector;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,8 +24,13 @@ public class Limelight extends SubsystemBase {
    * be as many tables as you like and exist to make it easier to organize
    * your data. In this case, it's a table called datatable.
    */
+  private final int numberOfAverages = 10; 
+
   private NetworkTable table = instance.getTable("limelight");
   private double lastKnownTx = 0; 
+  private double[] lastTenTx = new double[numberOfAverages]; 
+  private double[] lastTenTy = new double[numberOfAverages]; 
+  int counter = 0; 
 
   // Limelight tx value - x degree offset of target center from viewport center
   private double tx;
@@ -76,6 +83,13 @@ public class Limelight extends SubsystemBase {
     tx = table.getEntry("tx").getDouble(DEFAULT_VALUE_TX);
     ty = table.getEntry("ty").getDouble(DEFAULT_VALUE_TY);
     tv = table.getEntry("tv").getDouble(DEFAULT_VALUE_TV);
+
+    if (tv == 1) {
+      lastTenTx[counter % numberOfAverages] = tx; 
+      lastTenTy[counter % numberOfAverages] = ty; 
+      counter++; 
+      
+    }
   }
 
   /**
@@ -108,9 +122,19 @@ public class Limelight extends SubsystemBase {
     return tv == 1;
   }
 
+  public double getRatio(double angle) {
+    double ratio = Math.tan(((Math.toRadians(angle + Constants.Limelight.limelightAngleOffset))));
+    return ratio;
+  }
+
   public double getRatio() {
     double ratio = Math.tan(((Math.toRadians(this.getTy() + Constants.Limelight.limelightAngleOffset))));
     return ratio;
+  }
+
+  public double getDistanceToTarget(double angle) {
+    double ratio = this.getRatio(angle);
+    return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
   }
 
   public double getDistanceToTarget() {
@@ -120,6 +144,15 @@ public class Limelight extends SubsystemBase {
 
   public boolean isWithinShootingRange(){
     return 100 < getDistanceToTarget() && getDistanceToTarget() < 135;
+  }
+
+  public double getAverageDistance() {
+    double sum = 0; 
+    for (int i = 0; i < lastTenTy.length; i++) {
+      sum += this.getDistanceToTarget(lastTenTx[i]); 
+    }
+
+    return sum/lastTenTy.length; 
   }
 
   public void setLedStatus(boolean on) {
@@ -140,6 +173,6 @@ public class Limelight extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    this.refreshValues();
   }
 }

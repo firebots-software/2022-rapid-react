@@ -161,50 +161,47 @@ public class Robot extends TimedRobot {
   }
 
   private void updateShuffleboard() {
-    limelight.refreshValues();
     SmartDashboard.putNumber("tx", limelight.getTx());
-    if (limelight.getTv()) {
-      limelight.setLastKnownTx(limelight.getTx());
-    }
     SmartDashboard.putNumber("ty", limelight.getTy());
 
-    // SmartDashboard.putNumber("name", subsystem.getNumberValue());
-    SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
-    SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
+    // // SmartDashboard.putNumber("name", subsystem.getNumberValue());
+    // SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
+    // SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
 
     SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
 
     SmartDashboard.putBoolean("adjustable rpm?", shooter.isRPMAdjusting());
     SmartDashboard.putNumber("limelight distance", limelight.getDistanceToTarget());
+    SmartDashboard.putNumber("limelight average distance", limelight.getAverageDistance()); 
 
-    SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
+    // SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
 
-    SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
-    SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
+    // SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
+    // SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
 
-    SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
-    SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
-    SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
+    // SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
+    // SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
+    // SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
 
-    SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
+    // SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
 
     SmartDashboard.putBoolean("within shooting range?", limelight.isWithinShootingRange());
 
-    SmartDashboard.putNumber("left drivetrain voltage", drivetrain.getLeftVoltage());
-    SmartDashboard.putNumber("right drivetrain voltage", drivetrain.getRightVoltage());
+    // SmartDashboard.putNumber("left drivetrain voltage", drivetrain.getLeftVoltage());
+    // SmartDashboard.putNumber("right drivetrain voltage", drivetrain.getRightVoltage());
 
-    SmartDashboard.putBoolean("left climber hall effect", climber.getLeftHallEffectValue());
-    SmartDashboard.putBoolean("right climber hall effect", climber.getRightHallEffectValue());
+    // SmartDashboard.putBoolean("left climber hall effect", climber.getLeftHallEffectValue());
+    // SmartDashboard.putBoolean("right climber hall effect", climber.getRightHallEffectValue());
 
-    SmartDashboard.putBoolean("intake piston status", intake.pistonExtended());
+    // SmartDashboard.putBoolean("intake piston status", intake.pistonExtended());
 
     SmartDashboard.putNumber("TESTING: TARGET RPM TOP", shooter.getTopTargetRPM());
     SmartDashboard.putNumber("TESTING: TARGET RPM BOTTOM", shooter.getBottomTargetRPM());
 
     SmartDashboard.putBoolean("SHOOTER AT RPM", shooter.atTargetRPM());
 
-    SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
+    // SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
 
     // SmartDashboard.putNumber("turret motion magic position", turret.getMotionMagicPosition());
 
