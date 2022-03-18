@@ -13,7 +13,7 @@ public class AimAndShootV2 extends SequentialCommandGroup {
   /** Creates a new AimAndShootV2. */
   public AimAndShootV2() {
     addCommands(new AlignToTargetPosControl(),
-                new FlywheelFalconFFNoStop(),
+                new FlywheelFalconFFNoStop().withTimeout(3),
                 new RunSpaghetAndRoll().withTimeout(3),
                 new StopShooter());
   }

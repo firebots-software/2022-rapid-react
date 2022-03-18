@@ -15,6 +15,7 @@ public class FlywheelFalconFF extends CommandBase {
   /** Creates a new FlywheelFalconFF. */
   public FlywheelFalconFF() {
     shooter = Shooter.getInstance();
+    limelight = Limelight.getInstance();
     addRequirements(shooter);
   }
 

@@ -29,7 +29,9 @@ public class Limelight extends SubsystemBase {
   private NetworkTable table = instance.getTable("limelight");
   private double lastKnownTx = 0; 
   private double[] lastTenTx = new double[numberOfAverages]; 
+  private double lastKnownTxValue; 
   private double[] lastTenTy = new double[numberOfAverages]; 
+  private double lastKnownTyValue; 
   int counter = 0; 
 
   // Limelight tx value - x degree offset of target center from viewport center
@@ -86,7 +88,9 @@ public class Limelight extends SubsystemBase {
 
     if (tv == 1) {
       lastTenTx[counter % numberOfAverages] = tx; 
+      lastKnownTxValue = tx; 
       lastTenTy[counter % numberOfAverages] = ty; 
+      lastKnownTyValue = ty; 
       counter++; 
       
     }
@@ -137,8 +141,23 @@ public class Limelight extends SubsystemBase {
     return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
   }
 
+  public double getLastKnownRatio() {
+    double ratio = Math.tan(((Math.toRadians(this.getLastKnownTy() + Constants.Limelight.limelightAngleOffset))));
+    return ratio;
+  }
+
+
   public double getDistanceToTarget() {
-    double ratio = this.getRatio();
+    if (getTv()) {
+      double ratio = this.getRatio();
+      return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
+    } else {
+      return getLastKnownDistanceToTarget();
+    }
+  }
+
+  public double getLastKnownDistanceToTarget() {
+    double ratio = this.getLastKnownRatio();
     return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
   }
 
@@ -164,11 +183,28 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getLastKnownTx() {
-    return lastKnownTx; 
+    return lastKnownTxValue; 
+  }
+
+  public double getLastKnownTy() {
+    return lastKnownTyValue; 
   }
   
   public void setLastKnownTx(double newLastKnownTx) {
     this.lastKnownTx = newLastKnownTx; 
+  }
+
+  public void setLastKnownTy(double newLastKnownTy) {
+    this.lastKnownTyValue = newLastKnownTy; 
+  }
+
+
+
+  public boolean isAimed() {
+    if (getTv()) {
+      return Math.abs(getTx()) < Constants.Turret.pidPositionToleranceDegrees;
+    }
+    return false;
   }
 
   @Override

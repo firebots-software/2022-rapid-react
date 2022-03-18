@@ -31,9 +31,12 @@ import frc.robot.commands.intake.ToggleIntakePiston;
 import frc.robot.subsystems.Drivetrain;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -41,8 +44,9 @@ public class RobotContainer {
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the button bindings
     this.ps4_controller = new Joystick(Constants.OI.PS4_CONTROLLER_PORT);
@@ -50,12 +54,12 @@ public class RobotContainer {
     this.drivetrain = Drivetrain.getInstance();
     configureButtonBindings();
 
-        // Configure default commands
-        // Set the default driv e command to split-stick arcade drive
-        drivetrain.setDefaultCommand(
-          new JoystickDrive(
-                  () -> ps4_controller.getRawAxis(1),
-                  () -> ps4_controller.getRawAxis(2)));
+    // Configure default commands
+    // Set the default driv e command to split-stick arcade drive
+    drivetrain.setDefaultCommand(
+        new JoystickDrive(
+            () -> ps4_controller.getRawAxis(1),
+            () -> ps4_controller.getRawAxis(2)));
 
     autonChooser.setDefaultOption("limelightAim", new AlignToTargetFeedForward());
 
@@ -66,20 +70,22 @@ public class RobotContainer {
     autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
     autonChooser.addOption("test only -- turn for time", new TurnForTime(0.35, 3));
 
-
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     /*
-    final Button buttonName = new JoystickButton(ps4_controller, Constants.OI.PortNumber);
-    buttonName.whenPressed(new commandName());
-    */
+     * final Button buttonName = new JoystickButton(ps4_controller,
+     * Constants.OI.PortNumber);
+     * buttonName.whenPressed(new commandName());
+     */
 
     final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
     flipOrientation.whenPressed(new FlipOrientation());
@@ -87,12 +93,12 @@ public class RobotContainer {
     final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
     slowMode.whenHeld(new ToggleSlowMode());
 
-    final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); //TODO: change button accordingly
+    final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); // TODO: change button
+                                                                                            // accordingly
     loadBall.whenHeld(new RunSpaghetAndRoll());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
     spinUpShooter.toggleWhenPressed(new FlywheelFalconFF());
-
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
     limelightAim.whenHeld(new AlignToTargetPosControl());
@@ -112,10 +118,6 @@ public class RobotContainer {
     final Button stopEverything = new JoystickButton(ps4_controller, Constants.OI.BIG_BUTTON_PORT);
     stopEverything.whenPressed(new StopEverything());
 
-    // final Button posControl = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    // posControl.whenPressed(new TurretPositionControl(20));
-    
-
     final POVButton upPov = new POVButton(ps4_controller, 0);
     upPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedUp));
 
@@ -123,35 +125,14 @@ public class RobotContainer {
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
     double manualTurretSpeed = 0.3;
-    double turretDegTurn = 20;
     final POVButton leftPov = new POVButton(ps4_controller, 270);
     leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
 
     final POVButton rightPov = new POVButton(ps4_controller, 90);
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
-
-    // double increment = 25;
-    // final Button increaseRPM = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    // increaseRPM.whenPressed(new ChangeShooterTargetRPM(increment));
-
-    final Button aimAndShoot = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    aimAndShoot.whenPressed(new AimAndShoot2Balls());
-
-
-    // final Button zeroTurret = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
-    // zeroTurret.whenPressed(new ZeroTurret());
-
-    // TESTING BUTTONS
-    // final Button turretClockwise = new JoystickButton(ps4_controller, Constants.OI.R2_BUTTON_PORT);
-    // turretClockwise.whenHeld(new ManualTurretTurn(0.3));
-
-    // final Button turretCounterclockwise = new JoystickButton(ps4_controller, Constants.OI.L2_BUTTON_PORT);
-    // turretCounterclockwise.whenHeld(new ManualTurretTurn(-0.3));
-
-    // final POVButton reverseIntake = new POVButton(ps4_controller, 270);
-    // reverseIntake.whenHeld(new RunIntakeAndSpaghetti(true));
-
+    final Button pjAiming = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    pjAiming.whenHeld(new AlignToTargetFeedForward());
 
   }
 

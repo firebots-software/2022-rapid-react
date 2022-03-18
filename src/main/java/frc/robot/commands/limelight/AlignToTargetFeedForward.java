@@ -31,8 +31,8 @@ public class AlignToTargetFeedForward extends CommandBase {
     pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD);
     pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);
 
-    feedforward = new SimpleMotorFeedforward(Constants.Limelight.FEED_FORWARD_KS, Constants.Limelight.FEED_FORWARD_KV,
-        Constants.Limelight.FEED_FORWARD_KA);
+    feedforward = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret,
+        Constants.Turret.kaTurret);
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -75,7 +75,8 @@ public class AlignToTargetFeedForward extends CommandBase {
   }
 
   public boolean isFinished() {
-    return pid.atSetpoint();
+    // return pid.atSetpoint();
+    return false;
   }
 
   // Returns true when the command should end.
