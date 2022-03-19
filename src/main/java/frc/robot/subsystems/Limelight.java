@@ -28,10 +28,9 @@ public class Limelight extends SubsystemBase {
 
   private NetworkTable table = instance.getTable("limelight");
   private double lastKnownTx = 0; 
-  private double[] lastTenTx = new double[numberOfAverages]; 
-  private double lastKnownTxValue; 
   private double[] lastTenTy = new double[numberOfAverages]; 
   private double lastKnownTyValue; 
+  private int secsWithoutSeeingTarget; 
   int counter = 0; 
 
   // Limelight tx value - x degree offset of target center from viewport center
@@ -56,6 +55,7 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
   private Limelight() {
       setLedStatus(false);
+      secsWithoutSeeingTarget = 0; 
   }
 
   /**
@@ -87,8 +87,6 @@ public class Limelight extends SubsystemBase {
     tv = table.getEntry("tv").getDouble(DEFAULT_VALUE_TV);
 
     if (tv == 1) {
-      lastTenTx[counter % numberOfAverages] = tx; 
-      lastKnownTxValue = tx; 
       lastTenTy[counter % numberOfAverages] = ty; 
       lastKnownTyValue = ty; 
       counter++; 
@@ -168,7 +166,7 @@ public class Limelight extends SubsystemBase {
   public double getAverageDistance() {
     double sum = 0; 
     for (int i = 0; i < lastTenTy.length; i++) {
-      sum += this.getDistanceToTarget(lastTenTx[i]); 
+      sum += this.getDistanceToTarget(lastTenTy[i]); 
     }
 
     return sum/lastTenTy.length; 
@@ -183,7 +181,7 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getLastKnownTx() {
-    return lastKnownTxValue; 
+    return lastKnownTx; 
   }
 
   public double getLastKnownTy() {
@@ -198,6 +196,9 @@ public class Limelight extends SubsystemBase {
     this.lastKnownTyValue = newLastKnownTy; 
   }
 
+  public double getTimeWithoutTarget() {
+    return secsWithoutSeeingTarget; 
+  }
 
 
   public boolean isAimed() {
@@ -210,5 +211,11 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() {
     this.refreshValues();
+    this.setLastKnownTx(tx);
+    if (this.tv == 0) {
+      secsWithoutSeeingTarget++; 
+    } else {
+      secsWithoutSeeingTarget = 0; 
+    }
   }
 }

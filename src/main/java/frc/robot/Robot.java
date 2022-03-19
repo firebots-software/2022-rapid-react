@@ -163,6 +163,7 @@ public class Robot extends TimedRobot {
   private void updateShuffleboard() {
     SmartDashboard.putNumber("tx", limelight.getTx());
     SmartDashboard.putNumber("ty", limelight.getTy());
+    SmartDashboard.putNumber("drivetrain angular velocity", drivetrain.getAngularVelocity()); 
 
     // // SmartDashboard.putNumber("name", subsystem.getNumberValue());
     // SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
@@ -175,7 +176,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("limelight distance", limelight.getDistanceToTarget());
     SmartDashboard.putNumber("limelight average distance", limelight.getAverageDistance()); 
 
-    // SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
+    SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
+    SmartDashboard.putNumber("turret degrees per second", turret.getDegreesPerSec()); 
+    SmartDashboard.putNumber("drivetrain degrees per second", drivetrain.getAngularVelocity()); 
 
     // SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
     // SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());

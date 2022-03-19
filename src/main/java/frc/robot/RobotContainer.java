@@ -29,6 +29,7 @@ import frc.robot.commands.climber.ManualClimb;
 import frc.robot.commands.intake.FlapIntake;
 import frc.robot.commands.intake.ToggleIntakePiston;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Turret;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -40,8 +41,10 @@ import frc.robot.subsystems.Drivetrain;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private Joystick ps4_controller;
+  private Joystick ps4_controller1;
+  private Joystick ps4_controller2; 
   private Drivetrain drivetrain = Drivetrain.getInstance();
+  private Turret turret = Turret.getInstance(); 
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
   /**
@@ -49,17 +52,24 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    this.ps4_controller = new Joystick(Constants.OI.PS4_CONTROLLER_PORT);
+    this.ps4_controller1 = new Joystick(Constants.OI.PS4_CONTROLLER_PORT_1);
+    this.ps4_controller2 = new Joystick(Constants.OI.PS4_CONTROLLER_PORT_2); 
+    
     Paths.generate();
     this.drivetrain = Drivetrain.getInstance();
+    this.turret = Turret.getInstance(); 
     configureButtonBindings();
 
     // Configure default commands
     // Set the default driv e command to split-stick arcade drive
     drivetrain.setDefaultCommand(
         new JoystickArcadeDrive(
-            () -> ps4_controller.getRawAxis(1),
-            () -> ps4_controller.getRawAxis(2)));
+            () -> ps4_controller1.getRawAxis(1),
+            () -> ps4_controller1.getRawAxis(2)));
+    
+    turret.setDefaultCommand(
+        new AlignToTargetFeedForward()
+    ); 
 
     autonChooser.setDefaultOption("limelightAim", new AlignToTargetFeedForward());
 
@@ -87,51 +97,52 @@ public class RobotContainer {
      * buttonName.whenPressed(new commandName());
      */
 
-    final Button flipOrientation = new JoystickButton(ps4_controller, Constants.OI.L3_BUTTON_PORT);
+    final Button flipOrientation = new JoystickButton(ps4_controller1, Constants.OI.L3_BUTTON_PORT);
     flipOrientation.whenPressed(new FlipOrientation());
 
-    final Button slowMode = new JoystickButton(ps4_controller, Constants.OI.L1_BUTTON_PORT);
+    final Button slowMode = new JoystickButton(ps4_controller1, Constants.OI.L1_BUTTON_PORT);
     slowMode.whenHeld(new ToggleSlowMode());
 
-    final Button loadBall = new JoystickButton(ps4_controller, Constants.OI.X_BUTTON_PORT); // TODO: change button
+    final Button loadBall = new JoystickButton(ps4_controller1, Constants.OI.X_BUTTON_PORT); // TODO: change button
                                                                                             // accordingly
     loadBall.whenHeld(new RunSpaghetAndRoll());
 
-    final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
+    final Button spinUpShooter = new JoystickButton(ps4_controller1, Constants.OI.CIRCLE_BUTTON_PORT);
     spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
-    final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
+    final Button limelightAim = new JoystickButton(ps4_controller1, Constants.OI.TRIANGLE_BUTTON_PORT);
     limelightAim.whenHeld(new LimelightAimPosControl());
 
-    final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
+    final Button toggleAdjustRPM = new JoystickButton(ps4_controller1, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
 
-    final Button toggleCamOrientation = new JoystickButton(ps4_controller, Constants.OI.PS_SHARE_BUTTON_PORT);
+    final Button toggleCamOrientation = new JoystickButton(ps4_controller1, Constants.OI.PS_SHARE_BUTTON_PORT);
     toggleCamOrientation.whenPressed(new ToggleCameraOrientation());
 
-    final Button toggleIntake = new JoystickButton(ps4_controller, Constants.OI.PS_BUTTON_PORT);
+    final Button toggleIntake = new JoystickButton(ps4_controller1, Constants.OI.PS_BUTTON_PORT);
     toggleIntake.whenPressed(new ToggleIntakePiston());
 
-    final Button runIntake = new JoystickButton(ps4_controller, Constants.OI.R1_BUTTON_PORT);
+    final Button runIntake = new JoystickButton(ps4_controller1, Constants.OI.R1_BUTTON_PORT);
     runIntake.whenHeld(new RunIntakeAndSpaghetti(false));
 
-    final Button stopEverything = new JoystickButton(ps4_controller, Constants.OI.BIG_BUTTON_PORT);
+    final Button stopEverything = new JoystickButton(ps4_controller1, Constants.OI.BIG_BUTTON_PORT);
     stopEverything.whenPressed(new StopEverything());
 
-    final POVButton upPov = new POVButton(ps4_controller, 0);
+    final POVButton upPov = new POVButton(ps4_controller1, 0);
     upPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedUp));
 
-    final POVButton downPov = new POVButton(ps4_controller, 180);
+    final POVButton downPov = new POVButton(ps4_controller1, 180);
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
-    double manualTurretSpeed = 0.3;
-    final POVButton leftPov = new POVButton(ps4_controller, 270);
+    // only if using second controller
+    double manualTurretSpeed = 0.5;
+    final POVButton leftPov = new POVButton(ps4_controller2, 270);
     leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
 
-    final POVButton rightPov = new POVButton(ps4_controller, 90);
+    final POVButton rightPov = new POVButton(ps4_controller2, 90);
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
-    final Button pjAiming = new JoystickButton(ps4_controller, Constants.OI.SQUARE_BUTTON_PORT);
+    final Button pjAiming = new JoystickButton(ps4_controller1, Constants.OI.SQUARE_BUTTON_PORT);
     pjAiming.whenHeld(new AlignToTargetFeedForward());
 
   }

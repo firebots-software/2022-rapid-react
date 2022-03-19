@@ -22,7 +22,8 @@ public final class Constants {
     public static final double TICKS_PER_METER = 3064; // 26199.13932126; // * (1.339280 / 2.13);
     public static final double TICKS_PER_INCH = (TICKS_PER_METER / 100.0) * 2.54;//76.1120944;
     public static class OI {
-        public static final int PS4_CONTROLLER_PORT = 3;
+        public static final int PS4_CONTROLLER_PORT_1 = 3;
+        public static final int PS4_CONTROLLER_PORT_2 = 3; // change
 
         // Buttons on PS4 Controller
         public static final int SQUARE_BUTTON_PORT = 1;
@@ -105,9 +106,9 @@ public final class Constants {
     }
 
     public static final class Limelight {
-        public static final double alignP = 0.1; 
+        public static final double alignP = 0.04; 
         public static final double alignI = 0.0; 
-        public static final double alignD = 0.0071; 
+        public static final double alignD = 0.0; 
 
         public final static double turnToleranceDeg = 5;
         public static final double turnRateToleranceDegPerS = 45; // TODO: understand why this is 45 (might be wrong)
@@ -118,7 +119,8 @@ public final class Constants {
         public static final double FEED_FORWARD_KV = 0;
         public static final double FEED_FORWARD_KA = 0;
 
-        public static final double LIMELIGHT_DEFAULT_VALUE = 150.935; 
+        public static final double LIMELIGHT_DEFAULT_VALUE = 150.935;
+        public static final double timeWithoutTarget = 5; // change
         // public static final double turretSpeedConstant = 0.1; 
         public static double maxAngle = 90;
 

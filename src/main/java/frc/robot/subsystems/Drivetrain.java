@@ -138,7 +138,7 @@ public class Drivetrain extends SubsystemBase {
 
       } else {
         frontBackSpeed *= DEFAULT_DRIVE_CONSTANT;
-        rotation *= DEFAULT_DRIVE_CONSTANT * 0.7;
+        rotation *= DEFAULT_DRIVE_CONSTANT * 0.8;
       }
 
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
@@ -452,7 +452,6 @@ public class Drivetrain extends SubsystemBase {
     double[] xyz_dps = new double[3]; 
     pigeon.getRawGyro(xyz_dps); 
     double angularVelDegPerSec = xyz_dps[0]; 
-    double angularVelRadPerSec = angularVelDegPerSec * Math.PI * 2 / 360; 
-    return angularVelRadPerSec; 
+    return angularVelDegPerSec; 
   }
 }

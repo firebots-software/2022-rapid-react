@@ -213,7 +213,7 @@ public class Shooter extends SubsystemBase {
 
   public double getBottomTargetRPM() {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM;
-    return getRPMForDistanceInches(limelight.getDistanceToTarget());
+    return getRPMForDistanceInches(limelight.getAverageDistance());
   }
 
   public double getBottomTargetRPM(double distance) {
