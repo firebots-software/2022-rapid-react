@@ -211,7 +211,10 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() {
     this.refreshValues();
-    this.setLastKnownTx(tx);
+    if (tx != 0) {
+      this.setLastKnownTx(tx);
+    } 
+
     if (this.tv == 0) {
       secsWithoutSeeingTarget++; 
     } else {

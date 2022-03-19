@@ -42,6 +42,7 @@ public class AlignToTargetFeedForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
     // System.out.println("starting command");
     limelight.setLedStatus(true);
     limelight.refreshValues();
@@ -52,41 +53,51 @@ public class AlignToTargetFeedForward extends CommandBase {
   // Counter refreshes every 200 ms
   @Override
   public void execute() {
-    // if (!limelight.getTv() && drivetrain.getAngularVelocity() > Constants.Drivetrain.velocityThreshold && Math.abs(turret.getDegreesPerSec()) < Constants.Turret.turningVelThreshold) {
-    //   if (turret.getEncoderValDegrees() <= -80) {
-    //     turret.setMotorSpeed(0.3);
-    //   } else if (turret.getEncoderValDegrees() >= 80) {
-    //     turret.setMotorSpeed(-0.3);
-    //   }
+
+    // if (!limelight.getTv() && drivetrain.getAngularVelocity() >
+    // Constants.Drivetrain.velocityThreshold && Math.abs(turret.getDegreesPerSec())
+    // < Constants.Turret.turningVelThreshold) {
+    // if (turret.getEncoderValDegrees() <= -80) {
+    // turret.setMotorSpeed(0.3);
+    // } else if (turret.getEncoderValDegrees() >= 80) {
+    // turret.setMotorSpeed(-0.3);
+    // }
     // }
 
-    pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
+    if (!limelight.getTv()) {
+      if (limelight.getLastKnownTx() > 0) {
+        turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
+      } else if (limelight.getLastKnownTx() < 0) {
+        turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+      }
+    } else {
 
-    double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() - limelight.getTx())
-        / (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance to meters
-    double angularVel = -drivetrain.getAngularVelocity();
-    double pidOutput = pid.calculate(turret.getEncoderValDegrees());
-    if (pid.atSetpoint()) {
-      pidOutput = 0;
-    }
+      pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
 
-    double feedForwardCalculationOnlyAngular = feedforward.calculate(angularVel);
-    double feedForwardCalculationBoth = feedforward.calculate(angularVel + tangentialVel);
-    SmartDashboard.putNumber("turret pid output", pidOutput); 
-    SmartDashboard.putNumber("turret feedforward output", feedForwardCalculationOnlyAngular);
+      // double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() - limelight.getTx())
+      //     / (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance to meters
+      double angularVel = -drivetrain.getAngularVelocity();
+      double pidOutput = pid.calculate(turret.getEncoderValDegrees());
+      if (pid.atSetpoint()) {
+        pidOutput = 0;
+      }
 
-    // if (limelight.getTv()) {
-    //   turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12.0);
-    // } else {
-    //   turret.setMotorSpeed(pidOutput);
-    // }
-    // turret.setMotorSpeed(feedForwardCalculationOnlyAngular/12);
+      double feedForwardCalculationOnlyAngular = feedforward.calculate(angularVel);
+      // double feedForwardCalculationBoth = feedforward.calculate(angularVel + tangentialVel);
+      SmartDashboard.putNumber("turret pid output", pidOutput);
+      SmartDashboard.putNumber("turret feedforward output", feedForwardCalculationOnlyAngular);
 
-    turret.setMotorSpeed(pidOutput);
-    // turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12.0);
+      // if (limelight.getTv()) {
+      // turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12.0);
+      // } else {
+      // turret.setMotorSpeed(pidOutput);
+      // }
+      // turret.setMotorSpeed(feedForwardCalculationOnlyAngular/12);
 
-    if (pid.atSetpoint()) {
-      System.out.println("pid done");
+      turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular/12 * Constants.Turret.feedForwardConstant);
+      if (pid.atSetpoint()) {
+        System.out.println("pid done");
+      }
     }
   }
 

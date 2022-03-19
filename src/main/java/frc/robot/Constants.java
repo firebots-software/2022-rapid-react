@@ -173,6 +173,7 @@ public final class Constants {
         public static final double kaTurret = 0.00096306;
         public static final double constantTurretTurnSpeed = 0.5;
         public static final double turningVelThreshold = 0.5; // tune this value
+        public static final double feedForwardConstant = 0.7;
    }
     
     public static class Ramsete {

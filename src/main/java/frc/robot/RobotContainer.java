@@ -66,6 +66,10 @@ public class RobotContainer {
         new JoystickArcadeDrive(
             () -> ps4_controller1.getRawAxis(1),
             () -> ps4_controller1.getRawAxis(2)));
+
+    turret.setDefaultCommand(
+      new AlignToTargetFeedForward()
+    );
     
     // turret.setDefaultCommand(
     //     new AlignToTargetFeedForward()
@@ -143,9 +147,6 @@ public class RobotContainer {
 
     final Button zeroTurret = new JoystickButton(ps4_controller1, Constants.OI.SQUARE_BUTTON_PORT);
     zeroTurret.whenHeld(new ZeroTurret());
-
-    final Button feedforwardAngular = new JoystickButton(ps4_controller1, Constants.OI.L2_BUTTON_PORT);
-    feedforwardAngular.whenHeld(new AlignToTargetFeedForward());
 
   }
 
