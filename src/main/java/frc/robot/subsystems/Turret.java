@@ -78,6 +78,14 @@ public class Turret extends SubsystemBase {
   }
 
   public void setTurretPosition(double degrees) {
+    if (getEncoderValDegrees() + degrees > maxRange) { // right soft stop -- only go up to maxrange
+      degrees = maxRange - getEncoderValDegrees();
+    } 
+
+    if (getEncoderValDegrees() + degrees < minRange) { // left soft stop
+      degrees = minRange - getEncoderValDegrees();
+    }
+
     motor.set(
       ControlMode.Position,
       degrees * Constants.Turret.encoderTicksPerDegree,
