@@ -52,31 +52,41 @@ public class AlignToTargetFeedForward extends CommandBase {
   // Counter refreshes every 200 ms
   @Override
   public void execute() {
-    pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
-    System.out.println("Doing command");
-    if (!limelight.getTv()) {
-      if (limelight.getLastKnownTx() > 0) {
-        turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-      } else {
-        turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-      }
-    } else {
-      // SmartDashboard.setDefaultNumber("ATT: Output Ticks", getOutputTicks());
-      double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() - limelight.getTx()) / (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance to meters
-      double angularVel = -drivetrain.getAngularVelocity();
-      double pidOutput = pid.calculate(turret.getEncoderValDegrees());
-      if (pid.atSetpoint()) {
-        pidOutput = 0; 
-      }
-      double feedForwardCalculationOnlyAngular = feedforward.calculate(angularVel); 
-      double feedForwardCalculationBoth = feedforward.calculate(angularVel + tangentialVel); 
-      SmartDashboard.putNumber("turret pid output", pidOutput);
-      SmartDashboard.putNumber("turret feedforward output", feedForwardCalculationOnlyAngular); 
-      turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular/12.0);
+    // if (!limelight.getTv() && drivetrain.getAngularVelocity() > Constants.Drivetrain.velocityThreshold && Math.abs(turret.getDegreesPerSec()) < Constants.Turret.turningVelThreshold) {
+    //   if (turret.getEncoderValDegrees() <= -80) {
+    //     turret.setMotorSpeed(0.3);
+    //   } else if (turret.getEncoderValDegrees() >= 80) {
+    //     turret.setMotorSpeed(-0.3);
+    //   }
+    // }
 
-      if (pid.atSetpoint()) {
-        System.out.println("pid done");
-      }
+    pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
+
+    double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() - limelight.getTx())
+        / (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance to meters
+    double angularVel = -drivetrain.getAngularVelocity();
+    double pidOutput = pid.calculate(turret.getEncoderValDegrees());
+    if (pid.atSetpoint()) {
+      pidOutput = 0;
+    }
+
+    double feedForwardCalculationOnlyAngular = feedforward.calculate(angularVel);
+    double feedForwardCalculationBoth = feedforward.calculate(angularVel + tangentialVel);
+    SmartDashboard.putNumber("turret pid output", pidOutput); 
+    SmartDashboard.putNumber("turret feedforward output", feedForwardCalculationOnlyAngular);
+
+    // if (limelight.getTv()) {
+    //   turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12.0);
+    // } else {
+    //   turret.setMotorSpeed(pidOutput);
+    // }
+    // turret.setMotorSpeed(feedForwardCalculationOnlyAngular/12);
+
+    turret.setMotorSpeed(pidOutput);
+    // turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12.0);
+
+    if (pid.atSetpoint()) {
+      System.out.println("pid done");
     }
   }
 

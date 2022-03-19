@@ -78,6 +78,7 @@ public final class Constants {
         public static final double ksVolts = 1.5451;
         public static final double kvVoltSecondsPerMeter = 3.3875;
         public static final double kaVoltSecondsSquaredPerMeter = 1.2148;
+		public static final double velocityThreshold = 90; // tune this value
 
         public static DifferentialDriveVoltageConstraint autoVoltageConstraint =
                 new DifferentialDriveVoltageConstraint(
@@ -170,8 +171,9 @@ public final class Constants {
         public static final double ksTurret = 0.55865;
         public static final double kvTurret = 0.041588;
         public static final double kaTurret = 0.00096306;
-        public static final double constantTurretTurnSpeed = 0.5; 
-    }
+        public static final double constantTurretTurnSpeed = 0.5;
+        public static final double turningVelThreshold = 0.5; // tune this value
+   }
     
     public static class Ramsete {
         public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Drivetrain.ksVolts,

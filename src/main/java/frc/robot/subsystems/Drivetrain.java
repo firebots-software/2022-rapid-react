@@ -33,7 +33,7 @@ public class Drivetrain extends SubsystemBase {
   private final double DEFAULT_DRIVE_CONSTANT = 1;
   private final double RAMPING_CONSTANT = 1;
   private boolean usingFrontCam = true;
-  private double lastAlignedGyro; 
+  private double lastAlignedGyro;
 
   /*
    * MOTION PROFILING
@@ -49,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
 
   // fields
   private final WPI_TalonFX leftFollower, leftFrontMaster, rightRearMaster, rightFollower;
-  private static Pigeon2 pigeon; 
+  private static Pigeon2 pigeon;
 
   private final DifferentialDrive robotDrive;
   private boolean isSlowMode;
@@ -102,7 +102,7 @@ public class Drivetrain extends SubsystemBase {
     this.orientation = driveOrientation.BACK; // default value
     this.isSlowMode = false; // default value
 
-    lastAlignedGyro = 0; 
+    lastAlignedGyro = 0;
   }
 
   /**
@@ -122,6 +122,10 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
     odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderCountMeters(),
         getRightEncoderCountMeters());
+      
+    SmartDashboard.putNumber("x axis rotation", getGyroArray()[0]);
+    SmartDashboard.putNumber("y axis rotation", getGyroArray()[1]);
+    SmartDashboard.putNumber("z axis rotation", getGyroArray()[2]);
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
@@ -138,7 +142,7 @@ public class Drivetrain extends SubsystemBase {
 
       } else {
         frontBackSpeed *= DEFAULT_DRIVE_CONSTANT;
-        rotation *= DEFAULT_DRIVE_CONSTANT * 0.8;
+        rotation *= DEFAULT_DRIVE_CONSTANT * 0.6;
       }
 
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
@@ -439,19 +443,25 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setLastAlignedGyro(double newLastAlignedGyro) {
-    lastAlignedGyro = newLastAlignedGyro; 
+    lastAlignedGyro = newLastAlignedGyro;
   }
 
   public double getCurrentSpeed() {
-    double averageSpeedRPM = ((rightRearMaster.getSelectedSensorVelocity() + rightFollower.getSelectedSensorVelocity() + leftFrontMaster.getSelectedSensorVelocity() + leftFollower.getSelectedSensorVelocity()) / 4) * (600 / Constants.Drivetrain.drivetrainTicksPerRev); 
-    double velocityMetersPerSec = (averageSpeedRPM * Math.PI * 2 * Constants.Drivetrain.drivetrainWheelRadiusMeters) / 60; 
-    return velocityMetersPerSec; 
+    double averageSpeedRPM = ((rightRearMaster.getSelectedSensorVelocity() + rightFollower.getSelectedSensorVelocity()
+        + leftFrontMaster.getSelectedSensorVelocity() + leftFollower.getSelectedSensorVelocity()) / 4)
+        * (600 / Constants.Drivetrain.drivetrainTicksPerRev);
+    double velocityMetersPerSec = (averageSpeedRPM * Math.PI * 2 * Constants.Drivetrain.drivetrainWheelRadiusMeters)
+        / 60;
+    return velocityMetersPerSec;
   }
 
   public double getAngularVelocity() {
-    double[] xyz_dps = new double[3]; 
+    return -getGyroArray()[2];
+  }
+
+  public double[] getGyroArray() {
+    double[] xyz_dps = new double[3];
     pigeon.getRawGyro(xyz_dps); 
-    double angularVelDegPerSec = xyz_dps[0]; 
-    return angularVelDegPerSec; 
+    return xyz_dps;
   }
 }

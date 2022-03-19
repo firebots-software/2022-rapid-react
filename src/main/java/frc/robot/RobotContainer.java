@@ -67,9 +67,9 @@ public class RobotContainer {
             () -> ps4_controller1.getRawAxis(1),
             () -> ps4_controller1.getRawAxis(2)));
     
-    turret.setDefaultCommand(
-        new AlignToTargetFeedForward()
-    ); 
+    // turret.setDefaultCommand(
+    //     new AlignToTargetFeedForward()
+    // ); 
 
     autonChooser.setDefaultOption("limelightAim", new AlignToTargetFeedForward());
 
@@ -97,14 +97,13 @@ public class RobotContainer {
      * buttonName.whenPressed(new commandName());
      */
 
-    final Button flipOrientation = new JoystickButton(ps4_controller1, Constants.OI.L3_BUTTON_PORT);
-    flipOrientation.whenPressed(new FlipOrientation());
+    // final Button flipOrientation = new JoystickButton(ps4_controller1, Constants.OI.L3_BUTTON_PORT);
+    // flipOrientation.whenPressed(new FlipOrientation());
 
     final Button slowMode = new JoystickButton(ps4_controller1, Constants.OI.L1_BUTTON_PORT);
     slowMode.whenHeld(new ToggleSlowMode());
 
-    final Button loadBall = new JoystickButton(ps4_controller1, Constants.OI.X_BUTTON_PORT); // TODO: change button
-                                                                                            // accordingly
+    final Button loadBall = new JoystickButton(ps4_controller1, Constants.OI.X_BUTTON_PORT); // TODO: change button accordingly
     loadBall.whenHeld(new RunSpaghetAndRoll());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller1, Constants.OI.CIRCLE_BUTTON_PORT);
@@ -142,8 +141,11 @@ public class RobotContainer {
     final POVButton rightPov = new POVButton(ps4_controller2, 90);
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
-    final Button pjAiming = new JoystickButton(ps4_controller1, Constants.OI.SQUARE_BUTTON_PORT);
-    pjAiming.whenHeld(new AlignToTargetFeedForward());
+    final Button zeroTurret = new JoystickButton(ps4_controller1, Constants.OI.SQUARE_BUTTON_PORT);
+    zeroTurret.whenHeld(new ZeroTurret());
+
+    final Button feedforwardAngular = new JoystickButton(ps4_controller1, Constants.OI.L2_BUTTON_PORT);
+    feedforwardAngular.whenHeld(new AlignToTargetFeedForward());
 
   }
 

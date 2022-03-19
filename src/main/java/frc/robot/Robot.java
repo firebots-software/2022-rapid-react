@@ -179,6 +179,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("turret encoder degrees", turret.getEncoderValDegrees());
     SmartDashboard.putNumber("turret degrees per second", turret.getDegreesPerSec()); 
     SmartDashboard.putNumber("drivetrain degrees per second", drivetrain.getAngularVelocity()); 
+    SmartDashboard.putNumber("real drivetrain deg per sec?", drivetrain.getGyroArray()[2]); 
 
     // SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
     // SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());

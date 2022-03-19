@@ -23,8 +23,8 @@ public class Turret extends SubsystemBase {
 
     private static Turret instance;
     private final double RAMPING_CONSTANT = 0.25;
-    private final double maxRange = 90; 
-    private final double minRange = -90;
+    private final double maxRange = 80; 
+    private final double minRange = -80;
     private SimpleMotorFeedforward turretFF;
 
   /** Creates a new Turret. */
@@ -54,6 +54,15 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     if (isHallEffectEnabled()) zeroEncoder();
+
+    if (getEncoderValDegrees() >= maxRange && motor.getMotorOutputPercent() > 0) {
+      stopMotor();
+    } 
+
+    if (getEncoderValDegrees() >= minRange && motor.getMotorOutputPercent() < 0) {
+      stopMotor();
+    }
+
   }
 
   public void setMotorSpeed(double speed) {
@@ -61,7 +70,7 @@ public class Turret extends SubsystemBase {
       speed = 0; // left hardstop
     } else if (this.getEncoderValDegrees() >= maxRange && speed > 0) {
       speed = 0; // right hardstop
-    }
+    }   
     
     motor.set(ControlMode.PercentOutput, speed);
     
