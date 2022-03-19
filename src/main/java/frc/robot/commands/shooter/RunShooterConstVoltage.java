@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class RunConstSpeed extends CommandBase {
+public class RunShooterConstVoltage extends CommandBase {
   private Shooter shooter;
   private double speed;
   
   /** Creates a new RunConstSpeed. */
-  public RunConstSpeed(double speed) {
+  public RunShooterConstVoltage(double speed) {
     this.speed = SmartDashboard.getNumber("shooter speed", 0.0);
     this.shooter = Shooter.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.

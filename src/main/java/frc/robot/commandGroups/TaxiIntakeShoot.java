@@ -9,7 +9,6 @@ import frc.robot.commands.auton.DriveForTime;
 import frc.robot.commands.auton.TurnForAngle;
 import frc.robot.commands.intake.StartIntakeNoStop;
 import frc.robot.commands.intake.StopIntake;
-import frc.robot.commands.shooter.TurnTurretToAngle;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -23,7 +22,6 @@ public class TaxiIntakeShoot extends SequentialCommandGroup {
                 new DriveForTime(-0.5, 1),
                 new StopIntake(),
                 new TurnForAngle(180),
-                new AimAndShoot(),
-                new TurnTurretToAngle(-45));
+                new AimAndShoot());
   }
 }

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auton.DriveForTime;
 import frc.robot.commands.auton.TurnForAngle;
 import frc.robot.commands.auton.TurnForTime;
-import frc.robot.commands.shooter.TurnTurretToAngle;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

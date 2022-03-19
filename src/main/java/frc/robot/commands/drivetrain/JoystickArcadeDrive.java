@@ -7,13 +7,13 @@ import frc.robot.subsystems.Drivetrain;
 import java.util.Set;
 import java.util.function.DoubleSupplier;
 
-public class JoystickDrive implements Command {
+public class JoystickArcadeDrive implements Command {
     private final Drivetrain drivetrain;
     private final DoubleSupplier frontBackSpeed;
     private final DoubleSupplier rotationSpeed;
 
 
-    public JoystickDrive(DoubleSupplier frontBackSpeed, DoubleSupplier rotationSpeed) {
+    public JoystickArcadeDrive(DoubleSupplier frontBackSpeed, DoubleSupplier rotationSpeed) {
         this.drivetrain = Drivetrain.getInstance();
         this.frontBackSpeed = frontBackSpeed;
         this.rotationSpeed = rotationSpeed;

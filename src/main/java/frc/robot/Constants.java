@@ -135,7 +135,7 @@ public final class Constants {
 
         public static final double DEFAULT_SHOOTER_SPEED = 0.5;
 
-        public static final double FIXED_RPM = 4000;
+        public static final double FIXED_RPM = 2000;
         public static final double MAX_RPM = 4500;
 
         public static final double MAX_VOLTAGE = 12.0;

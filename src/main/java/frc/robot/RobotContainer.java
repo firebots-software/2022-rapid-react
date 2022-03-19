@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commandGroups.AimAndShoot2Balls;
-import frc.robot.commandGroups.AimAndShootV2;
+import frc.robot.commandGroups.AimAndShoot;
 import frc.robot.commandGroups.DummyAutonAndShoot;
 import frc.robot.commandGroups.RunIntakeAndSpaghetti;
 import frc.robot.commandGroups.RunSpaghetAndRoll;
@@ -57,7 +57,7 @@ public class RobotContainer {
     // Configure default commands
     // Set the default driv e command to split-stick arcade drive
     drivetrain.setDefaultCommand(
-        new JoystickDrive(
+        new JoystickArcadeDrive(
             () -> ps4_controller.getRawAxis(1),
             () -> ps4_controller.getRawAxis(2)));
 
@@ -98,10 +98,10 @@ public class RobotContainer {
     loadBall.whenHeld(new RunSpaghetAndRoll());
 
     final Button spinUpShooter = new JoystickButton(ps4_controller, Constants.OI.CIRCLE_BUTTON_PORT);
-    spinUpShooter.toggleWhenPressed(new FlywheelFalconFF());
+    spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
     final Button limelightAim = new JoystickButton(ps4_controller, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenHeld(new AlignToTargetPosControl());
+    limelightAim.whenHeld(new LimelightAimPosControl());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());

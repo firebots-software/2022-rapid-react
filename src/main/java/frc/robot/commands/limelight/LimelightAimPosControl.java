@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
-public class AlignToTargetPosControl extends CommandBase {
+public class LimelightAimPosControl extends CommandBase {
   private Limelight limelight;
   private Turret turret;
   private double feedbackDelayCounter;
@@ -18,7 +18,7 @@ public class AlignToTargetPosControl extends CommandBase {
 
 
   /** Creates a new AlignToTargetPosControl. */
-  public AlignToTargetPosControl() {
+  public LimelightAimPosControl() {
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
 

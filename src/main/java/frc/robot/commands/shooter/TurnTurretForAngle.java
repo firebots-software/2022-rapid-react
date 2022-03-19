@@ -4,55 +4,52 @@
 
 package frc.robot.commands.shooter;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Turret;
 
-// manual alignment of robot with hub 
 public class TurnTurretForAngle extends CommandBase {
   private Turret turret;
-  protected double targetAngle;
-  protected PIDController pid;
-
-  // pid constants 
-  private double kP = 0.5;
-  private double kI = 0;
-  private double kD = 0;
+  private SimpleMotorFeedforward feedforward; 
+  private double degreesToTurn, initialDegrees;
+  private final double THRESHOLD = 0.25;
   
-  public TurnTurretForAngle(double targetAngle) {
+  /** Creates a new TurretPositionControl. */
+  public TurnTurretForAngle(double degrees) {
     turret = Turret.getInstance();
-    this.targetAngle = targetAngle;
-
-    this.pid = new PIDController(kP, kI, kD);
-    pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees, Constants.Turret.pidVelToleranceDegPerSecond);
+    this.degreesToTurn = degrees;
+    feedforward = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret, Constants.Turret.kaTurret); 
+    addRequirements(turret);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    targetAngle += turret.getEncoderValDegrees();
-    pid.setSetpoint(targetAngle);
-
+    this.initialDegrees = turret.getEncoderValDegrees();
+    turret.setTurretPosition(degreesToTurn);
+    // System.out.println("starting position control");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pidOutput = pid.calculate(turret.getEncoderValDegrees());
-    turret.setMotorSpeed(pidOutput);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // System.out.println("ending position control");
     turret.stopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return pid.atSetpoint();
+    // return Math.abs(turret.getMotionMagicPosition()) > Math.abs(degreesToTurn / 6.0);
+    return Math.abs(turret.getEncoderValDegrees() - initialDegrees) > Math.abs(degreesToTurn);
+
+    // return Math.abs(turret.getEncoderValDegrees() - targetDegrees) < THRESHOLD;
   }
 }

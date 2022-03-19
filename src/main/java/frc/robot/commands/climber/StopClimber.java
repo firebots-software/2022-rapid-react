@@ -20,7 +20,7 @@ public class StopClimber extends CommandBase {
   @Override
   public void initialize() {
     climber.stopClimber();
-    System.out.println("stopping climber");
+    // System.out.println("stopping climber");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

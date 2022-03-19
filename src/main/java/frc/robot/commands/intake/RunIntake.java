@@ -2,39 +2,44 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.shooter;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 
-public class StartRoller extends CommandBase {
-
-  private final Shooter shooter;
+public class RunIntake extends CommandBase {
+  private Intake intake;
+  private double speed;
   
-  /** Creates a new LoadBall. */
-  public StartRoller() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.shooter = Shooter.getInstance();
-    
+  /** Creates a new RunIntakeMotor. */
+  public RunIntake(double speed) {
+    this.intake = Intake.getInstance();
+    this.speed = speed;
+  }
+
+  public RunIntake() {
+    this.intake = Intake.getInstance();
+    this.speed = Constants.Intake.INTAKE_SPEED_FORWARDS;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    intake.extendIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setRollerMotorSpeed(Constants.Shooter.maxRollerSpeed); //set to 0.5 for now 
-
+    intake.runRollerMotor(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopRollerMotor(); // check if we want to keep it running or not
+    intake.stopMotors();
+    intake.retractIntake();
   }
 
   // Returns true when the command should end.

@@ -19,7 +19,7 @@ public class StopShooter extends CommandBase {
   public void initialize() {
     shooter.stopBothMotors();
     shooter.stopRollerMotor();
-    System.out.println("stopping shooter");
+    // System.out.println("stopping shooter");
   }
 
   @Override

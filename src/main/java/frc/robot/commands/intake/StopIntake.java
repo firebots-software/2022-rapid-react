@@ -20,7 +20,7 @@ public class StopIntake extends CommandBase {
   public void initialize() {
     intake.stopMotors();
     intake.retractIntake();
-    System.out.println("stopping intake");
+    // System.out.println("stopping intake");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

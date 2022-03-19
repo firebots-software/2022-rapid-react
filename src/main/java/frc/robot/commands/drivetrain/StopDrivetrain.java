@@ -21,7 +21,7 @@ public class StopDrivetrain extends CommandBase {
   @Override
   public void initialize() {
     drivetrain.stop();
-    System.out.println("stopping drivetrain");
+    // System.out.println("stopping drivetrain");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

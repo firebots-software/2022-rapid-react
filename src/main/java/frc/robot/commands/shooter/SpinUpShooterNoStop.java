@@ -4,27 +4,25 @@
 
 package frc.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SpinUpShooterNoStop extends SpinUpShooter {
-
-  /** Creates a new SpinUpShooter. */
-  public  SpinUpShooterNoStop() {
-    super();  
+  /** Creates a new FlywheelFalconFFNoStop. */
+  public SpinUpShooterNoStop() {
+    super();
   }
 
   @Override
   public boolean isFinished() {
-    boolean done = pidTop.atSetpoint() & pidBottom.atSetpoint();
-    if (done) {
-      timer.stop();
-    }
-    // SmartDashboard.putBoolean("SHOOTER AT RPM", done);
-    return false; // RETURN FALSE -- KEEP THE WHEELS SPINNING ONCE THEY'RE UP TO SPEED
+    return shooter.atTargetRPM();
   }
-  
+
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      // override original, don't stop motors
+    System.out.println("spin up shooter done");
+    // don't stop the motor
   }
+
+ 
 }

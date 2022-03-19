@@ -7,7 +7,7 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.intake.RunSpaghettiWheels;
-import frc.robot.commands.shooter.StartRoller;
+import frc.robot.commands.shooter.RunRoller;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
@@ -25,7 +25,7 @@ public class RunSpaghetAndRoll extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new StartRoller(), new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
+      new RunRoller(), new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
   }
 
 

@@ -6,7 +6,7 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.intake.RunIntakeMotor;
+import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.intake.RunSpaghettiWheels;
 
 public class RunIntakeAndSpaghetti extends ParallelCommandGroup {
@@ -14,10 +14,10 @@ public class RunIntakeAndSpaghetti extends ParallelCommandGroup {
 
   public RunIntakeAndSpaghetti(boolean reversed) {
     if (!reversed) {
-    addCommands(new RunIntakeMotor(Constants.Intake.INTAKE_SPEED_FORWARDS),
+    addCommands(new RunIntake(Constants.Intake.INTAKE_SPEED_FORWARDS),
                 new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
     } else {
-    addCommands(new RunIntakeMotor(-Constants.Intake.INTAKE_SPEED_FORWARDS),
+    addCommands(new RunIntake(-Constants.Intake.INTAKE_SPEED_FORWARDS),
                 new RunSpaghettiWheels(-Constants.Intake.SPAGHETTI_SPEED));
     }
   }

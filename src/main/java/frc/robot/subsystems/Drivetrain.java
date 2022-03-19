@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.drivetrain.CurvatureDrive;
-import frc.robot.commands.drivetrain.JoystickDrive;
+import frc.robot.commands.drivetrain.JoystickArcadeDrive;
 
 public class Drivetrain extends SubsystemBase {
   // constants
@@ -394,7 +394,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void toggleDefaultCommand(Joystick ps4) {
     if (curvatureDriveOn) {
-      this.setDefaultCommand(new JoystickDrive(
+      this.setDefaultCommand(new JoystickArcadeDrive(
           () -> ps4.getRawAxis(1),
           () -> ps4.getRawAxis(2)));
 
