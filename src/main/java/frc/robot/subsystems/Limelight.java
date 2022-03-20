@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.Drivetrain;
 
 public class Limelight extends SubsystemBase {
 
@@ -18,6 +19,7 @@ public class Limelight extends SubsystemBase {
    * when your program starts
    */
   private NetworkTableInstance instance = NetworkTableInstance.getDefault();
+  private Drivetrain drivetrain; 
 
   /*
    * Get the table within that instance that contains the data. There can
@@ -32,6 +34,7 @@ public class Limelight extends SubsystemBase {
   private double lastKnownTyValue; 
   private int secsWithoutSeeingTarget; 
   int counter = 0; 
+  private double lastSeenHeading; 
 
   // Limelight tx value - x degree offset of target center from viewport center
   private double tx;
@@ -55,7 +58,9 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
   private Limelight() {
       setLedStatus(false);
-      secsWithoutSeeingTarget = 0; 
+      secsWithoutSeeingTarget = 0;
+      lastSeenHeading = 0;  
+      drivetrain = Drivetrain.getInstance(); 
   }
 
   /**
@@ -213,6 +218,7 @@ public class Limelight extends SubsystemBase {
     this.refreshValues();
     if (tx != 0) {
       this.setLastKnownTx(tx);
+      lastSeenHeading = drivetrain.getHeading(); 
     } 
 
     if (this.tv == 0) {
@@ -220,5 +226,10 @@ public class Limelight extends SubsystemBase {
     } else {
       secsWithoutSeeingTarget = 0; 
     }
+
   }
+
+public double getLastSeenHeading() {
+    return lastSeenHeading;
+}
 }

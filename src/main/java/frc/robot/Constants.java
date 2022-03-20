@@ -122,7 +122,8 @@ public final class Constants {
 
         public static final double LIMELIGHT_DEFAULT_VALUE = 150.935;
         public static final double timeWithoutTarget = 5; // change
-        // public static final double turretSpeedConstant = 0.1; 
+        public static final double turningThreshold = 100; 
+        // \public static final double turretSpeedConstant = 0.1; 
         public static double maxAngle = 90;
 
         public static double maxDistance = 121;

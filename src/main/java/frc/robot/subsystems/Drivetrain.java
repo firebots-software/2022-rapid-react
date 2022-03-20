@@ -301,7 +301,7 @@ public class Drivetrain extends SubsystemBase {
 
   public double getHeading() {
     if (pigeon != null) {
-      return pigeon.getYaw(); // todo: why gyro angle = -heading?
+      return -pigeon.getYaw(); // todo: why gyro angle = -heading?
     } else {
       return 0;
     }
