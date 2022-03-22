@@ -6,8 +6,6 @@ package frc.robot.commands.limelight;
 
 import java.util.Set;
 
-import javax.sound.sampled.SourceDataLine;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,7 +51,8 @@ public class AlignToTargetFeedForward extends CommandBase {
   // Counter refreshes every 200 ms
   @Override
   public void execute() {
-    if (!limelight.getTv() && Math.abs(drivetrain.getAngularVelocity()) > Constants.Drivetrain.velocityThreshold && Math.abs(turret.getDegreesPerSec()) < Constants.Turret.turningVelThreshold) {
+
+    if (!limelight.getTv() && Math.abs(drivetrain.getAngularVelocity()) > Constants.Drivetrain.velocityThreshold) {
       if ((Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading()) > Constants.Limelight.turningThreshold)) {
         if (drivetrain.getHeading() - limelight.getLastSeenHeading() > 0) {
           turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
@@ -63,6 +62,16 @@ public class AlignToTargetFeedForward extends CommandBase {
       }
     }
 
+    if (!limelight.getTv()) {
+      if (Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees()) > 120 && 
+          Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees()) < 180) {
+        if (limelight.getLastKnownTx() > 0) {
+          turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+        } else if (limelight.getLastKnownTx() < 0) {
+          turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
+        }
+      }
+    }
 
     if (!limelight.getTv()) {
       if (limelight.getLastKnownTx() > 0) {

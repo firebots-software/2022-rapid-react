@@ -213,6 +213,10 @@ public class Limelight extends SubsystemBase {
     return false;
   }
 
+  public double getLastSeenHeading() {
+    return lastSeenHeading;
+  }
+
   @Override
   public void periodic() {
     this.refreshValues();
@@ -228,8 +232,4 @@ public class Limelight extends SubsystemBase {
     }
 
   }
-
-public double getLastSeenHeading() {
-    return lastSeenHeading;
-}
 }
