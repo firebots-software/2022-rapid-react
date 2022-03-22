@@ -99,7 +99,7 @@ public class Drivetrain extends SubsystemBase {
     // this.gyro.reset();
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), new Pose2d());
 
-    this.orientation = driveOrientation.BACK; // default value
+    this.orientation = driveOrientation.FRONT; // default value
     this.isSlowMode = false; // default value
 
     lastAlignedGyro = 0;
@@ -247,10 +247,10 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.follow(leftFrontMaster);
     rightFollower.follow(rightRearMaster);
 
-    rightRearMaster.setInverted(true); // might need to change
-    leftFrontMaster.setInverted(false);
-    leftFollower.setInverted(false);
-    rightFollower.setInverted(true);
+    rightRearMaster.setInverted(false); // might need to change
+    leftFrontMaster.setInverted(true);
+    leftFollower.setInverted(true);
+    rightFollower.setInverted(false);
 
     setMotorNeutralMode(NeutralMode.Brake);
   }
