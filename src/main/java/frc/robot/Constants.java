@@ -23,7 +23,7 @@ public final class Constants {
     public static final double TICKS_PER_INCH = (TICKS_PER_METER / 100.0) * 2.54;//76.1120944;
     public static class OI {
         public static final int PS4_CONTROLLER_PORT_1 = 3;
-        public static final int PS4_CONTROLLER_PORT_2 = 3; // change
+        public static final int PS4_CONTROLLER_PORT_2 = 1; // change
 
         // Buttons on PS4 Controller
         public static final int SQUARE_BUTTON_PORT = 1;

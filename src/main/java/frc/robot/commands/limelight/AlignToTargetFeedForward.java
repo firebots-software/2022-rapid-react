@@ -63,11 +63,12 @@ public class AlignToTargetFeedForward extends CommandBase {
     }
 
     if (!limelight.getTv()) {
-      if (Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees()) > 120 && 
-          Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees()) < 180) {
-        if (limelight.getLastKnownTx() > 0) {
+      double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees(); 
+      SmartDashboard.putNumber("robot degree position", degreePos);  
+      if (Math.abs(degreePos) > 150 && Math.abs(degreePos) < 180 && Math.abs(drivetrain.getAngularVelocity()) > 0) {
+        if (drivetrain.getAngularVelocity() > 0) {
           turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-        } else if (limelight.getLastKnownTx() < 0) {
+        } else if (drivetrain.getAngularVelocity() < 0) {
           turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
         }
       }
@@ -83,10 +84,7 @@ public class AlignToTargetFeedForward extends CommandBase {
 
       pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
 
-      // double tangentialVel = -drivetrain.getCurrentSpeed() *
-      // Math.sin(turret.getEncoderValDegrees() - limelight.getTx())
-      // / (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
-      // to meters
+      double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() + limelight.getTx())/ (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
       double angularVel = -drivetrain.getAngularVelocity();
       double pidOutput = pid.calculate(turret.getEncoderValDegrees());
       if (pid.atSetpoint()) {
