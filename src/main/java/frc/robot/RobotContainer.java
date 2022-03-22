@@ -83,6 +83,7 @@ public class RobotContainer {
     autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
     autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
     autonChooser.addOption("test only -- turn for time", new TurnForTime(0.35, 3));
+    autonChooser.addOption("mot prof test", RamseteGenerator.generateCommandForPath(Paths.straightLineAuton));
 
   }
 

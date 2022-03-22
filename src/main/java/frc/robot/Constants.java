@@ -73,11 +73,11 @@ public final class Constants {
         // ramsete values from wpilib docs
         public static double kRamseteB = 2.0;
         public static double kRamseteZeta = 0.7;
-        public static double kPDriveVel = 5.8082;
+        public static double kPDriveVel = 2.6604;
 
-        public static final double ksVolts = 1.5451;
-        public static final double kvVoltSecondsPerMeter = 3.3875;
-        public static final double kaVoltSecondsSquaredPerMeter = 1.2148;
+        public static final double ksVolts = 0.67605;
+        public static final double kvVoltSecondsPerMeter = 1.8252;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.37032;
 		public static final double velocityThreshold = 90; // tune this value
 
         public static DifferentialDriveVoltageConstraint autoVoltageConstraint =

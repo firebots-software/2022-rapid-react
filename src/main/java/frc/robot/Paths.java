@@ -13,10 +13,10 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 
 /** Add your docs here. */
 public class Paths {
-    public static Trajectory moveToBall, moveToShootingDistanceFromBall;
+    public static Trajectory straightLineAuton, moveToShootingDistanceFromBall;
 
     public static void generate(){
-        moveToBall = TrajectoryGenerator.generateTrajectory(
+        straightLineAuton = TrajectoryGenerator.generateTrajectory(
             List.of(new Pose2d(0, 0, new Rotation2d(0)),
                     new Pose2d(1, 0, new Rotation2d(0))),
             Constants.Drivetrain.MotionProfilingConfig
