@@ -15,6 +15,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -47,6 +48,7 @@ public class Robot extends TimedRobot {
 
   private Shooter shooter;
   private Climber climber;
+  private PowerDistribution powerboard;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -64,6 +66,10 @@ public class Robot extends TimedRobot {
     turret = Turret.getInstance();
     drivetrain = Drivetrain.getInstance();
     intake = Intake.getInstance();
+    this.powerboard = new PowerDistribution();
+    powerboard.setSwitchableChannel(true);
+
+
 
     // CameraServer is responsible for publishing about cameras/camera servers to
     // Network Tables
@@ -217,6 +223,11 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("last known tx", limelight.getLastKnownTx());
     SmartDashboard.putBoolean("limelight tv", limelight.getTv());
+
+    // System.out.println("20 current: " + powerboard.getCurrent(20));
+    // System.out.println("21 current: " + powerboard.getCurrent(21));
+    // System.out.println("22 current: " + powerboard.getCurrent(22));
+    // System.out.println("23 current: " + powerboard.getCurrent(23));
 
   }
 

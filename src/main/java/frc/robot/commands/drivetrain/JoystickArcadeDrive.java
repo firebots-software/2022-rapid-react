@@ -27,7 +27,7 @@ public class JoystickArcadeDrive implements Command {
 
     @Override
     public void execute() {
-        drivetrain.arcadeDrive(-frontBackSpeed.getAsDouble(), rotationSpeed.getAsDouble());
+        drivetrain.arcadeDrive(-frontBackSpeed.getAsDouble(), -rotationSpeed.getAsDouble());
 
     }
 
