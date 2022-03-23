@@ -53,7 +53,7 @@ public class Shooter extends SubsystemBase {
     topMotorFF = new SimpleMotorFeedforward(Constants.Shooter.ksTopFlywheel, Constants.Shooter.kvTopFlywheel, Constants.Shooter.kaTopFlywheel);
     bottomMotorFF = new SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel, Constants.Shooter.kvBottomFlywheel, Constants.Shooter.kaBottomFlywheel);
 
-    isAdjustingRPM = false; 
+    isAdjustingRPM = true; 
 
     limelight = Limelight.getInstance();
     currentDist = 0; 
@@ -244,7 +244,7 @@ public class Shooter extends SubsystemBase {
 
   public double getRPMForDistanceInches(double distance) {
     // double rpm = 12.5079 * distance + 1874.28;
-    double rpm = (0.076082 * distance * distance) + (-6.13344 * distance) + 2990.84;
+    double rpm = (0.0914563 * distance * distance) + (-9.8779 * distance) + 3213.38;
     if (rpm < 0) rpm = 0;
     if (rpm > Constants.Shooter.MAX_RPM) rpm = Constants.Shooter.MAX_RPM;
     return rpm; 

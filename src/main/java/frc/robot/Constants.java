@@ -48,9 +48,9 @@ public final class Constants {
         public final static int rightMasterPort = 2;
         public final static int rightFollowerPort = 1;
 
-        public static final double TICKS_PER_METER = 26199.13932126; // * (1.339280 / 2.13);
+        public static final double TICKS_PER_METER = 35914.8225; // * (1.339280 / 2.13);
         public static final double drivetrainTicksPerRev = 2048;
-        public static final double drivetrainWheelRadiusMeters = 0.0762; // convert to meters 
+        public static final double drivetrainWheelRadiusMeters = 0.479; // convert to meters 
 
         public final static int PIGEON_ID = 8;
 
@@ -140,7 +140,7 @@ public final class Constants {
         public static final double DEFAULT_SHOOTER_SPEED = 0.5;
 
         public static final double FIXED_RPM = 2000;
-        public static final double MAX_RPM = 4500;
+        public static final double MAX_RPM = 5000;
 
         public static final double MAX_VOLTAGE = 12.0;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 

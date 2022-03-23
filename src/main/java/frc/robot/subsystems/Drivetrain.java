@@ -320,23 +320,23 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftEncoderCountMeters() {
-    return -leftFrontMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+    return leftFrontMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
   }
 
   public double getRightEncoderCountMeters() {
-    return -rightRearMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+    return rightRearMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
   }
 
   public double getRightEncoderTicks() {
-    return -rightRearMaster.getSelectedSensorPosition();
+    return rightRearMaster.getSelectedSensorPosition();
   }
 
   public double getLeftEncoderVelocityMetersPerSec() {
-    return (-leftFrontMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
+    return (leftFrontMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
   }
 
   public double getRightEncoderVelocityMetersPerSec() {
-    return (-rightRearMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
+    return (rightRearMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
   }
 
   public double getAvgEncoderCountMeters() {
