@@ -63,6 +63,7 @@ public class Robot extends TimedRobot {
     // init cameraServer + stream
     m_robotContainer = new RobotContainer();
     limelight = Limelight.getInstance();
+    limelight.setLedStatus(true);
     turret = Turret.getInstance();
     drivetrain = Drivetrain.getInstance();
     intake = Intake.getInstance();

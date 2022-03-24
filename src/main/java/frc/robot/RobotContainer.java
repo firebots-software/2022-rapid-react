@@ -136,7 +136,7 @@ public class RobotContainer {
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
     // only if using second controller
-    double manualTurretSpeed = 0.5;
+    double manualTurretSpeed = 0.7;
     final POVButton leftPov = new POVButton(ps4_controller1, 270);
     leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
 
