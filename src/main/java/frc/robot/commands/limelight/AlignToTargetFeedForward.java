@@ -52,29 +52,44 @@ public class AlignToTargetFeedForward extends CommandBase {
   @Override
   public void execute() {
 
-    if (!limelight.getTv() && Math.abs(drivetrain.getAngularVelocity()) > Constants.Drivetrain.velocityThreshold) {
-      if ((Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading()) > Constants.Limelight.turningThreshold)) {
-        if (drivetrain.getHeading() - limelight.getLastSeenHeading() > 0) {
-          turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-        } else if (drivetrain.getHeading() - limelight.getLastSeenHeading() < 0) {
-          turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-        }
+    if (!limelight.getTv()) {
+      double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading(); 
+      if (degreePos < 180) {
+        turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+      } else if (degreePos > 180) {
+        turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
       }
     }
 
-    if (!limelight.getTv()) {
-      double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees(); 
-      // SmartDashboard.putNumber("robot degree position", degreePos);  
-      if (Math.abs(degreePos) > 150 && Math.abs(degreePos) < 180 && Math.abs(drivetrain.getAngularVelocity()) > 0) {
-        if (drivetrain.getAngularVelocity() > 0) {
-          turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-        } else if (drivetrain.getAngularVelocity() < 0) {
-          turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-        }
-      }
-    }
+    // if (!limelight.getTv() && Math.abs(drivetrain.getAngularVelocity()) > Constants.Drivetrain.velocityThreshold) {
+    //   if ((Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading()) > Constants.Limelight.turningThreshold)) {
+    //     if (drivetrain.getHeading() - limelight.getLastSeenHeading() > 0) {
+    //       turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
+    //     } else if (drivetrain.getHeading() - limelight.getLastSeenHeading() < 0) {
+    //       turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+    //     }
+    //   }
+    // }
+
+    // if (!limelight.getTv()) {
+    //   double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees(); 
+    //   // SmartDashboard.putNumber("robot degree position", degreePos);  
+    //   if (Math.abs(degreePos) > 150 && Math.abs(degreePos) < 180 && Math.abs(drivetrain.getAngularVelocity()) > 0) {
+    //     if (drivetrain.getAngularVelocity() > 0) {
+    //       turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+    //     } else if (drivetrain.getAngularVelocity() < 0) {
+    //       turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
+    //     }
+    //   }
+    // }
 
     if (!limelight.getTv()) {
+      if (drivetrain.getHeading() < limelight.getLastSeenHeading()) {
+        turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
+      } else if (drivetrain.getHeading() > limelight.getLastSeenHeading()) {
+        turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+      }
+
       if (limelight.getLastKnownTx() > 0) {
         turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
       } else if (limelight.getLastKnownTx() < 0) {
