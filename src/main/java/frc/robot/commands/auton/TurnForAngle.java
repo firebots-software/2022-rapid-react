@@ -38,11 +38,12 @@ public class TurnForAngle extends CommandBase {
   @Override
   public void execute() {
     double output = pid.calculate(drivetrain.getHeading());
-    if (output > 1) output = 1;
-    if (output < -1) output = -1;
+    double max = 0.7;
+    if (output > max) output = max;
+    if (output < -max) output = -max;
     drivetrain.PIDarcadeDriveAngle(output);
-    SmartDashboard.putNumber("PID output", output); 
-    SmartDashboard.putNumber("PID error", pid.getPositionError());
+    // SmartDashboard.putNumber("PID output", output); 
+    // SmartDashboard.putNumber("PID error", pid.getPositionError());
   }
 
   // Called once the command ends or is interrupted.

@@ -45,21 +45,21 @@ public class DriveForDistance2 extends CommandBase {
     double outputRight = pidRight.calculate(drivetrain.getRightEncoderCountMeters());
     // System.out.print("pid left output: " + outputLeft);
     // System.out.print("pid right output: " + outputRight);
-    SmartDashboard.putNumber("Left Position Error: ", pidLeft.getPositionError());
-    SmartDashboard.putNumber("Right Position Error: ", pidRight.getPositionError());
+    // SmartDashboard.putNumber("Left Position Error: ", pidLeft.getPositionError());
+    // SmartDashboard.putNumber("Right Position Error: ", pidRight.getPositionError());
     drivetrain.PIDtankDrive(outputLeft, outputRight);
 
-    SmartDashboard.putNumber("pid left output", outputLeft);
-    SmartDashboard.putNumber("pid right output", outputRight);
+    // SmartDashboard.putNumber("pid left output", outputLeft);
+    // SmartDashboard.putNumber("pid right output", outputRight);
 
-    SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
-    SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
-    SmartDashboard.putNumber("dfd2 pid error", drivetrain.getRightEncoderCountMeters());
-    SmartDashboard.putNumber("dfd2 pid setpoint", drivetrain.getRightEncoderVelocityMetersPerSec());
+    // SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
+    // SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
+    // SmartDashboard.putNumber("dfd2 pid error", drivetrain.getRightEncoderCountMeters());
+    // SmartDashboard.putNumber("dfd2 pid setpoint", drivetrain.getRightEncoderVelocityMetersPerSec());
  
-    SmartDashboard.putBoolean("at setpoint", pidLeft.atSetpoint());
+    // SmartDashboard.putBoolean("at setpoint", pidLeft.atSetpoint());
 
-    SmartDashboard.putNumber("Average encoder value", drivetrain.getLeftEncoderCountMeters());
+    // SmartDashboard.putNumber("Average encoder value", drivetrain.getLeftEncoderCountMeters());
     //SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
      
   }

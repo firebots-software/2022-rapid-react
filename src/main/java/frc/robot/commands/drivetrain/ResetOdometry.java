@@ -21,7 +21,9 @@ public class ResetOdometry extends CommandBase {
   @Override
   public void initialize() {
     drivetrain.resetOdometry(new Pose2d());
-    // System.out.println("RESETTING ODOMETRY BEFORE MOTION PROF");
+    drivetrain.resetEncoders();
+    drivetrain.resetGyro();
+    System.out.println("RESETTING ODOMETRY BEFORE MOTION PROF");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

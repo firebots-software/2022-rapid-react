@@ -56,7 +56,7 @@ public class SpinFlywheelBangBang extends CommandBase {
     boolean done = topBang.atSetpoint() && bottomBang.atSetpoint();
 
 
-    SmartDashboard.putBoolean("flywheel bang bang done", done);
+    // SmartDashboard.putBoolean("flywheel bang bang done", done);
     return false;
   }
 }

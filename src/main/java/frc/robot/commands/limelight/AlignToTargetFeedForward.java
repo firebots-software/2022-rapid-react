@@ -64,7 +64,7 @@ public class AlignToTargetFeedForward extends CommandBase {
 
     if (!limelight.getTv()) {
       double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees(); 
-      SmartDashboard.putNumber("robot degree position", degreePos);  
+      // SmartDashboard.putNumber("robot degree position", degreePos);  
       if (Math.abs(degreePos) > 150 && Math.abs(degreePos) < 180 && Math.abs(drivetrain.getAngularVelocity()) > 0) {
         if (drivetrain.getAngularVelocity() > 0) {
           turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
@@ -94,7 +94,7 @@ public class AlignToTargetFeedForward extends CommandBase {
       double feedForwardCalculationOnlyAngular = feedforward.calculate(angularVel);
       // double feedForwardCalculationBoth = feedforward.calculate(angularVel +
       // tangentialVel);
-      SmartDashboard.putNumber("turret pid output", pidOutput);
+      // SmartDashboard.putNumber("turret pid output", pidOutput);
       SmartDashboard.putNumber("turret feedforward output", feedForwardCalculationOnlyAngular);
 
       // if (limelight.getTv()) {

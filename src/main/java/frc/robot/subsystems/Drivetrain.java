@@ -123,9 +123,9 @@ public class Drivetrain extends SubsystemBase {
     odometry.update(Rotation2d.fromDegrees(getMotionProfilingHeading()), getLeftEncoderCountMeters(),
         getRightEncoderCountMeters());
 
-    SmartDashboard.putNumber("x axis rotation", getGyroArray()[0]);
-    SmartDashboard.putNumber("y axis rotation", getGyroArray()[1]);
-    SmartDashboard.putNumber("z axis rotation", getGyroArray()[2]);
+    // SmartDashboard.putNumber("x axis rotation", getGyroArray()[0]);
+    // SmartDashboard.putNumber("y axis rotation", getGyroArray()[1]);
+    // SmartDashboard.putNumber("z axis rotation", getGyroArray()[2]);
   }
 
   public void arcadeDrive(double frontBackSpeed, double rotation) {
@@ -148,8 +148,8 @@ public class Drivetrain extends SubsystemBase {
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
 
-      SmartDashboard.putNumber("frontbackspeed", frontBackSpeed);
-      SmartDashboard.putNumber("rotationspeed", rotation);
+      // SmartDashboard.putNumber("frontbackspeed", frontBackSpeed);
+      // SmartDashboard.putNumber("rotationspeed", rotation);
 
       robotDrive.arcadeDrive(frontBackSpeed, -rotation);
 
@@ -212,9 +212,9 @@ public class Drivetrain extends SubsystemBase {
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
       rotation = restrictToRange(rotation, -1, 1);
 
-      SmartDashboard.putNumber("frontbackspeed", frontBackSpeed);
-      SmartDashboard.putNumber("rotationspeed", rotation);
-      SmartDashboard.putBoolean("quickTurnEnabled", quickTurn);
+      // SmartDashboard.putNumber("frontbackspeed", frontBackSpeed);
+      // SmartDashboard.putNumber("rotationspeed", rotation);
+      // SmartDashboard.putBoolean("quickTurnEnabled", quickTurn);
 
       robotDrive.curvatureDrive(frontBackSpeed, rotation, quickTurn);
 
@@ -391,8 +391,8 @@ public class Drivetrain extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    SmartDashboard.putNumber("leftvolts", leftVolts);
-    SmartDashboard.putNumber("rightvolts", rightVolts);
+    // SmartDashboard.putNumber("leftvolts", leftVolts);
+    // SmartDashboard.putNumber("rightvolts", rightVolts);
     leftFrontMaster.setVoltage(leftVolts);
     leftFollower.setVoltage(leftVolts);
     rightRearMaster.setVoltage(rightVolts);

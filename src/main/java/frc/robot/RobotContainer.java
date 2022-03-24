@@ -21,6 +21,7 @@ import frc.robot.commandGroups.RunSpaghetAndRoll;
 import frc.robot.commandGroups.StopEverything;
 import frc.robot.commandGroups.TaxiIntakeShoot;
 import frc.robot.commandGroups.TaxiTurnShoot;
+import frc.robot.commandGroups.TwoBallAuton;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
@@ -67,7 +68,7 @@ public class RobotContainer {
             () -> ps4_controller1.getRawAxis(1),
             () -> ps4_controller1.getRawAxis(2)));
 
-    // turret.setDefaultCommand(new AlignToTargetFeedForward());
+    turret.setDefaultCommand(new AlignToTargetFeedForward());
     
     // turret.setDefaultCommand(
     //     new AlignToTargetFeedForward()
@@ -77,9 +78,8 @@ public class RobotContainer {
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
     autonChooser.setDefaultOption("dummy auton backwards & shoot", new DummyAutonAndShoot());
-    autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
-    autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
-    autonChooser.addOption("test only -- turn for time", new TurnForTime(0.35, 3));
+    autonChooser.addOption("2 ball auton", new TwoBallAuton());
+    autonChooser.addOption("test only -- turn 180", new TurnForAngle(180));
     autonChooser.addOption("mot prof test", RamseteGenerator.generateCommandForPath(Paths.turnTest));
 
   }
@@ -137,11 +137,18 @@ public class RobotContainer {
 
     // only if using second controller
     double manualTurretSpeed = 0.5;
-    final POVButton leftPov = new POVButton(ps4_controller2, 270);
+    final POVButton leftPov = new POVButton(ps4_controller1, 270);
     leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
 
-    final POVButton rightPov = new POVButton(ps4_controller2, 90);
+    final POVButton rightPov = new POVButton(ps4_controller1, 90);
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
+
+
+    final POVButton leftPov2 = new POVButton(ps4_controller2, 270);
+    leftPov2.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
+
+    final POVButton rightPov2 = new POVButton(ps4_controller2, 90);
+    rightPov2.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
     final Button zeroTurret = new JoystickButton(ps4_controller1, Constants.OI.SQUARE_BUTTON_PORT);
     zeroTurret.whenHeld(new ZeroTurret());

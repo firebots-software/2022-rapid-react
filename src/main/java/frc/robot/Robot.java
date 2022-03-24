@@ -112,6 +112,8 @@ public class Robot extends TimedRobot {
         Mat output = new Mat();
 
         while (!Thread.interrupted()) {
+
+          updateShuffleboard();
           if (drivetrain.isUsingFrontCam()) {
             if (cvSink1.grabFrame(source) == 0) {
               continue;
@@ -224,9 +226,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("last known tx", limelight.getLastKnownTx());
     SmartDashboard.putBoolean("limelight tv", limelight.getTv());
 
-    SmartDashboard.putNumber("LEFT DRIVE SPEED", drivetrain.getLeftEncoderVelocityMetersPerSec());
-    SmartDashboard.putNumber("RIGHT DRIVE SPEED", drivetrain.getRightEncoderVelocityMetersPerSec());
-
     SmartDashboard.putNumber("drivetrain heading", drivetrain.getHeading());
     SmartDashboard.putNumber("motprof heading", drivetrain.getMotionProfilingHeading());
     SmartDashboard.putNumber("drivetrain left ticks", drivetrain.getLeftEncoderTicks());
@@ -243,7 +242,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    updateShuffleboard();
+    // updateShuffleboard();
     drivetrain.setMotorNeutralMode(NeutralMode.Coast);
     limelight.setLedStatus(false);
 
@@ -252,7 +251,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    updateShuffleboard();
+    // updateShuffleboard();
   }
 
   /**
@@ -263,6 +262,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     drivetrain.resetOdometry(new Pose2d());
+    drivetrain.resetEncoders();
+    drivetrain.resetGyro();
     drivetrain.setMotorNeutralMode(NeutralMode.Brake);
     // turret.zeroEncoder();
     limelight.setLedStatus(true);
@@ -276,7 +277,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    updateShuffleboard();
+    // updateShuffleboard();
   }
 
   @Override
@@ -299,7 +300,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    updateShuffleboard();
+    // updateShuffleboard();
   }
 
   @Override
