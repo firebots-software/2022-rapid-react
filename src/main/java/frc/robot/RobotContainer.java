@@ -60,17 +60,11 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("Drive Back for Time", new DriveBackForTime(-0.5, 2));
-    autonChooser.addOption("only taxi", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
-    autonChooser.addOption("taxi and move to shooting distance", new MoveToBallAndShootingDistance());
-    autonChooser.addOption("taxi and intake ball", new TaxiAndIntake());
-    autonChooser.addOption("drive back 1m", RamseteGenerator.generateCommandForPath(Paths.moveToShootingDistanceFromBall));
-    autonChooser.addOption("drive forward 1m", RamseteGenerator.generateCommandForPath(Paths.moveToBall));
-    autonChooser.addOption("turn 180", new TurnForAngle(180));
-    // autonChooser.addOption("taxi and shoot ball", taxiAndShoot);
-    // autonChooser.addOption("taxi and intake and shoot one ball", taxiIntakeShootOne);
-    // autonChooser.addOption("taxi and intake and shoot two balls", taxiIntakeShootTwo);
-
-
+    autonChooser.addOption("Drive Forward for Time", new DriveBackForTime(0.7, 5));
+    autonChooser.addOption("Drive for Distance Test 2", new DriveForDistance2(2.13));
+    autonChooser.addOption("Drive for Distance Test Single Controller", new DriveForDistanceSingleController(2.13));
+    autonChooser.addOption("Motion Profiling Test", RamseteGenerator.generateCommandForPath(Paths.test));
+    autonChooser.addOption("Test Path Drive Forward", RamseteGenerator.generateCommandForPath(Paths.testPath));
 
   }
 
