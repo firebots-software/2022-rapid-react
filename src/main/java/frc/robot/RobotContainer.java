@@ -67,15 +67,12 @@ public class RobotContainer {
             () -> ps4_controller1.getRawAxis(1),
             () -> ps4_controller1.getRawAxis(2)));
 
-    turret.setDefaultCommand(
-      new AlignToTargetFeedForward()
-    );
+    // turret.setDefaultCommand(new AlignToTargetFeedForward());
     
     // turret.setDefaultCommand(
     //     new AlignToTargetFeedForward()
     // ); 
 
-    autonChooser.setDefaultOption("limelightAim", new AlignToTargetFeedForward());
 
     SmartDashboard.putData("Auton chooser", autonChooser);
     autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
@@ -83,7 +80,7 @@ public class RobotContainer {
     autonChooser.addOption("taxi, turn, shoot", new TaxiTurnShoot());
     autonChooser.addOption("intake and shoot 2", new TaxiIntakeShoot());
     autonChooser.addOption("test only -- turn for time", new TurnForTime(0.35, 3));
-    autonChooser.addOption("mot prof test", RamseteGenerator.generateCommandForPath(Paths.straightLineAuton));
+    autonChooser.addOption("mot prof test", RamseteGenerator.generateCommandForPath(Paths.turnTest));
 
   }
 

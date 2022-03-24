@@ -120,9 +120,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderCountMeters(),
+    odometry.update(Rotation2d.fromDegrees(getMotionProfilingHeading()), getLeftEncoderCountMeters(),
         getRightEncoderCountMeters());
-      
+
     SmartDashboard.putNumber("x axis rotation", getGyroArray()[0]);
     SmartDashboard.putNumber("y axis rotation", getGyroArray()[1]);
     SmartDashboard.putNumber("z axis rotation", getGyroArray()[2]);
@@ -259,13 +259,6 @@ public class Drivetrain extends SubsystemBase {
     return brakeMode;
   }
 
-  // todo: why is setBrakeMode commented out
-  public void setBrakeMode(boolean newBrakeMode) {
-    // if (newBrakeMode) {
-    // rightRearMaster.set(NeutralMode.Brake, 0);
-    // }
-  }
-
   public driveOrientation getDriveOrientation() {
     return orientation;
   }
@@ -301,7 +294,15 @@ public class Drivetrain extends SubsystemBase {
 
   public double getHeading() {
     if (pigeon != null) {
-      return -pigeon.getYaw(); // todo: why gyro angle = -heading?
+      return -pigeon.getYaw();
+    } else {
+      return 0;
+    }
+  }
+
+  public double getMotionProfilingHeading() {
+    if (pigeon != null) {
+      return pigeon.getYaw();
     } else {
       return 0;
     }
@@ -320,23 +321,27 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftEncoderCountMeters() {
-    return leftFrontMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+    return getLeftEncoderTicks() / Constants.Drivetrain.TICKS_PER_METER;
   }
 
   public double getRightEncoderCountMeters() {
-    return rightRearMaster.getSelectedSensorPosition() / Constants.TICKS_PER_METER;
+    return getRightEncoderTicks() / Constants.Drivetrain.TICKS_PER_METER;
   }
 
   public double getRightEncoderTicks() {
     return rightRearMaster.getSelectedSensorPosition();
   }
 
+  public double getLeftEncoderTicks() {
+    return leftFrontMaster.getSelectedSensorPosition();
+  }
+
   public double getLeftEncoderVelocityMetersPerSec() {
-    return (leftFrontMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
+    return (leftFrontMaster.getSelectedSensorVelocity() * 10) / Constants.Drivetrain.TICKS_PER_METER;
   }
 
   public double getRightEncoderVelocityMetersPerSec() {
-    return (rightRearMaster.getSelectedSensorVelocity() * 10) / Constants.TICKS_PER_METER;
+    return (rightRearMaster.getSelectedSensorVelocity() * 10) / Constants.Drivetrain.TICKS_PER_METER;
   }
 
   public double getAvgEncoderCountMeters() {
@@ -461,7 +466,7 @@ public class Drivetrain extends SubsystemBase {
 
   public double[] getGyroArray() {
     double[] xyz_dps = new double[3];
-    pigeon.getRawGyro(xyz_dps); 
+    pigeon.getRawGyro(xyz_dps);
     return xyz_dps;
   }
 }

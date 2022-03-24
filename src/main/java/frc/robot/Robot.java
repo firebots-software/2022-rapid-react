@@ -140,7 +140,7 @@ public class Robot extends TimedRobot {
     shooter = Shooter.getInstance();
     climber = Climber.getInstance();
 
-    drivetrain.setMotorNeutralMode(NeutralMode.Brake);
+    // drivetrain.setMotorNeutralMode(NeutralMode.Brake);
   }
 
   /**
@@ -224,6 +224,15 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("last known tx", limelight.getLastKnownTx());
     SmartDashboard.putBoolean("limelight tv", limelight.getTv());
 
+    SmartDashboard.putNumber("LEFT DRIVE SPEED", drivetrain.getLeftEncoderVelocityMetersPerSec());
+    SmartDashboard.putNumber("RIGHT DRIVE SPEED", drivetrain.getRightEncoderVelocityMetersPerSec());
+
+    SmartDashboard.putNumber("drivetrain heading", drivetrain.getHeading());
+    SmartDashboard.putNumber("motprof heading", drivetrain.getMotionProfilingHeading());
+    SmartDashboard.putNumber("drivetrain left ticks", drivetrain.getLeftEncoderTicks());
+    SmartDashboard.putNumber("drivetrain left meters", drivetrain.getLeftEncoderCountMeters());
+
+
     // System.out.println("20 current: " + powerboard.getCurrent(20));
     // System.out.println("21 current: " + powerboard.getCurrent(21));
     // System.out.println("22 current: " + powerboard.getCurrent(22));
@@ -237,7 +246,7 @@ public class Robot extends TimedRobot {
     updateShuffleboard();
     drivetrain.setMotorNeutralMode(NeutralMode.Coast);
     limelight.setLedStatus(false);
-    
+
     // intake.retractIntake();
   }
 

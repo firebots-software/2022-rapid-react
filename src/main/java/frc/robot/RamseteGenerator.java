@@ -35,11 +35,8 @@ public class RamseteGenerator {
                 (leftVolts, rightVolts) -> {
                     drivetrain.tankDriveVolts(leftVolts, rightVolts);
 
-                    SmartDashboard.putNumber("left measurement", drivetrain.getWheelSpeeds().leftMetersPerSecond);
-                    SmartDashboard.putNumber("right measurement", drivetrain.getWheelSpeeds().rightMetersPerSecond);
-
-                    SmartDashboard.putNumber("left target", leftController.getSetpoint());
-                    SmartDashboard.putNumber("right target", rightController.getSetpoint());
+                    SmartDashboard.putNumber("motprof left target", leftController.getSetpoint());
+                    SmartDashboard.putNumber("motprof right target", rightController.getSetpoint());
                 },
                 drivetrain
         );

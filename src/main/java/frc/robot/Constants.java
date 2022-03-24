@@ -19,8 +19,6 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double TICKS_PER_METER = 3064; // 26199.13932126; // * (1.339280 / 2.13);
-    public static final double TICKS_PER_INCH = (TICKS_PER_METER / 100.0) * 2.54;//76.1120944;
     public static class OI {
         public static final int PS4_CONTROLLER_PORT_1 = 3;
         public static final int PS4_CONTROLLER_PORT_2 = 1; // change
@@ -48,9 +46,9 @@ public final class Constants {
         public final static int rightMasterPort = 2;
         public final static int rightFollowerPort = 1;
 
-        public static final double TICKS_PER_METER = 35914.8225; // * (1.339280 / 2.13);
-        public static final double drivetrainTicksPerRev = 2048;
-        public static final double drivetrainWheelRadiusMeters = 0.479; // convert to meters 
+        public static final double TICKS_PER_METER = 35914.8225; // * (2048 * 8.4) / 0.479;
+        public static final double drivetrainTicksPerRev = 2048 * 8.4;
+        public static final double drivetrainWheelRadiusMeters = 0.0762; // convert to meters 
 
         public final static int PIGEON_ID = 8;
 
@@ -67,8 +65,8 @@ public final class Constants {
 
         public static final DifferentialDriveKinematics kinematics =
                 new DifferentialDriveKinematics(TRACK_WIDTH_METERS);
-        public static double kMaxSpeedMetersPerSecond = 0.5;
-        public static double kMaxAccelerationMetersPerSecondSquared = 0.5;
+        public static double kMaxSpeedMetersPerSecond = 1;
+        public static double kMaxAccelerationMetersPerSecondSquared = 1;
 
         // ramsete values from wpilib docs
         public static double kRamseteB = 2.0;
