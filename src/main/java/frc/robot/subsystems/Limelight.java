@@ -35,6 +35,7 @@ public class Limelight extends SubsystemBase {
   private int secsWithoutSeeingTarget; 
   int counter = 0; 
   private double lastSeenHeading; 
+  private boolean hasSeenTarget; 
 
   // Limelight tx value - x degree offset of target center from viewport center
   private double tx;
@@ -60,7 +61,8 @@ public class Limelight extends SubsystemBase {
       setLedStatus(false);
       secsWithoutSeeingTarget = 0;
       lastSeenHeading = 0;  
-      drivetrain = Drivetrain.getInstance(); 
+      drivetrain = Drivetrain.getInstance();
+      hasSeenTarget = false; 
   }
 
   /**
@@ -205,6 +207,10 @@ public class Limelight extends SubsystemBase {
     return secsWithoutSeeingTarget; 
   }
 
+  public boolean hasSeenTarget() {
+    return hasSeenTarget; 
+  }
+
 
   public boolean isAimed() {
     if (getTv()) {
@@ -223,6 +229,7 @@ public class Limelight extends SubsystemBase {
     if (tx != 0) {
       this.setLastKnownTx(tx);
       lastSeenHeading = drivetrain.getHeading(); 
+      hasSeenTarget = true; 
     } 
 
     if (this.tv == 0) {

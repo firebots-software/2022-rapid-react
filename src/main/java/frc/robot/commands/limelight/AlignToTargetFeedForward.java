@@ -119,7 +119,11 @@ public class AlignToTargetFeedForward extends CommandBase {
       // }
       // turret.setMotorSpeed(feedForwardCalculationOnlyAngular/12);
 
-      turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12 * Constants.Turret.feedForwardConstant);
+      if (!limelight.hasSeenTarget()) {
+        turret.stopMotor();
+      } else {
+        turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12 * Constants.Turret.feedForwardConstant);
+      }
       // if (pid.atSetpoint()) {
       //   System.out.println("pid done");
       // }
