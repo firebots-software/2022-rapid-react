@@ -53,68 +53,13 @@ public class AlignToTargetFeedForward extends CommandBase {
   public void execute() {
 
     if (!limelight.getTv()) {
-      double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading(); 
-      if (Math.abs(degreePos) > 90) {
-        if (drivetrain.getHeading() < limelight.getLastSeenHeading()) {
-        turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-        }
-        else if (drivetrain.getHeading() > limelight.getLastSeenHeading()) {
-          turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed); 
-        }
-      } 
-    }
-
-    // alternative code
-    // if (!limelight.getTv()) {
-    //   double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading(); 
-    //   if (Math.abs(degreePos) > 90) {
-    //     if (drivetrain.getHeading() < limelight.getLastSeenHeading()) {
-    //       turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-    //       }
-    //       else if (drivetrain.getHeading() > limelight.getLastSeenHeading()) {
-    //         turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed); 
-    //       }
-    //   } else if (Math.abs(degreePos) < 90) {
-    //     turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed); 
-    //   }
-    // }
-
-    // if (!limelight.getTv() && Math.abs(drivetrain.getAngularVelocity()) > Constants.Drivetrain.velocityThreshold) {
-    //   if ((Math.abs(drivetrain.getHeading() - limelight.getLastSeenHeading()) > Constants.Limelight.turningThreshold)) {
-    //     if (drivetrain.getHeading() - limelight.getLastSeenHeading() > 0) {
-    //       turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-    //     } else if (drivetrain.getHeading() - limelight.getLastSeenHeading() < 0) {
-    //       turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-    //     }
-    //   }
-    // }
-
-    // if (!limelight.getTv()) {
-    //   double degreePos = drivetrain.getHeading() - limelight.getLastSeenHeading() + turret.getEncoderValDegrees(); 
-    //   // SmartDashboard.putNumber("robot degree position", degreePos);  
-    //   if (Math.abs(degreePos) > 150 && Math.abs(degreePos) < 180 && Math.abs(drivetrain.getAngularVelocity()) > 0) {
-    //     if (drivetrain.getAngularVelocity() > 0) {
-    //       turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-    //     } else if (drivetrain.getAngularVelocity() < 0) {
-    //       turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-    //     }
-    //   }
-    // }
-
-    if (!limelight.getTv()) {
-      // if (drivetrain.getHeading() < limelight.getLastSeenHeading()) {
-      //   turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-      // } else if (drivetrain.getHeading() > limelight.getLastSeenHeading()) {
-      //   turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-      // }
-
-      if (limelight.getLastKnownTx() > 0) {
+      double angVel = drivetrain.getAngularVelocity(); 
+      if (angVel > 0) {
         turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-      } else if (limelight.getLastKnownTx() < 0) {
+      } else if (angVel < 0) {
         turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
       }
-    } else {
-
+    } else {  
       pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
 
       // double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() + limelight.getTx())/ (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
