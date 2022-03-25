@@ -102,11 +102,11 @@ public class AlignToTargetFeedForward extends CommandBase {
     // }
 
     if (!limelight.getTv()) {
-      if (drivetrain.getHeading() < limelight.getLastSeenHeading()) {
-        turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-      } else if (drivetrain.getHeading() > limelight.getLastSeenHeading()) {
-        turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
-      }
+      // if (drivetrain.getHeading() < limelight.getLastSeenHeading()) {
+      //   turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
+      // } else if (drivetrain.getHeading() > limelight.getLastSeenHeading()) {
+      //   turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+      // }
 
       if (limelight.getLastKnownTx() > 0) {
         turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);

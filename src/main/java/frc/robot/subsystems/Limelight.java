@@ -60,7 +60,6 @@ public class Limelight extends SubsystemBase {
   private Limelight() {
       setLedStatus(false);
       secsWithoutSeeingTarget = 0;
-      lastSeenHeading = 0;  
       drivetrain = Drivetrain.getInstance();
       hasSeenTarget = false; 
   }
