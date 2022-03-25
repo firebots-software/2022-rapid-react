@@ -31,6 +31,7 @@ import frc.robot.commands.climber.ManualClimb;
 import frc.robot.commands.intake.FlapIntake;
 import frc.robot.commands.intake.ToggleIntakePiston;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -47,6 +48,7 @@ public class RobotContainer {
   private Joystick ps4_controller2; 
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private Turret turret = Turret.getInstance(); 
+  private Shooter shooter = Shooter.getInstance();
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
   /**
@@ -70,6 +72,7 @@ public class RobotContainer {
             () -> ps4_controller1.getRawAxis(2)));
 
     turret.setDefaultCommand(new AlignToTargetFeedForward());
+    shooter.setDefaultCommand(new SpinUpShooter());
     
     // turret.setDefaultCommand(
     //     new AlignToTargetFeedForward()
@@ -80,7 +83,7 @@ public class RobotContainer {
     autonChooser.addOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
     autonChooser.addOption("dummy auton backwards & shoot", new DummyAutonAndShoot());
     autonChooser.setDefaultOption("2 ball auton", new TwoBallAuton());
-    autonChooser.addOption("test only -- turn 180", new TurnForAngle(180));
+    autonChooser.addOption("test only -- turn 180", new TurnForTime(0.4, 1.6));
     autonChooser.addOption("mot prof test", RamseteGenerator.generateCommandForPath(Paths.turnTest));
     autonChooser.addOption("sweep test", new ScanField());
   }

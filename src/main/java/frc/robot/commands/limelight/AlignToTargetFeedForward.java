@@ -60,7 +60,7 @@ public class AlignToTargetFeedForward extends CommandBase {
       } else if (angVel < -Constants.Turret.velThreshold) {
         turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
         System.out.println("flipping left");
-      }
+      } 
     } else {  
       pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
 

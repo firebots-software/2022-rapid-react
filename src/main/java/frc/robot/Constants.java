@@ -142,7 +142,7 @@ public final class Constants {
 
         public static final double MAX_VOLTAGE = 12.0;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 
-        public static final double maxRollerSpeed = 0.3; //TODO: change to actual max
+        public static final double maxRollerSpeed = 0.5; //TODO: change to actual max
 
         // CONTROLLERS
         public static final double kpFlywheel = 0.14172 / (MAX_VOLTAGE * 60); // divide by max voltage * 60 s/min
@@ -170,7 +170,7 @@ public final class Constants {
         public static final double ksTurret = 0.55865;
         public static final double kvTurret = 0.041588;
         public static final double kaTurret = 0.00096306;
-        public static final double constantTurretTurnSpeed = 0.5;
+        public static final double constantTurretTurnSpeed = 0.4;
         public static final double turningVelThreshold = 0.5; // tune this value
         public static final double feedForwardConstant = 0.7;
         public static double velThreshold = 5;
@@ -193,7 +193,7 @@ public final class Constants {
         public final static int leftHallEffectPort = 3; //todo
         public final static int leftClimberMotorPort = 10; //todo
         public final static int rightClimberMotorPort = 11; //todo
-        public final static double climbSpeedUp = 0.7;
+        public final static double climbSpeedUp = 1;
         public final static double climbSpeedDown = -1;
         public final static double lowBarHeight = 50; //todo: find height in centimeters
         public final static double middleBarHeight = 100; //todo: find height in centimeters

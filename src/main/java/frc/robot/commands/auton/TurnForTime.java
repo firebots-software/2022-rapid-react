@@ -14,7 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 public class TurnForTime extends CommandBase {
   private final Drivetrain drivetrain;
   private double speed;
-  private int targetTime;
+  private double targetTime;
   private Timer timer;
 
   /**
@@ -23,7 +23,7 @@ public class TurnForTime extends CommandBase {
    * @param speed       = speed set in RobotContainer.java
    * @param targetTime  = time set in RobotContainer.java
    */
-  public TurnForTime(double speed,int targetTime) {
+  public TurnForTime(double speed,double targetTime) {
     // System.out.println("init timed turn");
     this.drivetrain = Drivetrain.getInstance();
     this.speed = speed;
