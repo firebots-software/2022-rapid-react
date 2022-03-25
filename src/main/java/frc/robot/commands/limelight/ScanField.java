@@ -56,7 +56,7 @@ public class ScanField extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return limelight.getTx() < Constants.Turret.pidPositionToleranceDegrees;
-    // return limelight.getTv(); 
+    // return limelight.getTx() < Constants.Turret.pidPositionToleranceDegrees;
+    return limelight.getTv(); 
   }
 }

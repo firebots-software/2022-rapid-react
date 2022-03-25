@@ -54,10 +54,12 @@ public class AlignToTargetFeedForward extends CommandBase {
 
     if (!limelight.getTv()) {
       double angVel = drivetrain.getAngularVelocity(); 
-      if (angVel > 0) {
+      if (angVel > Constants.Turret.velThreshold) {
         turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-      } else if (angVel < 0) {
+        System.out.println("flipping right");
+      } else if (angVel < -Constants.Turret.velThreshold) {
         turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
+        System.out.println("flipping left");
       }
     } else {  
       pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());

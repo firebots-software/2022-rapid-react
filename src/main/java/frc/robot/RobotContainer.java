@@ -77,12 +77,12 @@ public class RobotContainer {
 
 
     SmartDashboard.putData("Auton chooser", autonChooser);
-    autonChooser.setDefaultOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
-    autonChooser.setDefaultOption("dummy auton backwards & shoot", new DummyAutonAndShoot());
-    autonChooser.addOption("2 ball auton", new TwoBallAuton());
+    autonChooser.addOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
+    autonChooser.addOption("dummy auton backwards & shoot", new DummyAutonAndShoot());
+    autonChooser.setDefaultOption("2 ball auton", new TwoBallAuton());
     autonChooser.addOption("test only -- turn 180", new TurnForAngle(180));
     autonChooser.addOption("mot prof test", RamseteGenerator.generateCommandForPath(Paths.turnTest));
-
+    autonChooser.addOption("sweep test", new ScanField());
   }
 
   /**
