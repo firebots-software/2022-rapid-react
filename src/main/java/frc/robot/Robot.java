@@ -245,7 +245,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     // updateShuffleboard();
     drivetrain.setMotorNeutralMode(NeutralMode.Coast);
-    limelight.setLedStatus(false);
+    // limelight.setLedStatus(false);
 
     // intake.retractIntake();
   }

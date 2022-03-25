@@ -40,7 +40,7 @@ public class LimelightAimPosControl extends CommandBase {
     if (!limelight.getTv()) {
       if (limelight.getLastKnownTx() > 0) {
         turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
-      } else {
+      } else if (limelight.getLastKnownTx() < 0) {
         turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
       }
     } else {

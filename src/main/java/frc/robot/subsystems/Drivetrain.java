@@ -142,7 +142,7 @@ public class Drivetrain extends SubsystemBase {
 
       } else {
         frontBackSpeed *= DEFAULT_DRIVE_CONSTANT;
-        rotation *= DEFAULT_DRIVE_CONSTANT * 0.4;
+        rotation *= DEFAULT_DRIVE_CONSTANT * 0.5;
       }
 
       frontBackSpeed = restrictToRange(frontBackSpeed, -1, 1);
@@ -239,10 +239,10 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.configFactoryDefault();
     rightFollower.configFactoryDefault();
 
-    rightFollower.configOpenloopRamp(RAMPING_CONSTANT);
-    rightRearMaster.configOpenloopRamp(RAMPING_CONSTANT);
-    leftFollower.configOpenloopRamp(RAMPING_CONSTANT);
-    leftFrontMaster.configOpenloopRamp(RAMPING_CONSTANT);
+    // rightFollower.configOpenloopRamp(RAMPING_CONSTANT);
+    // rightRearMaster.configOpenloopRamp(RAMPING_CONSTANT);
+    // leftFollower.configOpenloopRamp(RAMPING_CONSTANT);
+    // leftFrontMaster.configOpenloopRamp(RAMPING_CONSTANT);
 
     leftFollower.follow(leftFrontMaster);
     rightFollower.follow(rightRearMaster);

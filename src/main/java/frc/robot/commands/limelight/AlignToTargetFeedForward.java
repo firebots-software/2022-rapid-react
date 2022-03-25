@@ -117,7 +117,7 @@ public class AlignToTargetFeedForward extends CommandBase {
 
       pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
 
-      double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() + limelight.getTx())/ (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
+      // double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() + limelight.getTx())/ (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
       double angularVel = -drivetrain.getAngularVelocity();
       double pidOutput = pid.calculate(turret.getEncoderValDegrees());
       if (pid.atSetpoint()) {
