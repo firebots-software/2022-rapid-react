@@ -58,7 +58,7 @@ public class Limelight extends SubsystemBase {
 
   /** Creates a new Limelight. */
   private Limelight() {
-      setLedStatus(false);
+      // setLedStatus(false);
       secsWithoutSeeingTarget = 0;
       lastSeenHeading = 0;  
       drivetrain = Drivetrain.getInstance();

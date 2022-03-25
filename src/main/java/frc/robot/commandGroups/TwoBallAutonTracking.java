@@ -7,10 +7,10 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.limelight.AlignToTargetFeedForward;
 
-public class AimAndShoot extends ParallelCommandGroup {
-  /** Creates a new AimAndShootV2. */
-  public AimAndShoot() {
-    addCommands(new AlignToTargetFeedForward(),
-                new SpinUpAndShoot());
+public class TwoBallAutonTracking extends ParallelCommandGroup {
+  
+  public TwoBallAutonTracking() {
+    addCommands(new TwoBallAuton(),
+                new AlignToTargetFeedForward());
   }
 }

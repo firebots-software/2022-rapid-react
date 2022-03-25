@@ -23,7 +23,7 @@ public class TurnForAngle extends CommandBase {
     pid = new PIDController(Constants.Drivetrain.angleP, Constants.Drivetrain.angleI, Constants.Drivetrain.angleD);
     pid.setSetpoint(targetAngleDegrees);
     pid.setTolerance(Constants.Drivetrain.angleToleranceDegrees, Constants.Drivetrain.velocityToleranceDegreesPerSec);
-    pid.enableContinuousInput(-180, 180);
+    // pid.enableContinuousInput(-180, 180);
   }
 
   // Called when the command is initially scheduled.

@@ -5,9 +5,7 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.auton.DoNothing;
 import frc.robot.commands.auton.TurnForAngle;
-import frc.robot.commands.intake.StopIntake;
 
 public class TwoBallAuton extends SequentialCommandGroup {
   public TwoBallAuton() {
