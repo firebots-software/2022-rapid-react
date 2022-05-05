@@ -71,8 +71,8 @@ public class RobotContainer {
             () -> ps4_controller1.getRawAxis(1),
             () -> ps4_controller1.getRawAxis(2)));
 
-    turret.setDefaultCommand(new AlignToTargetFeedForward());
-    shooter.setDefaultCommand(new SpinUpShooter());
+    // turret.setDefaultCommand(new AlignToTargetFeedForward());
+    // shooter.setDefaultCommand(new SpinUpShooter());
     
     // turret.setDefaultCommand(
     //     new AlignToTargetFeedForward()
@@ -116,7 +116,7 @@ public class RobotContainer {
     spinUpShooter.toggleWhenPressed(new SpinUpShooter());
 
     final Button limelightAim = new JoystickButton(ps4_controller1, Constants.OI.TRIANGLE_BUTTON_PORT);
-    limelightAim.whenHeld(new LimelightAimPosControl());
+    limelightAim.toggleWhenPressed(new AlignToTargetFeedForward());
 
     final Button toggleAdjustRPM = new JoystickButton(ps4_controller1, Constants.OI.OPTIONS_BUTTON_PORT);
     toggleAdjustRPM.whenPressed(new ToggleAdjustableShooter());
