@@ -10,14 +10,13 @@ import frc.robot.commands.auton.TurnForAngle;
 import frc.robot.commands.intake.StartIntakeNoStop;
 import frc.robot.commands.intake.StopIntake;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TaxiIntakeShoot extends SequentialCommandGroup {
-  /** Creates a new TaxiIntakeShoot. */
+
+  /**
+   * Align robot to additional ball, taxi off tarmac while intaking. Shoot 2 balls.
+   * Uses PID to turn 180 degrees -- not used in comp
+   */
   public TaxiIntakeShoot() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(new StartIntakeNoStop(),
                 new DriveForTime(-0.5, 1),
                 new StopIntake(),

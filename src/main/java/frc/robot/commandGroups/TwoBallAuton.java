@@ -10,6 +10,11 @@ import frc.robot.commands.auton.TurnForTime;
 import frc.robot.commands.limelight.ScanField;
 
 public class TwoBallAuton extends SequentialCommandGroup {
+
+  /**
+   * Align robot manually to extra ball, taxi off tarmac while intaking, then turn around and shoot.
+   * Uses turn for time -- simplified version of command used at comp. 
+   */
   public TwoBallAuton() {
     addCommands(new DriveAndIntake(0.5, 1, 1).withTimeout(2),
                 new TurnForTime(0.4, 1.6),

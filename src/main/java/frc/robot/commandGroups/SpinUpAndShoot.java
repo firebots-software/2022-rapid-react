@@ -9,7 +9,10 @@ import frc.robot.commands.shooter.SpinUpShooterNoStop;
 import frc.robot.commands.shooter.StopShooter;
 
 public class SpinUpAndShoot extends SequentialCommandGroup {
-  /** Creates a new SpinUpAndShoot. */
+
+/**
+ * Spin flywheels up to proper RPM, then use ball manipulator to deploy. Stop mechanism after shooting
+ */
   public SpinUpAndShoot() {
     addCommands(new SpinUpShooterNoStop().withTimeout(3),
                 new RunSpaghetAndRoll().withTimeout(3),

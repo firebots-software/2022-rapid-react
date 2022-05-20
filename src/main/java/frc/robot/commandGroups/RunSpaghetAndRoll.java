@@ -19,11 +19,10 @@ public class RunSpaghetAndRoll extends ParallelCommandGroup {
   Shooter shooter = Shooter.getInstance();
   Limelight limelight = Limelight.getInstance();
 
-
-  /** Creates a new SpaghettiRollerShooter. */
+  /**
+   * Deploy balls into the shooter by running the spaghetti wheels and the ball manipulator roller.
+   */
   public RunSpaghetAndRoll() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new RunRoller(), new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
   }

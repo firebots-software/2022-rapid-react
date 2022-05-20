@@ -6,11 +6,14 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auton.DriveForTime;
-import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.commands.shooter.SpinUpShooterNoStop;
 import frc.robot.commands.shooter.StopShooter;
 
 public class DummyAutonAndShoot extends SequentialCommandGroup {
+  
+  /**
+   * With robot pre-aligned & facing target, taxi off the tarmac and shoot preloaded ball without aiming
+   */
   public DummyAutonAndShoot() {
     addCommands(new DriveForTime(-0.2, 1.8), 
                 new SpinUpShooterNoStop().withTimeout(2.5),

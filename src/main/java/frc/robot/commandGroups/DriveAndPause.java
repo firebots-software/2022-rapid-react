@@ -9,6 +9,13 @@ import frc.robot.commands.auton.DoNothing;
 import frc.robot.commands.auton.DriveForTime;
 
 public class DriveAndPause extends SequentialCommandGroup {
+  /**
+   * Drive for time, then pause for time.
+   * 
+   * @param speed = drivetrain percent output, front-back velocity [-1, 1]
+   * @param driveTime = time to drive, in seconds
+   * @param pauseTime = time to pause, in seconds
+   */
     public DriveAndPause(double speed, double driveTime, double pauseTime) {
     addCommands(new DriveForTime(speed, driveTime),
                 new DoNothing().withTimeout(pauseTime));

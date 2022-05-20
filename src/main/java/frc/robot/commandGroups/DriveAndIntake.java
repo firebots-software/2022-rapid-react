@@ -5,9 +5,16 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.auton.DriveForTime;
 
 public class DriveAndIntake extends ParallelCommandGroup {
+
+  /**
+   * Drive for time while running intake, then pause for time
+   * 
+   * @param speed = drivetrain percent output, front-back velocity [-1, 1]
+   * @param driveTime = time to drive, in seconds
+   * @param pauseTime = time to pause, in seconds
+   */
   public DriveAndIntake(double speed, double driveTime, double pauseTime) {
     addCommands(new DriveAndPause(speed, driveTime, pauseTime),
                 new RunIntakeAndSpaghetti(false));

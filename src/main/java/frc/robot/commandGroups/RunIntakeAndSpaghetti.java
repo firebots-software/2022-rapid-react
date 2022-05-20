@@ -10,8 +10,11 @@ import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.intake.RunSpaghettiWheels;
 
 public class RunIntakeAndSpaghetti extends ParallelCommandGroup {
-  /** Creates a new RunIntakeAndSpaghetti. */
 
+  /**
+   * Run the intake rollers and spaghetti wheels.
+   * @param reversed = direction of rollers; true = outtaking balls
+   */
   public RunIntakeAndSpaghetti(boolean reversed) {
     if (!reversed) {
     addCommands(new RunIntake(Constants.Intake.INTAKE_SPEED_FORWARDS),

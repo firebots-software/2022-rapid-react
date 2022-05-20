@@ -11,6 +11,10 @@ import frc.robot.commands.intake.StopIntake;
 import frc.robot.commands.shooter.StopShooter;
 
 public class StopEverything extends ParallelCommandGroup {
+
+  /**
+   * Emergency stop command -- stops movement from all mechanisms
+   */
   public StopEverything() {
     addCommands(new StopShooter(),
                 new StopIntake(),
