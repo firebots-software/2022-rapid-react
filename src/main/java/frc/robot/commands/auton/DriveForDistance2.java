@@ -16,17 +16,23 @@ public class DriveForDistance2 extends CommandBase {
   private Drivetrain drivetrain;
   private PIDController pidLeft, pidRight;
 
-  /** Creates a new DriveForDistance2. */
+  /**
+   * Drive the robot for a set distance. Uses 2 PID controllers, left and right,
+   * to control 2 sides of drivetrain
+   * 
+   * @param targetMeters = target distance in meters. positive is forward
+   */
   public DriveForDistance2(double targetMeters) {
     drivetrain = Drivetrain.getInstance();
     pidLeft = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD);
     pidLeft.setSetpoint(targetMeters);
-    pidLeft.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
-    
+    pidLeft.setTolerance(Constants.Drivetrain.distanceToleranceMeters,
+        Constants.Drivetrain.velocityToleranceMetersPerSec);
 
     pidRight = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD);
     pidRight.setSetpoint(targetMeters);
-    pidRight.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
+    pidRight.setTolerance(Constants.Drivetrain.distanceToleranceMeters,
+        Constants.Drivetrain.velocityToleranceMetersPerSec);
 
   }
 
@@ -43,7 +49,7 @@ public class DriveForDistance2 extends CommandBase {
     double outputRight = pidRight.calculate(drivetrain.getRightEncoderCountMeters());
 
     drivetrain.PIDtankDrive(outputLeft, outputRight);
-     
+
   }
 
   // Called once the command ends or is interrupted.

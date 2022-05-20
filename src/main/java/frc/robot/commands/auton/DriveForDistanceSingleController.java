@@ -17,7 +17,11 @@ public class DriveForDistanceSingleController extends CommandBase {
   private Drivetrain drivetrain;
   private PIDController pid;
 
-  /** Creates a new DriveForDistanceSingleController. */
+  /**
+   * Drive the robot for a set distance. Uses 1 PID controller that uses the avg left-right encoder value
+   * 
+   * @param targetMeters = target distance in meters. positive is forward
+   */
   public DriveForDistanceSingleController(double targetMeters) {
     drivetrain = Drivetrain.getInstance();
     pid = new PIDController(Constants.Drivetrain.driveP, Constants.Drivetrain.driveI, Constants.Drivetrain.driveD);

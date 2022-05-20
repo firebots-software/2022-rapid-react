@@ -7,7 +7,6 @@ package frc.robot.commands.auton;
 import java.util.Set;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -18,7 +17,11 @@ public class TurnForAngle extends CommandBase {
   private PIDController pid;
   private static final double MAX_ROTATION = 0.7;
 
-  /** Creates a new DriveForDistanceSingleController. */
+  /**
+   * Turn the robot for a given angle using a PID controller with gyro input.
+   * 
+   * @param targetAngleDegrees = target angle to turn, in degrees, + is clockwise (double check direction?)
+   */
   public TurnForAngle(double targetAngleDegrees) {
     drivetrain = Drivetrain.getInstance();
     pid = new PIDController(Constants.Drivetrain.angleP, Constants.Drivetrain.angleI, Constants.Drivetrain.angleD);

@@ -18,10 +18,10 @@ public class TurnForTime extends CommandBase {
   private Timer timer;
 
   /**
-   * Default constructior
+   * Turn the robot at a fixed speed for a set time
    * 
-   * @param speed       = speed set in RobotContainer.java
-   * @param targetTime  = time set in RobotContainer.java
+   * @param speed = percent output drivetrain rotation, [-1, 1]
+   * @param targetTime  = target time in seconds
    */
   public TurnForTime(double speed,double targetTime) {
     // System.out.println("init timed turn");

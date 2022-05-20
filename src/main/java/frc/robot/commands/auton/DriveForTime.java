@@ -18,10 +18,10 @@ public class DriveForTime extends CommandBase {
   private Timer timer;
 
   /**
-   * Default constructior
+   * Drive the robot for a set time
    * 
-   * @param speed       = speed set in RobotContainer.java
-   * @param targetTime  = time set in RobotContainer.java
+   * @param speed = drivetrain front-back percent output, [-1, 1] where + is forward
+   * @param targetTime = time (s) to drive
    */
   public DriveForTime(double speed,double targetTime) {
     // System.out.println("INIT TIME DRIVE");
