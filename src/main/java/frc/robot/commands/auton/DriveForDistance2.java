@@ -7,7 +7,6 @@ package frc.robot.commands.auton;
 import java.util.Set;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -29,7 +28,6 @@ public class DriveForDistance2 extends CommandBase {
     pidRight.setSetpoint(targetMeters);
     pidRight.setTolerance(Constants.Drivetrain.distanceToleranceMeters, Constants.Drivetrain.velocityToleranceMetersPerSec);
 
-    // System.out.println("drive for dist constructor");
   }
 
   // Called when the command is initially scheduled.
@@ -43,24 +41,8 @@ public class DriveForDistance2 extends CommandBase {
   public void execute() {
     double outputLeft = pidLeft.calculate(drivetrain.getLeftEncoderCountMeters());
     double outputRight = pidRight.calculate(drivetrain.getRightEncoderCountMeters());
-    // System.out.print("pid left output: " + outputLeft);
-    // System.out.print("pid right output: " + outputRight);
-    // SmartDashboard.putNumber("Left Position Error: ", pidLeft.getPositionError());
-    // SmartDashboard.putNumber("Right Position Error: ", pidRight.getPositionError());
+
     drivetrain.PIDtankDrive(outputLeft, outputRight);
-
-    // SmartDashboard.putNumber("pid left output", outputLeft);
-    // SmartDashboard.putNumber("pid right output", outputRight);
-
-    // SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
-    // SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
-    // SmartDashboard.putNumber("dfd2 pid error", drivetrain.getRightEncoderCountMeters());
-    // SmartDashboard.putNumber("dfd2 pid setpoint", drivetrain.getRightEncoderVelocityMetersPerSec());
- 
-    // SmartDashboard.putBoolean("at setpoint", pidLeft.atSetpoint());
-
-    // SmartDashboard.putNumber("Average encoder value", drivetrain.getLeftEncoderCountMeters());
-    //SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
      
   }
 

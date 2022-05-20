@@ -7,10 +7,9 @@ package frc.robot.commands.climber;
 import frc.robot.Constants;
 
 public class ClimbToMax extends ClimbToHeight {
-  /** Creates a new ClimbToMax. */
+
   public ClimbToMax() {
     super(Constants.Climber.climbSpeedUp, Constants.Climber.maxClimberHeight);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   @Override

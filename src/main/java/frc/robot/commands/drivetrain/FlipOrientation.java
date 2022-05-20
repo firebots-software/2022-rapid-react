@@ -15,14 +15,12 @@ public class FlipOrientation implements Command {
     }
 
     public void initialize() {
-      drivetrain.toggleDriveOrientation();
+        drivetrain.toggleDriveOrientation();
     }
 
     @Override
     public void execute() {
-       
     }
-
 
     @Override
     public boolean isFinished() {
@@ -31,9 +29,7 @@ public class FlipOrientation implements Command {
 
     @Override
     public void end(boolean interrupted) {
-
     }
-
 
     @Override
     public Set<Subsystem> getRequirements() {

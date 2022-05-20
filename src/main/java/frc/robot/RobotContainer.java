@@ -13,26 +13,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commandGroups.AimAndShoot2Balls;
-import frc.robot.commandGroups.AimAndShoot;
-import frc.robot.commandGroups.DummyAutonAndShoot;
-import frc.robot.commandGroups.RunIntakeAndSpaghetti;
-import frc.robot.commandGroups.RunSpaghetAndRoll;
-import frc.robot.commandGroups.StopEverything;
-import frc.robot.commandGroups.TaxiIntakeShoot;
-import frc.robot.commandGroups.TaxiTurnShoot;
-import frc.robot.commandGroups.TwoBallAuton;
-import frc.robot.commandGroups.TwoBallAutonTracking;
+import frc.robot.commandGroups.*;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.shooter.*;
-import frc.robot.commands.climber.ManualClimb;
-import frc.robot.commands.intake.FlapIntake;
-import frc.robot.commands.intake.ToggleIntakePiston;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Turret;
+import frc.robot.commands.turret.ManualTurretTurn;
+import frc.robot.commands.turret.ZeroTurret;
+import frc.robot.commands.climber.*;
+import frc.robot.commands.intake.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

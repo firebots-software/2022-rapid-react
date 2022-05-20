@@ -12,20 +12,24 @@ import frc.robot.subsystems.Climber;
 import java.util.Collections;
 import java.util.Set;
 
+/**
+ *  Keto currently does not have functioning encoders on its climber motors, so this command cannot run
+ */
+
 public class ClimbToHeight extends CommandBase {
 
   protected Climber climber;
 
   /***
-   * Motor voltage has values between -1 and 1 inclusive and determines direction of motor
+   * Percent output has values between -1 and 1 inclusive and determines direction of motor
    * Target height is the target height in centimeters that the climber wants to go to
    */
-  private double motorVoltage, targetHeight;
+  private double percentOutput, targetHeight;
 
-  public ClimbToHeight(double motorVoltage, double targetHeight) {
+  public ClimbToHeight(double percentOutput, double targetHeight) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = Climber.getInstance();
-    this.motorVoltage = motorVoltage;
+    this.percentOutput = percentOutput;
     setTargetHeight(targetHeight);
   }
 
@@ -40,17 +44,17 @@ public class ClimbToHeight extends CommandBase {
     double rightHeight = climber.getRightHeight();
 
     if (leftHeight != targetHeight) {
-      if (targetHeight > leftHeight) motorVoltage = Math.abs(motorVoltage);
-      if (targetHeight < leftHeight) motorVoltage = -Math.abs(motorVoltage);
-      climber.setLeftClimberSpeed(motorVoltage);
+      if (targetHeight > leftHeight) percentOutput = Math.abs(percentOutput);
+      if (targetHeight < leftHeight) percentOutput = -Math.abs(percentOutput);
+      climber.setLeftClimberSpeed(percentOutput);
     } else {
       climber.setLeftClimberSpeed(0);
     }
 
     if (rightHeight != targetHeight) {
-      if (targetHeight > rightHeight) motorVoltage = Math.abs(motorVoltage);
-      if (targetHeight < rightHeight) motorVoltage = -Math.abs(motorVoltage);
-      climber.setRightClimberSpeed(motorVoltage);
+      if (targetHeight > rightHeight) percentOutput = Math.abs(percentOutput);
+      if (targetHeight < rightHeight) percentOutput = -Math.abs(percentOutput);
+      climber.setRightClimberSpeed(percentOutput);
     } else {
       climber.setRightClimberSpeed(0);
     }

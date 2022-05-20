@@ -40,18 +40,6 @@ public class DriveForDistanceSingleController extends CommandBase {
     double output = pid.calculate(drivetrain.getAvgEncoderCountMeters());
     SmartDashboard.putNumber("Position Error: ", pid.getPositionError());
     drivetrain.PIDarcadeDrive(output);
-
-    // SmartDashboard.putNumber("pid output", output);
-
-    // SmartDashboard.putNumber("Encoder count meters", drivetrain.getAvgEncoderCountMeters());
-    // SmartDashboard.putNumber("Left encoder Velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
-    // SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
-    // SmartDashboard.putNumber("dfds pid error", pid.getPositionError());
-    // SmartDashboard.putNumber("dfd2 pid setpoint", pid.getSetpoint());
-
- 
-    // SmartDashboard.putBoolean("at setpoint", pid.atSetpoint());
-    //SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
      
   }
 

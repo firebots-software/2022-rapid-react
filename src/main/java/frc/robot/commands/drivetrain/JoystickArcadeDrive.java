@@ -17,31 +17,26 @@ public class JoystickArcadeDrive implements Command {
         this.drivetrain = Drivetrain.getInstance();
         this.frontBackSpeed = frontBackSpeed;
         this.rotationSpeed = rotationSpeed;
-
     }
 
     @Override
     public void initialize() {
-
     }
 
     @Override
     public void execute() {
-        drivetrain.arcadeDrive(-frontBackSpeed.getAsDouble(), -rotationSpeed.getAsDouble());
-
+        drivetrain.arcadeDrive(-frontBackSpeed.getAsDouble(), -rotationSpeed.getAsDouble()); // todo: figure out why we need negation
     }
 
   
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
         return false;
     }
 
 
     @Override
     public void end(boolean interrupted) {
-
     }
 
     @Override

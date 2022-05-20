@@ -16,6 +16,7 @@ import frc.robot.subsystems.Drivetrain;
 public class TurnForAngle extends CommandBase {
   private Drivetrain drivetrain;
   private PIDController pid;
+  private static final double MAX_ROTATION = 0.7;
 
   /** Creates a new DriveForDistanceSingleController. */
   public TurnForAngle(double targetAngleDegrees) {
@@ -31,26 +32,21 @@ public class TurnForAngle extends CommandBase {
   public void initialize() {
     drivetrain.resetEncoders();
     drivetrain.resetGyro();
-    // System.out.println("starting turn for " + pid.getSetpoint() + " degrees");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double output = pid.calculate(drivetrain.getHeading());
-    double max = 0.7;
-    if (output > max) output = max;
-    if (output < -max) output = -max;
+    if (output > MAX_ROTATION) output = MAX_ROTATION;
+    if (output < -MAX_ROTATION) output = -MAX_ROTATION;
     drivetrain.PIDarcadeDriveAngle(output);
-    // SmartDashboard.putNumber("PID output", output); 
-    // SmartDashboard.putNumber("PID error", pid.getPositionError());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     drivetrain.stop();
-    // System.out.println("DONE WITH TURN FOR ANGLE");
   }
 
 

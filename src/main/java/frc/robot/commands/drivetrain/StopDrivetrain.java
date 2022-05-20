@@ -14,14 +14,12 @@ public class StopDrivetrain extends CommandBase {
   public StopDrivetrain() {
     drivetrain = Drivetrain.getInstance();
     addRequirements(drivetrain);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     drivetrain.stop();
-    // System.out.println("stopping drivetrain");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
