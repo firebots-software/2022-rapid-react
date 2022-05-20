@@ -8,6 +8,10 @@ import frc.robot.Constants;
 
 public class ClimbToMax extends ClimbToHeight {
 
+  /**
+   *  Extend climbers to their max height. WARNING: DOES NOT WORK ON KETO BECAUSE WE
+   * DO NOT HAVE ENCODERS ON THE CLIMBER MOTORS
+   */
   public ClimbToMax() {
     super(Constants.Climber.climbSpeedUp, Constants.Climber.maxClimberHeight);
   }

@@ -9,6 +9,10 @@ import frc.robot.Constants;
 
 public class ClimbToLow extends ClimbToHeight {
 
+  /**
+   * Move the climber to the height of the low hangar bar. WARNING: DOES NOT WORK ON KETO BECAUSE WE
+   * DO NOT HAVE ENCODERS ON THE CLIMBER MOTORS
+   */
   public ClimbToLow() {
     super(Constants.Climber.climbSpeedUp, Constants.Climber.lowBarHeight);
   }

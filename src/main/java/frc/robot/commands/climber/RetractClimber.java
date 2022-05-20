@@ -4,14 +4,17 @@
 
 package frc.robot.commands.climber;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
 public class RetractClimber extends ClimbToHeight {
-  /** Creates a new RetractClimber. */
+
+  /**
+   * Automatically retract climber. If currently at max, retract to middle rung.
+   * If at middle rung or below, retract completely. WARNING: DOES NOT WORK ON
+   * KETO BECAUSE WE DO NOT HAVE ENCODERS ON THE CLIMBER MOTORS
+   */
   public RetractClimber() {
     super(-Constants.Climber.climbSpeedUp, -1);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -20,7 +23,7 @@ public class RetractClimber extends ClimbToHeight {
     if (climber.climberAtMax()) {
       setTargetHeight(Constants.Climber.middleBarHeight);
     } else {
-      setTargetHeight(Constants.Climber.retractedHeight);
+      setTargetHeight(0);
     }
   }
 }

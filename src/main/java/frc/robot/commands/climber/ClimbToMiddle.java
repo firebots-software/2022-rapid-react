@@ -4,18 +4,15 @@
 
 package frc.robot.commands.climber;
 
-//import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Climber;
-
-import java.util.Collections;
-import java.util.Set;
 
 
 public class ClimbToMiddle extends ClimbToHeight {
 
+  /**
+   * Raise climbers to middle rung height. WARNING: DOES NOT WORK ON KETO BECAUSE WE
+   * DO NOT HAVE ENCODERS ON THE CLIMBER MOTORS
+   */
   public ClimbToMiddle() {
     super(Constants.Climber.climbSpeedUp, Constants.Climber.middleBarHeight);
   }

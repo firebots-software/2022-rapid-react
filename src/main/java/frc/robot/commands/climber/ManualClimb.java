@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
-import java.util.Collections;
 import java.util.Set;
 
 
@@ -17,6 +16,11 @@ public class ManualClimb extends CommandBase {
   public Climber climber;
   public double climbSpeed;
 
+  /**
+   * Manually control the climber motors' percent output. Move climbers up/down.
+   * 
+   * @param speed = climber motor percent output, [-1, 1], + is up
+   */
   public ManualClimb(double speed) {
     climber = Climber.getInstance();
     climbSpeed = speed;

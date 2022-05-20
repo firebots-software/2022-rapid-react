@@ -9,9 +9,11 @@ import frc.robot.subsystems.Climber;
 
 public class StopClimber extends CommandBase {
   private Climber climber;
-  
-  /** Creates a new StopClimber. */
-  public StopClimber() {
+
+  /**
+   * Stop the climber motors.
+   */
+    public StopClimber() {
     climber = Climber.getInstance();
     addRequirements(climber);
   }
