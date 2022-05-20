@@ -10,23 +10,25 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
 public class ScanField extends CommandBase {
-  private Limelight limelight; 
-  private Turret turret; 
+  private Limelight limelight;
+  private Turret turret;
   private boolean reachedLeftStop;
   private boolean reachedRightStop;
 
-  /** Creates a new ScanField. */
+  /**
+   * Sweep turret through its entire range of motion in order to capture vision
+   * target if it is out of frame initially.
+   */
   public ScanField() {
-    limelight = Limelight.getInstance(); 
-    turret = Turret.getInstance(); 
-    // Use addRequirements() here to declare subsystem dependencies.
+    limelight = Limelight.getInstance();
+    turret = Turret.getInstance();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     reachedLeftStop = false;
-    reachedRightStop = false; 
+    reachedRightStop = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,13 +37,13 @@ public class ScanField extends CommandBase {
     if (!reachedLeftStop) {
       turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
       if (turret.getEncoderValDegrees() <= -80) {
-        reachedLeftStop = true; 
+        reachedLeftStop = true;
         turret.stopMotor();
       }
     } else if (!reachedRightStop) {
       turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
       if (turret.getEncoderValDegrees() >= 80) {
-        reachedRightStop = true; 
+        reachedRightStop = true;
         turret.stopMotor();
       }
     }
@@ -57,6 +59,6 @@ public class ScanField extends CommandBase {
   @Override
   public boolean isFinished() {
     // return limelight.getTx() < Constants.Turret.pidPositionToleranceDegrees;
-    return limelight.getTv(); 
+    return limelight.getTv();
   }
 }

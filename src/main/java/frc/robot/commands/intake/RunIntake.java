@@ -12,7 +12,11 @@ public class RunIntake extends CommandBase {
   private Intake intake;
   private double speed;
   
-  /** Creates a new RunIntakeMotor. */
+  /**
+   * Extends intake, runs intake roller. Retracts and stops motor when done.
+   * 
+   * @param speed = intake motor percent output
+   */
   public RunIntake(double speed) {
     this.intake = Intake.getInstance();
     this.speed = speed;

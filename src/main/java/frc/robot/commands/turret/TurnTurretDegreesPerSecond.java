@@ -11,7 +11,12 @@ public class TurnTurretDegreesPerSecond extends CommandBase {
   private Turret turret;
   private double speed;
 
-  /** Creates a new TurnTurretDegreesPerSecond. */
+  /**
+   * Experimental: use falcon velocity control to rotate turret at fixed angular
+   * velocity
+   * 
+   * @param degPerS = turret velocity, in degrees per second, + is clockwise
+   */
   public TurnTurretDegreesPerSecond(double degPerS) {
     turret = Turret.getInstance();
     this.speed = degPerS;
@@ -19,7 +24,8 @@ public class TurnTurretDegreesPerSecond extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

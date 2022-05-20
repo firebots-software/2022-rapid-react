@@ -10,6 +10,10 @@ import java.util.Set;
 public class FlipOrientation implements Command {
     private Drivetrain drivetrain;
 
+    /**
+     * Flip which side of the robot is considered the front. Invert all driving
+     * controls accordingly
+     */
     public FlipOrientation() {
         this.drivetrain = Drivetrain.getInstance();
     }

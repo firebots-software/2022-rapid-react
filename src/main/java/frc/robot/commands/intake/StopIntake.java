@@ -10,6 +10,9 @@ import frc.robot.subsystems.Intake;
 public class StopIntake extends CommandBase {
   private Intake intake;
 
+  /**
+   * Stops intake motor and retracts intake piston
+   */
   public StopIntake() {
     intake = Intake.getInstance();
     addRequirements(intake);

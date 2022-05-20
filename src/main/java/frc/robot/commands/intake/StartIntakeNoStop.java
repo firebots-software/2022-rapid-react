@@ -11,7 +11,9 @@ import frc.robot.subsystems.Intake;
 public class StartIntakeNoStop extends CommandBase {
   private Intake intake;
   
-  /** Creates a new StartIntakeNoStop. */
+  /**
+   * Extend and start the intake roller, but keep it running when command is over. Used in command groups.
+   */
   public StartIntakeNoStop() {
     intake = Intake.getInstance();
   }

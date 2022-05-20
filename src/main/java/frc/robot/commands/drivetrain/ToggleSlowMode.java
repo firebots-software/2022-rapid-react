@@ -11,6 +11,9 @@ public class ToggleSlowMode extends CommandBase {
 
     private final Drivetrain drivetrain;
 
+    /**
+     *  Toggles drivetrain slow mode which reduces driving speed
+     */
     public ToggleSlowMode() {
         this.drivetrain = Drivetrain.getInstance();
     }

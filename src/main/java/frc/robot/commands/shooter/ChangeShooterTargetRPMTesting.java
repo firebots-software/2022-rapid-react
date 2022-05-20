@@ -10,9 +10,12 @@ import frc.robot.subsystems.Shooter;
 public class ChangeShooterTargetRPMTesting extends CommandBase {
   private Shooter shooter;
   private double change;
-  private boolean changeTopMotor;
   
-  /** Creates a new ChangeShooterTargetRPM. */
+  /**
+   * For use in robot testing. Increment the flywheel testing RPM target value.
+   * 
+   * @param changeInRPM = value to add to target RPM
+   */
   public ChangeShooterTargetRPMTesting(double changeInRPM) {
     shooter = Shooter.getInstance();
     this.change = changeInRPM;

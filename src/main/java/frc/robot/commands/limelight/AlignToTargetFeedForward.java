@@ -23,7 +23,10 @@ public class AlignToTargetFeedForward extends CommandBase {
   private PIDController pid;
   private SimpleMotorFeedforward feedforward;
 
-  /** Creates a new AlignToTarget. */
+  /**
+   * Automatic target tracking. Should be run throughout the match. Uses PID loop
+   * on limelight feedback and feedforward controller for drivetrain rotation.
+   */
   public AlignToTargetFeedForward() {
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
@@ -34,7 +37,6 @@ public class AlignToTargetFeedForward extends CommandBase {
     feedforward = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret,
         Constants.Turret.kaTurret);
 
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -53,18 +55,20 @@ public class AlignToTargetFeedForward extends CommandBase {
   public void execute() {
 
     if (!limelight.getTv()) {
-      double angVel = drivetrain.getAngularVelocity(); 
+      double angVel = drivetrain.getAngularVelocity();
       if (angVel > Constants.Turret.velThreshold) {
         turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
         System.out.println("flipping right");
       } else if (angVel < -Constants.Turret.velThreshold) {
         turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
         System.out.println("flipping left");
-      } 
-    } else {  
+      }
+    } else {
       pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
 
-      // double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() + limelight.getTx())/ (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
+      // double tangentialVel = -drivetrain.getCurrentSpeed() *
+      // Math.sin(turret.getEncoderValDegrees() + limelight.getTx())/
+      // (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
       double angularVel = -drivetrain.getAngularVelocity();
       double pidOutput = pid.calculate(turret.getEncoderValDegrees());
       if (pid.atSetpoint()) {
@@ -90,7 +94,7 @@ public class AlignToTargetFeedForward extends CommandBase {
         turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12 * Constants.Turret.feedForwardConstant);
       }
       // if (pid.atSetpoint()) {
-      //   System.out.println("pid done");
+      // System.out.println("pid done");
       // }
     }
   }

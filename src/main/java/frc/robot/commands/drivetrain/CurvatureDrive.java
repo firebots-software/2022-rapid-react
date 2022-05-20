@@ -13,6 +13,12 @@ public class CurvatureDrive extends CommandBase {
   private final DoubleSupplier frontBackSpeed;
   private final DoubleSupplier rotationSpeed;
 
+  /**
+   * Teleop joystick driving using curvature drive.
+   *  
+   * @param frontBackSpeed = joystick axis for front-back movement
+   * @param rotationSpeed = joystick axis for rotation
+   */
   public CurvatureDrive(DoubleSupplier frontBackSpeed, DoubleSupplier rotationSpeed) {
     this.drivetrain = Drivetrain.getInstance();
     this.frontBackSpeed = frontBackSpeed;

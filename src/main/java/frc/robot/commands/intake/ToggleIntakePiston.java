@@ -4,19 +4,15 @@
 
 package frc.robot.commands.intake;
 
-import java.util.Set;
-
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class ToggleIntakePiston extends CommandBase {
   private Intake intake;
   
-  /** Creates a new ToggleIntakePiston. */
+  /**
+   *  Toggles intake piston position from its current state
+   */
   public ToggleIntakePiston() {
     this.intake = Intake.getInstance();
 

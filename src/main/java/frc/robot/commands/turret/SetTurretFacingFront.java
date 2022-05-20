@@ -7,13 +7,15 @@ package frc.robot.commands.turret;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
-public class ZeroTurret extends CommandBase {
+public class SetTurretFacingFront extends CommandBase {
   private Turret turret;
   private double speed;
   private double DEFAULT_SPEED = 0.3;
 
-  /** Creates a new ZeroTurret. */
-  public ZeroTurret() {
+  /**
+   *  Reset turret to be facing forward. Ensure that encoder is properly zeroed before running.
+   */
+  public SetTurretFacingFront() {
     turret = Turret.getInstance();
     this.speed = DEFAULT_SPEED;
     addRequirements(turret);

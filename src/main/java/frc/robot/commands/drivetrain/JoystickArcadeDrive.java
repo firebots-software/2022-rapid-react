@@ -12,7 +12,12 @@ public class JoystickArcadeDrive implements Command {
     private final DoubleSupplier frontBackSpeed;
     private final DoubleSupplier rotationSpeed;
 
-
+  /**
+   * Teleop joystick driving using normal arcade drive.
+   *  
+   * @param frontBackSpeed = joystick axis for front-back movement
+   * @param rotationSpeed = joystick axis for rotation
+   */
     public JoystickArcadeDrive(DoubleSupplier frontBackSpeed, DoubleSupplier rotationSpeed) {
         this.drivetrain = Drivetrain.getInstance();
         this.frontBackSpeed = frontBackSpeed;

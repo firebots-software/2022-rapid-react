@@ -10,6 +10,9 @@ import frc.robot.subsystems.Shooter;
 public class StopShooter extends CommandBase {
   private Shooter shooter;
 
+  /**
+   *  Stop shooter motors
+   */
   public StopShooter() {
     shooter = Shooter.getInstance();
     addRequirements(shooter);

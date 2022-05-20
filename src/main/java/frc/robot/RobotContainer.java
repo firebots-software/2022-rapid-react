@@ -19,7 +19,7 @@ import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.turret.ManualTurretTurn;
-import frc.robot.commands.turret.ZeroTurret;
+import frc.robot.commands.turret.SetTurretFacingFront;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.intake.*;
 import frc.robot.subsystems.*;
@@ -145,7 +145,7 @@ public class RobotContainer {
     rightPov2.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
     final Button zeroTurret = new JoystickButton(ps4_controller1, Constants.OI.SQUARE_BUTTON_PORT);
-    zeroTurret.whenHeld(new ZeroTurret());
+    zeroTurret.whenHeld(new SetTurretFacingFront());
 
   }
 

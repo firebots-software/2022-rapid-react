@@ -12,11 +12,14 @@ public class RunShooterConstVoltage extends CommandBase {
   private Shooter shooter;
   private double speed;
   
-  /** Creates a new RunConstSpeed. */
+  /**
+   * Spin shooter flywheels at a constant percent output, no feedback loop.
+   * 
+   * @param speed = shooter percent output
+   */
   public RunShooterConstVoltage(double speed) {
     this.speed = SmartDashboard.getNumber("shooter speed", 0.0);
     this.shooter = Shooter.getInstance();
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.

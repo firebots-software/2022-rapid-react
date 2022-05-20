@@ -5,24 +5,26 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.math.controller.BangBangController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
 public class SpinFlywheelBangBang extends CommandBase {
   private Shooter shooter;
   private BangBangController topBang, bottomBang;
-  
-  /** Creates a new SpinFlywheelBangBang. */
+
+  /**
+   * Experimental: use a bang-bang controller to spin flywheel up to a certain
+   * RPM. Not working at the moment
+   */
   public SpinFlywheelBangBang() {
-    System.out.println("constructing bang bang");
+    // System.out.println("constructing bang bang");
     this.shooter = Shooter.getInstance();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("starting bang bang");
+    // System.out.println("starting bang bang");
 
     this.topBang = new BangBangController();
     this.bottomBang = new BangBangController();
@@ -54,7 +56,6 @@ public class SpinFlywheelBangBang extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean done = topBang.atSetpoint() && bottomBang.atSetpoint();
-
 
     // SmartDashboard.putBoolean("flywheel bang bang done", done);
     return false;

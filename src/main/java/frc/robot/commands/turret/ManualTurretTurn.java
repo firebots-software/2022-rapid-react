@@ -11,7 +11,10 @@ public class ManualTurretTurn extends CommandBase {
   private Turret turret;
   private double speed;
 
-  /** Creates a new TurnTurretAtSpeed. */
+  /**
+   * Manually turn turret in a certain direction
+   * @param speed = turret percent output, [-1, 1], + is clockwise
+   */
   public ManualTurretTurn(double speed) {
     this.turret = Turret.getInstance();
     this.speed = speed;

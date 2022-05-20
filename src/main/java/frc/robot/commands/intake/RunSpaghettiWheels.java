@@ -12,7 +12,11 @@ public class RunSpaghettiWheels extends CommandBase {
   private Intake intake;
   private double speed;
 
-  /** Creates a new RunSpaghettiWheels. */
+  /**
+   * Run the spaghetti wheel motor.
+   * 
+   * @param speed = motor percent output, [-1, 1]
+   */
   public RunSpaghettiWheels(double speed) {
     this.intake = Intake.getInstance();
     this.speed = speed;

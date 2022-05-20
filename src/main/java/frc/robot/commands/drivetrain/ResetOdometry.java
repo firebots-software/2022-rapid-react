@@ -11,7 +11,9 @@ import frc.robot.subsystems.Drivetrain;
 public class ResetOdometry extends CommandBase {
   private Drivetrain drivetrain;
   
-  /** Creates a new ResetOdometry. */
+  /**
+   *  Reset drivetrain odometry. Use before motion profiling commands.
+   */
   public ResetOdometry() {
     drivetrain = Drivetrain.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.

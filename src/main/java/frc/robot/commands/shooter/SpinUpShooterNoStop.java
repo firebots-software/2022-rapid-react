@@ -4,10 +4,11 @@
 
 package frc.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
 public class SpinUpShooterNoStop extends SpinUpShooter {
-  /** Creates a new FlywheelFalconFFNoStop. */
+
+  /**
+   *  Spin flywheel up to fixed RPM, do not stop when command ends. Used in command groups.
+   */
   public SpinUpShooterNoStop() {
     super();
   }

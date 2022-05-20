@@ -15,7 +15,11 @@ public class TurnTurretForAngle extends CommandBase {
   private double degreesToTurn, initialDegrees;
   private final double THRESHOLD = 0.25;
   
-  /** Creates a new TurretPositionControl. */
+  /**
+   * Experimental: use falcon position control to turn turret for a given angle. Does not quite work?
+   * 
+   * @param degrees = degrees to turn, + is clockwise
+   */
   public TurnTurretForAngle(double degrees) {
     turret = Turret.getInstance();
     this.degreesToTurn = degrees;

@@ -12,9 +12,10 @@ public class RunRoller extends CommandBase {
 
   private final Shooter shooter;
   
-  /** Creates a new LoadBall. */
+  /**
+   * Enable ball manipulator roller to deploy ball into shooter
+   */
   public RunRoller() {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
     
   }

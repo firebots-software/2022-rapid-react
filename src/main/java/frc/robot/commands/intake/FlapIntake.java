@@ -12,13 +12,14 @@ public class FlapIntake extends CommandBase {
   private Intake intake;
   private Timer timer;
 
-  /** Creates a new FlapIntake. */
+  /**
+   * Quickly flaps the intake out & in to help push stuck balls into the manipulator
+   */
   public FlapIntake() {
     intake = Intake.getInstance();
 
     timer = new Timer();
     
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.

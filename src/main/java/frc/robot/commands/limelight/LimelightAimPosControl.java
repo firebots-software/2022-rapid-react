@@ -16,8 +16,10 @@ public class LimelightAimPosControl extends CommandBase {
   private final int LIMELIGHT_REFRESH_INTERVAL = 5; // number of loops before refreshing Limelight
   private final double TX_THRESHOLD = 1;
 
-
-  /** Creates a new AlignToTargetPosControl. */
+  /**
+   * Experimental limelight aiming command using falcon position control. Aims
+   * turret from a fixed location, relatively slow turret movement.
+   */
   public LimelightAimPosControl() {
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
@@ -46,7 +48,8 @@ public class LimelightAimPosControl extends CommandBase {
     } else {
       if (feedbackDelayCounter % LIMELIGHT_REFRESH_INTERVAL == 0) {
         limelight.refreshValues();
-        turret.setTurretPosition(limelight.getTx());;
+        turret.setTurretPosition(limelight.getTx());
+        ;
       }
       feedbackDelayCounter++;
     }

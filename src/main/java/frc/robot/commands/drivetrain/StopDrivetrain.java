@@ -10,7 +10,9 @@ import frc.robot.subsystems.Drivetrain;
 public class StopDrivetrain extends CommandBase {
   private Drivetrain drivetrain;
   
-  /** Creates a new StopDrivetrain. */
+  /**
+   * Stop all drivetrain motors
+   */
   public StopDrivetrain() {
     drivetrain = Drivetrain.getInstance();
     addRequirements(drivetrain);

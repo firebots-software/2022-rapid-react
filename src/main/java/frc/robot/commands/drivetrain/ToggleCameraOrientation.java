@@ -10,7 +10,9 @@ import frc.robot.subsystems.Drivetrain;
 public class ToggleCameraOrientation extends CommandBase {
   private Drivetrain drivetrain;
 
-  /** Creates a new ToggleCameraOrientation. */
+  /**
+   * Toggle which camera feed is currently active
+   */
   public ToggleCameraOrientation() {
     this.drivetrain = Drivetrain.getInstance();
   }

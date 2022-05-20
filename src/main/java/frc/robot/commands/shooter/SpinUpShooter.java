@@ -10,9 +10,13 @@ import frc.robot.subsystems.Shooter;
 
 public class SpinUpShooter extends CommandBase {
   protected Shooter shooter;
-  protected Limelight limelight; 
+  protected Limelight limelight;
 
-  /** Creates a new FlywheelFalconFF. */
+  /**
+   * Spin flywheels at fixed RPM using falcon velocity control.
+   * NOTE: currently, RPM does not seem to match target RPM, though it does
+   * stabilize at some value
+   */
   public SpinUpShooter() {
     shooter = Shooter.getInstance();
     limelight = Limelight.getInstance();
@@ -22,7 +26,6 @@ public class SpinUpShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // System.out.println("starting falcon closed loop");
     shooter.setDistance(limelight.getDistanceToTarget());
   }
 
