@@ -47,9 +47,7 @@ public class TurnTurretForAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return Math.abs(turret.getMotionMagicPosition()) > Math.abs(degreesToTurn / 6.0);
     return Math.abs(turret.getEncoderValDegrees() - initialDegrees) > Math.abs(degreesToTurn);
 
-    // return Math.abs(turret.getEncoderValDegrees() - targetDegrees) < THRESHOLD;
   }
 }

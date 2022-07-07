@@ -14,7 +14,6 @@ public class RunRoller extends CommandBase {
   
   /** Creates a new LoadBall. */
   public RunRoller() {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = Shooter.getInstance();
     
   }

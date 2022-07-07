@@ -36,3 +36,5 @@ public class ToggleCameraOrientation extends CommandBase {
     return true;
   }
 }
+
+// CLEANED

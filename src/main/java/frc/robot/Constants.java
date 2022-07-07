@@ -52,8 +52,8 @@ public final class Constants {
 
         public final static int PIGEON_ID = 8;
 
-        public static double driveP = 0.3, driveI = 0, driveD = 0;
-        public static double angleP = 0.007, angleI = 0, angleD = 0.001;
+        public static double driveP = 0.3, driveI = 0, driveD = 0; // PID for drivetrain
+        public static double angleP = 0.007, angleI = 0, angleD = 0.001; 
         public static double distanceToleranceMeters = 0.02;
         public static double angleToleranceDegrees = 15;
         public static double velocityToleranceMetersPerSec = 0.35;
@@ -73,9 +73,11 @@ public final class Constants {
         public static double kRamseteZeta = 0.7;
         public static double kPDriveVel = 2.6604;
 
+        // motion profiling values from characterization tool
         public static final double ksVolts = 0.67605;
         public static final double kvVoltSecondsPerMeter = 1.8252;
         public static final double kaVoltSecondsSquaredPerMeter = 0.37032;
+
 		public static final double velocityThreshold = 90; // tune this value
 
         public static DifferentialDriveVoltageConstraint autoVoltageConstraint =
@@ -105,6 +107,7 @@ public final class Constants {
     }
 
     public static final class Limelight {
+        // tuned PID values
         public static final double alignP = 0.04; 
         public static final double alignI = 0.0; 
         public static final double alignD = 0.0; 
@@ -114,14 +117,11 @@ public final class Constants {
 
         public static final double limelightAngleOffset = 28; // TODO: change limelight angle offset to match actual thing\
         public static final double heightOfTarget = 104; // in meters 
-        public static final double FEED_FORWARD_KS = 0;
-        public static final double FEED_FORWARD_KV = 0;
-        public static final double FEED_FORWARD_KA = 0;
 
         public static final double LIMELIGHT_DEFAULT_VALUE = 150.935;
+        
         public static final double timeWithoutTarget = 5; // change
         public static final double turningThreshold = 100; 
-        // \public static final double turretSpeedConstant = 0.1; 
         public static double maxAngle = 90;
 
         public static double maxDistance = 121;
@@ -129,11 +129,11 @@ public final class Constants {
     }   
 
     public static final class Shooter{
-        public final static int rollerMotorPort = 12; //TODO: change to actual port
-        public final static int shooterTopMotorPort = 7; //TODO: change port number
-        public final static int shooterBottomMotorPort = 6; //TODO: change port number
+        public final static int rollerMotorPort = 12; 
+        public final static int shooterTopMotorPort = 7; 
+        public final static int shooterBottomMotorPort = 6; 
         public static final double shooterEncoderTicksPerRev = 2048;
-        public static final double motorSpeedToleranceRPM = 5.0; //todo: change to real tolerance
+        public static final double motorSpeedToleranceRPM = 5.0;
 
         public static final double DEFAULT_SHOOTER_SPEED = 0.5;
 
@@ -142,7 +142,7 @@ public final class Constants {
 
         public static final double MAX_VOLTAGE = 12.0;
         public static final double SHOOTER_TARGET_SPEED = 0.7; 
-        public static final double maxRollerSpeed = 0.5; //TODO: change to actual max
+        public static final double maxRollerSpeed = 0.5; 
 
         // CONTROLLERS
         public static final double kpFlywheel = 0.14172 / (MAX_VOLTAGE * 60); // divide by max voltage * 60 s/min
@@ -159,23 +159,28 @@ public final class Constants {
     }
     public static final class Turret{
         public final static int motorPortNumber = 5; //TODO: change to actual ID 
-        public static final double turretGearRatio = 10.0 * 14.0; //(small gear ration * big gear ratio )
+        public static final double turretGearRatio = 10.0 * 14.0; //(small gear ratio * big gear ratio )
         public static final double encoderTicksPerRev = 2048 * turretGearRatio;
         public static final double encoderTicksPerDegree = encoderTicksPerRev / 360.0;
+        
+        // experimentally determined
         public static final double pidPositionToleranceDegrees = 1;
         public static final double pidVelToleranceDegPerSecond = 0.5;
 
         public static final int hallEffectPort = 4;
 
+        // determined through characterization tool
         public static final double ksTurret = 0.55865;
         public static final double kvTurret = 0.041588;
         public static final double kaTurret = 0.00096306;
+
         public static final double constantTurretTurnSpeed = 0.4;
         public static final double turningVelThreshold = 0.5; // tune this value
-        public static final double feedForwardConstant = 0.7;
+        public static final double feedForwardConstant = 0.7; // experimentally determined
         public static double velThreshold = 5;
-   }
+    }
     
+    // 
     public static class Ramsete {
         public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Drivetrain.ksVolts,
                 Constants.Drivetrain.kvVoltSecondsPerMeter,
@@ -195,17 +200,6 @@ public final class Constants {
         public final static int rightClimberMotorPort = 11; //todo
         public final static double climbSpeedUp = 1;
         public final static double climbSpeedDown = -1;
-        public final static double lowBarHeight = 50; //todo: find height in centimeters
-        public final static double middleBarHeight = 100; //todo: find height in centimeters
-        public final static double maxClimberHeight = 400; //todo find this height
-        public final static double retractedHeight = 20;
-        public final static double encoderErrorRange = 5; //ensure this is a good range
-        public final static double encoderConversionRateToCm = 1; //todo: find encoder conversion rate
-          //Both of these are random numbers replace when we actually now the correct port
-        public final static int leftChannelA = 8;
-        public final static int leftChannelB = 9;
-        public final static int rightChannelA = 6;
-        public final static int rightChannelB = 7;
     }
 
     public static final class Intake {

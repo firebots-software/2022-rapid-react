@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
+
+  // fields
   private static Shooter instance;
   private Limelight limelight;
   private TalonSRX rollerMotor;
@@ -30,13 +32,15 @@ public class Shooter extends SubsystemBase {
 
   /** Creates a new Shooter */
   private Shooter() {
+    // top motor configs
     this.topMotor = new TalonFX(Constants.Shooter.shooterTopMotorPort);
     topMotor.configFactoryDefault();
-    topMotor.configOpenloopRamp(RAMPING_CONSTANT);
-    topMotor.setInverted(true);
-    topMotor.configVoltageCompSaturation(12);
-    topMotor.enableVoltageCompensation(true);
+    topMotor.configOpenloopRamp(RAMPING_CONSTANT); // slowls the rate at which it speeds up so motor isn't damaged
+    topMotor.setInverted(true); // motor spins backward
+    topMotor.configVoltageCompSaturation(12); // max voltage that can be applied
+    topMotor.enableVoltageCompensation(true); // TODO: figure out what this does
 
+    // bottom motor configs
     this.bottomMotor = new TalonFX(Constants.Shooter.shooterBottomMotorPort);
     bottomMotor.configFactoryDefault();
     bottomMotor.configOpenloopRamp(RAMPING_CONSTANT);
@@ -51,6 +55,7 @@ public class Shooter extends SubsystemBase {
     this.topTestTargetRPM = Constants.Shooter.FIXED_RPM;
     this.bottomTestTargetRPM = Constants.Shooter.FIXED_RPM;
 
+    // feed forward controllers for both motors
     topMotorFF = new SimpleMotorFeedforward(Constants.Shooter.ksTopFlywheel, Constants.Shooter.kvTopFlywheel, Constants.Shooter.kaTopFlywheel);
     bottomMotorFF = new SimpleMotorFeedforward(Constants.Shooter.ksBottomFlywheel, Constants.Shooter.kvBottomFlywheel, Constants.Shooter.kaBottomFlywheel);
 
@@ -89,8 +94,9 @@ public class Shooter extends SubsystemBase {
     return (bottomMotor.getSelectedSensorVelocity() * 600.0) / Constants.Shooter.shooterEncoderTicksPerRev; // rev per 100ms * 600 = rpm                                                                                       // = per min
   }
 
+  // run roller motor at specified speed
   public void setRollerMotorSpeed(double speed){
-   rollerMotor.set(ControlMode.PercentOutput, speed);
+   rollerMotor.set(ControlMode.PercentOutput, speed); // mode = PercentOutput, where 1 corresponds to 100% and -1 corresponds to -100%
   }
 
  /* 
@@ -130,6 +136,7 @@ public class Shooter extends SubsystemBase {
     stopBottomMotor();
   }
 
+  // feed forward control to get flywheel spinning at desired rpm
   public void setTopClosedLoopVelocity(double rpm) {
     rpm -= 225;
     topMotor.set(
@@ -154,15 +161,6 @@ public class Shooter extends SubsystemBase {
     setRollerMotorSpeed(0.0);
   }
 
-  // ask command or method
-
-  /*
-   * public void setAtTargetSpeed(boolean atTarget) {
-   * this.atTargetSpeed = atTarget;
-   * }
-   */
-  // add threshold for target speed
-
 
  /* 
   * Checks whether motor RPM is within a specified MoE of target speed.
@@ -182,6 +180,7 @@ public class Shooter extends SubsystemBase {
     return Math.abs(error) <= marginOfError; //both motors 
   }
 
+  // getters
   public double getTopMotorOutput() {
     return topMotor.getMotorOutputPercent();
   }
@@ -190,14 +189,10 @@ public class Shooter extends SubsystemBase {
     return bottomMotor.getMotorOutputPercent();
   }
 
-  // public double getTopTargetRPM() {
-  //   if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-  //   return getRPMForDistanceInches(limelight.getDistanceToTarget()) * TOP_FLYWHEEL_CONST;
-  // }
 
   public double getTopTargetRPM() {
-    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-    return getRPMForDistanceInches(limelight.getAverageDistance()) * TOP_FLYWHEEL_CONST;
+    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST; // constant speed if not variable RPM
+    return getRPMForDistanceInches(limelight.getAverageDistance()) * TOP_FLYWHEEL_CONST; // if variable RPM calculate using limelight distance and function
   }
 
   public void setBottomTestTargetRPM(double rpm) {
@@ -213,16 +208,17 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getBottomTargetRPM() {
-    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM;
-    return getRPMForDistanceInches(limelight.getAverageDistance());
+    if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM; // constant speed if not variable RPM
+    return getRPMForDistanceInches(limelight.getAverageDistance()); // if variable RPM calculate using limelight distance and function
   }
 
   public double getBottomTargetRPM(double distance) {
     if (!isRPMAdjusting()) return Constants.Shooter.FIXED_RPM * TOP_FLYWHEEL_CONST;
-    double average = (distance + currentDist)/2; 
+    double average = (distance + currentDist)/2; // average out distance to get a better estimate of the target RPM
     return getRPMForDistanceInches(average);
   }
 
+  // getters and setters
   public void setDistance(double newDist) {
     currentDist = newDist; 
   }
@@ -243,19 +239,21 @@ public class Shooter extends SubsystemBase {
     isAdjustingRPM = value; 
   }
 
+  // function which maps distance to desired RPM
   public double getRPMForDistanceInches(double distance) {
-    // double rpm = 12.5079 * distance + 1874.28;
     double rpm = (0.131271 * distance * distance) + (-19.4747 * distance) + 3779.39;
     if (rpm < 0) rpm = 0;
     if (rpm > Constants.Shooter.MAX_RPM) rpm = Constants.Shooter.MAX_RPM;
     return rpm; 
   }
 
+  // sets ramping constant for both motors
   public void setRampingConstant(double ramp) {
     topMotor.configOpenloopRamp(ramp);
     bottomMotor.configOpenloopRamp(ramp);
   }
 
+  // at target RPM for both top and bottom
   public boolean atTargetRPM(double marginOfError) {
     boolean topAtTarget = Math.abs(getTopShooterRPM() - getTopTargetRPM()) < marginOfError;
     boolean bottomAtTarget = Math.abs(getBottomShooterRPM() - getBottomTargetRPM()) < marginOfError;
@@ -269,3 +267,5 @@ public class Shooter extends SubsystemBase {
   }
 
 }
+
+// CLEANED

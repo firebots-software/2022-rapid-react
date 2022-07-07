@@ -22,17 +22,17 @@ public class SpinUpShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // System.out.println("starting falcon closed loop");
-    shooter.setDistance(limelight.getDistanceToTarget());
+    shooter.setDistance(limelight.getDistanceToTarget()); // starting distance as measured by limelight
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // feed forward velocity control for both top and bottom motors
     shooter.setTopClosedLoopVelocity(shooter.getTopTargetRPM());
     shooter.setBottomClosedLoopVelocity(shooter.getBottomTargetRPM());
   }
-
+       
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
@@ -41,6 +41,7 @@ public class SpinUpShooter extends CommandBase {
   }
 
   // Returns true when the command should end.
+  // doesn't end until button is let go
   @Override
   public boolean isFinished() {
     return false;

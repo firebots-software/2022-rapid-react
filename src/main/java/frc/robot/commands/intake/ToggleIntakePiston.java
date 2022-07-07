@@ -4,13 +4,7 @@
 
 package frc.robot.commands.intake;
 
-import java.util.Set;
-
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class ToggleIntakePiston extends CommandBase {
@@ -44,9 +38,6 @@ public class ToggleIntakePiston extends CommandBase {
   public boolean isFinished() {
     return true;
   }
-
-  // @Override
-  // public Set<Subsystem> getRequirements() {
-  //   return Set.of(intake);
-  // }
 }
+
+// CLEANED

@@ -16,6 +16,7 @@ public class ToggleSlowMode extends CommandBase {
     }
 
     @Override
+    // runs constantly until isFinished condition is met
     public void execute() {
         drivetrain.setSlowMode(true);
     }

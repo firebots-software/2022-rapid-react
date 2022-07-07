@@ -18,7 +18,7 @@ public class RunSpaghettiWheels extends CommandBase {
     this.speed = speed;
   }
 
-  public RunSpaghettiWheels() {
+  public RunSpaghettiWheels() { // default to predefined constant speed
     this.intake = Intake.getInstance();
     this.speed = Constants.Intake.SPAGHETTI_SPEED;
   }
@@ -45,3 +45,5 @@ public class RunSpaghettiWheels extends CommandBase {
     return false;
   }
 }
+
+// CLEANED

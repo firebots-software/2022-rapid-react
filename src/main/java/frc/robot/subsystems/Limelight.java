@@ -4,13 +4,10 @@
 
 package frc.robot.subsystems;
 
-import com.fasterxml.jackson.databind.introspect.NopAnnotationIntrospector;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
 
 public class Limelight extends SubsystemBase {
 
@@ -19,6 +16,7 @@ public class Limelight extends SubsystemBase {
    * when your program starts
    */
   private NetworkTableInstance instance = NetworkTableInstance.getDefault();
+  
   private Drivetrain drivetrain; 
 
   /*
@@ -29,10 +27,8 @@ public class Limelight extends SubsystemBase {
   private final int numberOfAverages = 10; 
 
   private NetworkTable table = instance.getTable("limelight");
-  private double lastKnownTx = 0; 
   private double[] lastTenTy = new double[numberOfAverages]; 
   private double lastKnownTyValue; 
-  private int secsWithoutSeeingTarget; 
   int counter = 0; 
   private double lastSeenHeading; 
   private boolean hasSeenTarget; 
@@ -58,8 +54,6 @@ public class Limelight extends SubsystemBase {
 
   /** Creates a new Limelight. */
   private Limelight() {
-      // setLedStatus(false);
-      secsWithoutSeeingTarget = 0;
       drivetrain = Drivetrain.getInstance();
       hasSeenTarget = false; 
   }
@@ -130,27 +124,31 @@ public class Limelight extends SubsystemBase {
     return tv == 1;
   }
 
+  // helper method for distance function
   public double getRatio(double angle) {
     double ratio = Math.tan(((Math.toRadians(angle + Constants.Limelight.limelightAngleOffset))));
     return ratio;
   }
 
+  // helper method for distance function
   public double getRatio() {
     double ratio = Math.tan(((Math.toRadians(this.getTy() + Constants.Limelight.limelightAngleOffset))));
     return ratio;
   }
 
+  // distance function when given angle
   public double getDistanceToTarget(double angle) {
     double ratio = this.getRatio(angle);
     return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
   }
 
+  // helper method for last known distance
   public double getLastKnownRatio() {
     double ratio = Math.tan(((Math.toRadians(this.getLastKnownTy() + Constants.Limelight.limelightAngleOffset))));
     return ratio;
   }
 
-
+  // either current distance or return last known distance as a failsafe
   public double getDistanceToTarget() {
     if (getTv()) {
       double ratio = this.getRatio();
@@ -160,15 +158,18 @@ public class Limelight extends SubsystemBase {
     }
   }
 
+  // use ratio + trig and account for distance between limelight and front of robot to get distance to target
   public double getLastKnownDistanceToTarget() {
     double ratio = this.getLastKnownRatio();
     return (Constants.Limelight.heightOfTarget - 28) / ratio + 8;
   }
 
+  // predefined shooting range
   public boolean isWithinShootingRange(){
     return 100 < getDistanceToTarget() && getDistanceToTarget() < 135;
   }
 
+  // using the last 10 recorded Ty values to calculate average distance
   public double getAverageDistance() {
     double sum = 0; 
     for (int i = 0; i < lastTenTy.length; i++) {
@@ -178,6 +179,7 @@ public class Limelight extends SubsystemBase {
     return sum/lastTenTy.length; 
   }
 
+  // for the green LED lights, toggling them on and off
   public void setLedStatus(boolean on) {
     if (on) {
       table.getEntry("ledMode").setNumber(3);
@@ -186,31 +188,16 @@ public class Limelight extends SubsystemBase {
     }
   }
 
-  public double getLastKnownTx() {
-    return lastKnownTx; 
-  }
-
+  // getters
   public double getLastKnownTy() {
     return lastKnownTyValue; 
-  }
-  
-  public void setLastKnownTx(double newLastKnownTx) {
-    this.lastKnownTx = newLastKnownTx; 
-  }
-
-  public void setLastKnownTy(double newLastKnownTy) {
-    this.lastKnownTyValue = newLastKnownTy; 
-  }
-
-  public double getTimeWithoutTarget() {
-    return secsWithoutSeeingTarget; 
   }
 
   public boolean hasSeenTarget() {
     return hasSeenTarget; 
   }
 
-
+  // if the difference between the limelight center and the target center < threshold
   public boolean isAimed() {
     if (getTv()) {
       return Math.abs(getTx()) < Constants.Turret.pidPositionToleranceDegrees;
@@ -218,24 +205,16 @@ public class Limelight extends SubsystemBase {
     return false;
   }
 
+  // return last gyro value when the limelight saw the target
   public double getLastSeenHeading() {
     return lastSeenHeading;
   }
 
   @Override
+  // runs once every scheduler run
   public void periodic() {
     this.refreshValues();
-    if (tx != 0) {
-      this.setLastKnownTx(tx);
-      lastSeenHeading = drivetrain.getHeading(); 
-      hasSeenTarget = true; 
-    } 
-
-    if (this.tv == 0) {
-      secsWithoutSeeingTarget++; 
-    } else {
-      secsWithoutSeeingTarget = 0; 
-    }
-
   }
 }
+
+// CLEANED

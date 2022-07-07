@@ -7,28 +7,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser; 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commandGroups.AimAndShoot2Balls;
-import frc.robot.commandGroups.AimAndShoot;
-import frc.robot.commandGroups.DummyAutonAndShoot;
 import frc.robot.commandGroups.RunIntakeAndSpaghetti;
 import frc.robot.commandGroups.RunSpaghetAndRoll;
 import frc.robot.commandGroups.StopEverything;
-import frc.robot.commandGroups.TaxiIntakeShoot;
-import frc.robot.commandGroups.TaxiTurnShoot;
 import frc.robot.commandGroups.TwoBallAuton;
-import frc.robot.commandGroups.TwoBallAutonTracking;
-import frc.robot.commands.auton.*;
 import frc.robot.commands.limelight.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.climber.ManualClimb;
-import frc.robot.commands.intake.FlapIntake;
 import frc.robot.commands.intake.ToggleIntakePiston;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Shooter;
@@ -58,8 +49,7 @@ public class RobotContainer {
     // Configure the button bindings
     this.ps4_controller1 = new Joystick(Constants.OI.PS4_CONTROLLER_PORT_1);
     this.ps4_controller2 = new Joystick(Constants.OI.PS4_CONTROLLER_PORT_2); 
-    
-    Paths.generate();
+  
     this.drivetrain = Drivetrain.getInstance();
     this.turret = Turret.getInstance(); 
     configureButtonBindings();
@@ -71,21 +61,8 @@ public class RobotContainer {
             () -> ps4_controller1.getRawAxis(1),
             () -> ps4_controller1.getRawAxis(2)));
 
-    // turret.setDefaultCommand(new AlignToTargetFeedForward());
-    // shooter.setDefaultCommand(new SpinUpShooter());
-    
-    // turret.setDefaultCommand(
-    //     new AlignToTargetFeedForward()
-    // ); 
-
-
-    SmartDashboard.putData("Auton chooser", autonChooser);
-    autonChooser.addOption("DUMMY AUTON", new DriveForTime(-0.5, 1));
-    autonChooser.addOption("dummy auton backwards & shoot", new DummyAutonAndShoot());
     autonChooser.setDefaultOption("2 ball auton", new TwoBallAuton());
-    autonChooser.addOption("test only -- turn 180", new TurnForTime(0.4, 1.6));
-    autonChooser.addOption("mot prof test", RamseteGenerator.generateCommandForPath(Paths.turnTest));
-    autonChooser.addOption("sweep test", new ScanField());
+
   }
 
   /**
@@ -97,15 +74,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /*
-     * final Button buttonName = new JoystickButton(ps4_controller,
-     * Constants.OI.PortNumber);
-     * buttonName.whenPressed(new commandName());
-     */
-
-    // final Button flipOrientation = new JoystickButton(ps4_controller1, Constants.OI.L3_BUTTON_PORT);
-    // flipOrientation.whenPressed(new FlipOrientation());
-
+   
+    // all the button bindings
     final Button slowMode = new JoystickButton(ps4_controller1, Constants.OI.L1_BUTTON_PORT);
     slowMode.whenHeld(new ToggleSlowMode());
 
@@ -139,7 +109,7 @@ public class RobotContainer {
     final POVButton downPov = new POVButton(ps4_controller1, 180);
     downPov.whenHeld(new ManualClimb(Constants.Climber.climbSpeedDown));
 
-    // only if using second controller
+    
     double manualTurretSpeed = 0.7;
     final POVButton leftPov = new POVButton(ps4_controller1, 270);
     leftPov.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
@@ -147,7 +117,7 @@ public class RobotContainer {
     final POVButton rightPov = new POVButton(ps4_controller1, 90);
     rightPov.whenHeld(new ManualTurretTurn(manualTurretSpeed));
 
-
+    // only if using second controller
     final POVButton leftPov2 = new POVButton(ps4_controller2, 270);
     leftPov2.whenHeld(new ManualTurretTurn(-manualTurretSpeed));
 

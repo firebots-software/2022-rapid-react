@@ -7,10 +7,8 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 
-import java.util.Collections;
 import java.util.Set;
 
 
@@ -30,7 +28,6 @@ public class ManualClimb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // System.out.println("climber speed: " + climbSpeed);
     climber.setClimberSpeed(climbSpeed);
   }
 
@@ -49,6 +46,5 @@ public class ManualClimb extends CommandBase {
   @Override
   public Set<Subsystem> getRequirements() {
     return Set.of(climber);
-    // do not require drivetrain here
   }
 }

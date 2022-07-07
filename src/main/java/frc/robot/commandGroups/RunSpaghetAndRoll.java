@@ -23,7 +23,6 @@ public class RunSpaghetAndRoll extends ParallelCommandGroup {
   /** Creates a new SpaghettiRollerShooter. */
   public RunSpaghetAndRoll() {
     // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new RunRoller(), new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
   }
@@ -32,7 +31,8 @@ public class RunSpaghetAndRoll extends ParallelCommandGroup {
   @Override
   public void end(boolean interrupted) {
     shooter.stopBothMotors();
-    // limelight.setLedStatus(false);
     super.end(interrupted);
   }
 }
+
+// CLEANED

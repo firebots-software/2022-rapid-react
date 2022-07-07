@@ -13,7 +13,7 @@ public class RunIntakeAndSpaghetti extends ParallelCommandGroup {
   /** Creates a new RunIntakeAndSpaghetti. */
 
   public RunIntakeAndSpaghetti(boolean reversed) {
-    if (!reversed) {
+    if (!reversed) { // if we want to eject balls or not --> didn't use in comp but is useful
     addCommands(new RunIntake(Constants.Intake.INTAKE_SPEED_FORWARDS),
                 new RunSpaghettiWheels(Constants.Intake.SPAGHETTI_SPEED));
     } else {
@@ -22,3 +22,5 @@ public class RunIntakeAndSpaghetti extends ParallelCommandGroup {
     }
   }
 }
+
+// CLEANED

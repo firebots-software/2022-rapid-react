@@ -25,12 +25,14 @@ public class AlignToTargetFeedForward extends CommandBase {
 
   /** Creates a new AlignToTarget. */
   public AlignToTargetFeedForward() {
+    // initializing subsystems
     limelight = Limelight.getInstance();
     turret = Turret.getInstance();
     drivetrain = Drivetrain.getInstance();
+
+    // PID and feed forward controllers
     pid = new PIDController(Constants.Limelight.alignP, Constants.Limelight.alignI, Constants.Limelight.alignD);
     pid.setTolerance(Constants.Turret.pidPositionToleranceDegrees);
-
     feedforward = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret,
         Constants.Turret.kaTurret);
 
@@ -51,7 +53,7 @@ public class AlignToTargetFeedForward extends CommandBase {
   // Counter refreshes every 200 ms
   @Override
   public void execute() {
-
+    // if target not seen, follow the direction drivetrain is moving
     if (!limelight.getTv()) {
       double angVel = drivetrain.getAngularVelocity(); 
       if (angVel > Constants.Turret.velThreshold) {
@@ -61,44 +63,33 @@ public class AlignToTargetFeedForward extends CommandBase {
         turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
         System.out.println("flipping left");
       } 
-    } else {  
+    } else {  // if target is seen, use PID and feedforward to rotate the turret to align with the target
       pid.setSetpoint(turret.getEncoderValDegrees() + limelight.getTx());
 
-      // double tangentialVel = -drivetrain.getCurrentSpeed() * Math.sin(turret.getEncoderValDegrees() + limelight.getTx())/ (limelight.getDistanceToTarget() * 0.0254); // convert limelight distance
       double angularVel = -drivetrain.getAngularVelocity();
       double pidOutput = pid.calculate(turret.getEncoderValDegrees());
+      
       if (pid.atSetpoint()) {
         pidOutput = 0;
       }
 
       double feedForwardCalculationOnlyAngular = feedforward.calculate(angularVel);
-      // double feedForwardCalculationBoth = feedforward.calculate(angularVel +
-      // tangentialVel);
-      // SmartDashboard.putNumber("turret pid output", pidOutput);
       SmartDashboard.putNumber("turret feedforward output", feedForwardCalculationOnlyAngular);
 
-      // if (limelight.getTv()) {
-      // turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12.0);
-      // } else {
-      // turret.setMotorSpeed(pidOutput);
-      // }
-      // turret.setMotorSpeed(feedForwardCalculationOnlyAngular/12);
 
-      if (!limelight.hasSeenTarget()) {
+      if (!limelight.hasSeenTarget()) { // if limelight has never seen target don't move
         turret.stopMotor();
       } else {
-        turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12 * Constants.Turret.feedForwardConstant);
+        turret.setMotorSpeed(pidOutput + feedForwardCalculationOnlyAngular / 12 * Constants.Turret.feedForwardConstant); // divide by 12 because feed forward output in volts 
       }
-      // if (pid.atSetpoint()) {
-      //   System.out.println("pid done");
-      // }
+     
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.setLastAlignedGyro(drivetrain.getHeading());
+    drivetrain.setLastAlignedGyro(drivetrain.getHeading()); // save the last aligned gyro valud
     turret.stopMotor();
     System.out.println("done with command");
   }
@@ -114,3 +105,5 @@ public class AlignToTargetFeedForward extends CommandBase {
     return Set.of(limelight, turret);
   }
 }
+
+// CLEANED

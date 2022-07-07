@@ -32,19 +32,20 @@ public class ScanField extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // moves turret towards the left side first, until it reaches the soft stop
     if (!reachedLeftStop) {
       turret.setMotorSpeed(-Constants.Turret.constantTurretTurnSpeed);
       if (turret.getEncoderValDegrees() <= -80) {
         reachedLeftStop = true; 
         turret.stopMotor();
       }
-    } else if (!reachedRightStop) {
+    } else if (!reachedRightStop) { // once it reaches the left soft stop, start moving it towards the right soft stop
       turret.setMotorSpeed(Constants.Turret.constantTurretTurnSpeed);
       if (turret.getEncoderValDegrees() >= 80) {
         reachedRightStop = true; 
         turret.stopMotor();
       }
-    }
+    } // along its path the target should enter it's field of vision, and then it should start aligning
   }
 
   // Called once the command ends or is interrupted.
@@ -56,7 +57,6 @@ public class ScanField extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return limelight.getTx() < Constants.Turret.pidPositionToleranceDegrees;
-    return limelight.getTv(); 
+    return limelight.getTv(); // once it sees the target, the command ends
   }
 }

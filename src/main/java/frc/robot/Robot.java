@@ -67,6 +67,10 @@ public class Robot extends TimedRobot {
     turret = Turret.getInstance();
     drivetrain = Drivetrain.getInstance();
     intake = Intake.getInstance();
+    shooter = Shooter.getInstance();
+    shooter.stopBothMotors();
+    shooter = Shooter.getInstance();
+    climber = Climber.getInstance();
     this.powerboard = new PowerDistribution();
     powerboard.setSwitchableChannel(true);
 
@@ -78,35 +82,16 @@ public class Robot extends TimedRobot {
     // startAutomaticCapture: creates server for viewing camera feed from dashboard
 
     try {
-      // UsbCamera shooterCamera = CameraServer.startAutomaticCapture("Shooter
-      // Camera", 0);
-      // UsbCamera intakeCamera = CameraServer.startAutomaticCapture("Intake Camera",
-      // 1);
-
-      // shooterCamera.setResolution(640, 480);
-      // intakeCamera.setResolution(640, 480);
 
       new Thread(() -> {
         UsbCamera frontCamera = new UsbCamera("front cam", 0);
-        // UsbCamera backCamera = new UsbCamera("back cam", 1);
         frontCamera.setFPS(30);
-        // backCamera.setFPS(30);
         frontCamera.setBrightness(10);
-        // backCamera.setBrightness(10);
-
-        // frontCamera = CameraServer.startAutomaticCapture("Front Camera", 0);
-
-        // // BACK Orientation
-        // backCamera = CameraServer.startAutomaticCapture("Back Camera", 1);
-
         frontCamera.setResolution(160, 120);
-        // backCamera.setResolution(160,120);
-
+      
         CvSink cvSink1 = new CvSink("front cam sink");
         cvSink1.setSource(frontCamera);
-        // CvSink cvSink2 = new CvSink("back cam sink");
-        // cvSink2.setSource(backCamera);
-        // Put video Blur -> stream on Shuffleboard
+        
         CvSource outputStream = CameraServer.putVideo("Camera Output", 160, 120);
 
         Mat source = new Mat();
@@ -120,11 +105,6 @@ public class Robot extends TimedRobot {
               continue;
             }
           }
-          // else{
-          // if (cvSink2.grabFrame(source) == 0) {
-          // continue;
-          // }
-          // }
 
           // Image processing goes here
           Imgproc.cvtColor(source, output, Imgproc.COLOR_BGRA2BGR);
@@ -132,16 +112,12 @@ public class Robot extends TimedRobot {
         }
 
         cvSink1.close();
-        // cvSink2.close();
       }).start();
       Shuffleboard.update();
     } catch (Exception e) {
       System.err.println("Error initializing camera");
     }
-    shooter = Shooter.getInstance();
-    shooter.stopBothMotors();
-    shooter = Shooter.getInstance();
-    climber = Climber.getInstance();
+    
 
     // drivetrain.setMotorNeutralMode(NeutralMode.Brake);
   }
@@ -174,10 +150,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("ty", limelight.getTy());
     SmartDashboard.putNumber("drivetrain angular velocity", drivetrain.getAngularVelocity()); 
 
-    // // SmartDashboard.putNumber("name", subsystem.getNumberValue());
-    // SmartDashboard.putBoolean("isSlowModeActivated", drivetrain.getSlowModeStatus());
-    // SmartDashboard.putString("driveOrientationName", drivetrain.getDriveOrientation().name());
-
     SmartDashboard.putNumber("top shooter rpm", shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter rpm", shooter.getBottomShooterRPM());
 
@@ -190,41 +162,17 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("drivetrain degrees per second", drivetrain.getAngularVelocity()); 
     SmartDashboard.putNumber("real drivetrain deg per sec?", drivetrain.getGyroArray()[2]); 
 
-    // SmartDashboard.putNumber("Right encoder count meters", drivetrain.getRightEncoderCountMeters());
-    // SmartDashboard.putNumber("Right encoder velocity", drivetrain.getRightEncoderVelocityMetersPerSec());
-
-    // SmartDashboard.putNumber("Left encoder count meters", drivetrain.getLeftEncoderCountMeters());
-    // SmartDashboard.putNumber("Left encoder velocity", drivetrain.getLeftEncoderVelocityMetersPerSec());
-    // SmartDashboard.putNumber("Gyro Value", drivetrain.getHeading());
-
-    // SmartDashboard.putBoolean("isCurvatureModeOn", drivetrain.getDriveStatus());
-
     SmartDashboard.putBoolean("within shooting range?", limelight.isWithinShootingRange());
-
-    // SmartDashboard.putNumber("left drivetrain voltage", drivetrain.getLeftVoltage());
-    // SmartDashboard.putNumber("right drivetrain voltage", drivetrain.getRightVoltage());
-
-    // SmartDashboard.putBoolean("left climber hall effect", climber.getLeftHallEffectValue());
-    // SmartDashboard.putBoolean("right climber hall effect", climber.getRightHallEffectValue());
-
-    // SmartDashboard.putBoolean("intake piston status", intake.pistonExtended());
 
     SmartDashboard.putNumber("TESTING: TARGET RPM TOP", shooter.getTopTargetRPM());
     SmartDashboard.putNumber("TESTING: TARGET RPM BOTTOM", shooter.getBottomTargetRPM());
 
     SmartDashboard.putBoolean("SHOOTER AT RPM", shooter.atTargetRPM());
 
-    // SmartDashboard.putNumber("turret degrees per sec", turret.getDegreesPerSec());
-
-    // SmartDashboard.putNumber("turret motion magic position",
-    // turret.getMotionMagicPosition());
-
     SmartDashboard.putNumber("top shooter error", shooter.getTopTargetRPM() - shooter.getTopShooterRPM());
     SmartDashboard.putNumber("bottom shooter error", shooter.getBottomTargetRPM() - shooter.getBottomShooterRPM());
 
     SmartDashboard.putBoolean("TURRET AIMED?", limelight.isAimed());
-
-    SmartDashboard.putNumber("last known tx", limelight.getLastKnownTx());
     SmartDashboard.putBoolean("limelight tv", limelight.getTv());
 
     SmartDashboard.putNumber("drivetrain heading", drivetrain.getHeading());
@@ -232,27 +180,17 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("drivetrain left ticks", drivetrain.getLeftEncoderTicks());
     SmartDashboard.putNumber("drivetrain left meters", drivetrain.getLeftEncoderCountMeters());
 
-
-    // System.out.println("20 current: " + powerboard.getCurrent(20));
-    // System.out.println("21 current: " + powerboard.getCurrent(21));
-    // System.out.println("22 current: " + powerboard.getCurrent(22));
-    // System.out.println("23 current: " + powerboard.getCurrent(23));
-
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    // updateShuffleboard();
     drivetrain.setMotorNeutralMode(NeutralMode.Coast);
-    // limelight.setLedStatus(false);
-
-    // intake.retractIntake();
   }
 
   @Override
   public void disabledPeriodic() {
-    // updateShuffleboard();
+    
   }
 
   /**

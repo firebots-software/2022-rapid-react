@@ -18,7 +18,7 @@ public class RunIntake extends CommandBase {
     this.speed = speed;
   }
 
-  public RunIntake() {
+  public RunIntake() { // default to predefined constant speed
     this.intake = Intake.getInstance();
     this.speed = Constants.Intake.INTAKE_SPEED_FORWARDS;
   }
@@ -48,3 +48,5 @@ public class RunIntake extends CommandBase {
     return false;
   }
 }
+
+// CLEANED

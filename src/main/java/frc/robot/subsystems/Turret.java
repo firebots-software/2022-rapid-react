@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -17,11 +16,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
-  //TODO: Java doc
+  // declare motor + sensor
     private TalonFX motor;
     private DigitalInput hallEffect;
 
     private static Turret instance;
+    
+    // ramping constant --> slows the rate at which the turret motor gets up to desired speed
     private final double RAMPING_CONSTANT = 0.25;
     private final double maxRange = 80; 
     private final double minRange = -80;
@@ -29,21 +30,29 @@ public class Turret extends SubsystemBase {
 
   /** Creates a new Turret. */
   private Turret() {
+    // motor configs
     this.motor = new TalonFX(Constants.Turret.motorPortNumber);
     motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     motor.configFactoryDefault();
     motor.configOpenloopRamp(RAMPING_CONSTANT); 
-    motor.setNeutralMode(NeutralMode.Brake);
+    motor.setNeutralMode(NeutralMode.Brake); 
 
+    // motion magic controller configs for feed forward
     motor.configMotionAcceleration(20 * Constants.Turret.encoderTicksPerDegree * 0.1);
     motor.configMotionCruiseVelocity(150 * Constants.Turret.encoderTicksPerDegree * 0.1);
     motor.configMotionSCurveStrength(8);
+
+    // feed forward controller for motor
     turretFF = new SimpleMotorFeedforward(Constants.Turret.ksTurret, Constants.Turret.kvTurret, Constants.Turret.kaTurret);
 
     hallEffect = new DigitalInput(Constants.Turret.hallEffectPort);
     zeroEncoder();
   }
 
+  /**
+   * singleton method for the turret
+   * @return turret instance
+   */
   public static Turret getInstance(){
     if (instance == null) {
       instance = new Turret();
@@ -55,6 +64,7 @@ public class Turret extends SubsystemBase {
   public void periodic() {
     if (isHallEffectEnabled()) zeroEncoder();
 
+    // constantly restricting movement range of turret
     if (getEncoderValDegrees() >= maxRange && motor.getMotorOutputPercent() > 0) {
       stopMotor();
     } 
@@ -66,12 +76,7 @@ public class Turret extends SubsystemBase {
   }
 
   public void setMotorSpeed(double speed) {
-    // if (this.getEncoderValDegrees() <= minRange + 10) {
-    //   speed *= 0.5; 
-    // } else if (this.getEncoderValDegrees() >= maxRange - 10){
-    //   speed *= 0.5; 
-    // }
-    
+    // check before moving turret to make sure it is within boundary
     if (this.getEncoderValDegrees() <= minRange && speed < 0) {
       speed = 0; // left hardstop
     } else if (this.getEncoderValDegrees() >= maxRange && speed > 0) {
@@ -82,7 +87,9 @@ public class Turret extends SubsystemBase {
     
   }
 
+
   public void setTurretClosedLoopVelocity(double degPerS) {
+    // feed forward control for turret
     motor.set(
         ControlMode.Velocity,
         degPerS * Constants.Turret.encoderTicksPerDegree * 0.1, // encoder ticks per 100ms
@@ -93,6 +100,7 @@ public class Turret extends SubsystemBase {
   }
 
   public void setTurretPosition(double degrees) {
+    // turn turret to a specific angle
     if (getEncoderValDegrees() + degrees > maxRange) { // right soft stop -- only go up to maxrange
       degrees = maxRange - getEncoderValDegrees();
     } 
@@ -137,6 +145,7 @@ public class Turret extends SubsystemBase {
     return motor.getSelectedSensorPosition() / Constants.Turret.encoderTicksPerDegree;
   }
 
+  // angular velociy of turret
   public double getDegreesPerSec() {
     return (motor.getSelectedSensorVelocity() / Constants.Turret.encoderTicksPerDegree) * 10;
   }
